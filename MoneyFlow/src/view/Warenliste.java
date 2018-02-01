@@ -6,7 +6,9 @@
 package view;
 
 import java.awt.Dimension;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -18,11 +20,14 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Warenliste extends JPanel {
 
+    JLabel warenlisteLabel = new JLabel("Warenliste");
     JTable table;
     DefaultTableModel tableModel = new DefaultTableModel();
 
     public Warenliste() {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.add(warenlisteLabel);
+        this.add(Box.createRigidArea(new Dimension(0, 5)));
         setTable();
     }
 
