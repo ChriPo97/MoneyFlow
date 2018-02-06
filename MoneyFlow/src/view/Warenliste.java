@@ -55,6 +55,8 @@ public class Warenliste extends JPanel {
         };
         table.getTableHeader().setReorderingAllowed(false);
         JScrollPane scrollpaneTable = new JScrollPane(table);
+        String[] test = {"Banane", "Obst", "0%", "kg", "1,20€","0,23€"};
+        tableModel.addRow(test);
         
         //Hinzufügen der Scroll Pane mit der Table
         this.add(Box.createRigidArea(new Dimension(0, 5)));
@@ -64,6 +66,10 @@ public class Warenliste extends JPanel {
         this.add(Box.createRigidArea(new Dimension(0, 5)));
         this.add(mwst);
         this.add(Box.createRigidArea(new Dimension(0, 12)));
+    }
+    
+    public void addRow(String[] row) {
+        tableModel.addRow(row);
     }
     
 }
