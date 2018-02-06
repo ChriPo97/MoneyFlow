@@ -5,6 +5,7 @@
  */
 package view;
 
+import Controller.Einkaufmanager;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UIManager;
@@ -29,7 +30,6 @@ public class Main {
         } catch (UnsupportedLookAndFeelException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
         Hauptfenster hf = new Hauptfenster();
         hf.setVisible(true);
         

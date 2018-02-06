@@ -16,9 +16,10 @@ import java.util.ArrayList;
  */
 public class Einkaufmanager {
     
-    private ArrayList<Artikel> einkaufskorb = new ArrayList<>();
+    private static ArrayList<Artikel> einkaufskorb = new ArrayList<>();
 
     public Einkaufmanager() {
+        
     }
     
     public boolean hinzufuegenArtikel (int id) {
@@ -46,6 +47,10 @@ public class Einkaufmanager {
     public Kassenbon abschliessenEInkauf() {
         
         return null;
+    }
+    
+    public static ArrayList<Artikel> getEinkaufskorb() {
+        return einkaufskorb;
     }
 
 }
