@@ -6,16 +6,20 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
@@ -25,9 +29,7 @@ import javax.swing.border.LineBorder;
  * @author Christoph
  */
 public class Artikelinformation extends JPanel {
-    
-    JLabel artikelinformationLabel = new JLabel("Artikelinformation");
-    
+
     JPanel artikelPanel = new JPanel();
     JLabel kategorieLabel = new JLabel("Kategorie:");
     JLabel produktLabel = new JLabel("Produkt:");
@@ -36,29 +38,102 @@ public class Artikelinformation extends JPanel {
     JLabel mengeLabel = new JLabel("Menge:");
     JLabel summeLabel = new JLabel("Summe:");
     JTextField kategorieField = new JTextField();
-    
+    JTextField produktField = new JTextField();
+    JTextField produktNummerField = new JTextField();
+    JTextField einzelpreisField = new JTextField();
+    JTextField mengeField = new JTextField();
+    JTextField summeField = new JTextField();
     JPanel panelButtons = new JPanel();
     JButton stornoButton = new JButton("Storno");
-    JButton produktnummerButton = new JButton("Produktnummer eingeben");
+    JButton produktnummerButton = new JButton("Produktnummer");
     JButton rabattButton = new JButton("Rabatt");
     JButton verkaufAbbrechenButton = new JButton("Verkauf abbrechen");
-    
+
     public Artikelinformation() {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setBorder(new EmptyBorder(new Insets(0, 10, 10, 10)));
-        
-        artikelPanel.setLayout(new GridLayout(6, 2));
-        artikelPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
-        artikelPanel.add(kategorieLabel);
-        artikelPanel.add(kategorieField);
-        artikelPanel.add(produktLabel);
-        artikelPanel.add(produktNummerLabel);
-        artikelPanel.add(einzelpreisLabel);
-        artikelPanel.add(mengeLabel);
-        artikelPanel.add(summeLabel);
-        
-        
-        panelButtons.setLayout(new BoxLayout(panelButtons, BoxLayout.Y_AXIS));
+        initComponents();
+    }
+
+    private void initComponents() {
+
+        //Artikel Panel mit den Artikelinformationen
+        stornoButton.setFont(new Font("Arial", 0, 24));
+        stornoButton.setForeground(new java.awt.Color(255, 51, 51));
+        produktnummerButton.setFont(new Font("Arial", 0, 24));
+        rabattButton.setFont(new Font("Arial", 0, 24));
+        verkaufAbbrechenButton.setFont(new Font("Arial", 0, 24));
+        verkaufAbbrechenButton.setForeground(new java.awt.Color(255, 51, 51));
+        kategorieField.setEditable(false);
+        produktField.setEditable(false);
+        produktNummerField.setEditable(false);
+        einzelpreisField.setEditable(false);
+        mengeField.setEditable(false);
+        summeField.setEditable(false);
+        GroupLayout artikelPanelGroupLayout = new GroupLayout(artikelPanel);
+        artikelPanelGroupLayout.setAutoCreateGaps(true);
+        artikelPanel.setLayout(artikelPanelGroupLayout);
+        artikelPanelGroupLayout.setHorizontalGroup(
+                artikelPanelGroupLayout.createParallelGroup()
+                        .addGroup(artikelPanelGroupLayout.createSequentialGroup()
+                                .addComponent(kategorieLabel)
+                                .addComponent(kategorieField)
+                        )
+                        .addGroup(artikelPanelGroupLayout.createSequentialGroup()
+                                .addComponent(produktLabel)
+                                .addComponent(produktField)
+                        )
+                        .addGroup(artikelPanelGroupLayout.createSequentialGroup()
+                                .addComponent(produktNummerLabel)
+                                .addComponent(produktNummerField)
+                        )
+                        .addGroup(artikelPanelGroupLayout.createSequentialGroup()
+                                .addComponent(einzelpreisLabel)
+                                .addComponent(einzelpreisField)
+                        )
+                        .addGroup(artikelPanelGroupLayout.createSequentialGroup()
+                                .addComponent(mengeLabel)
+                                .addComponent(mengeField)
+                        )
+                        .addGroup(artikelPanelGroupLayout.createSequentialGroup()
+                                .addComponent(summeLabel)
+                                .addComponent(summeField)
+                        )
+        );
+        artikelPanelGroupLayout.setVerticalGroup(
+                artikelPanelGroupLayout.createSequentialGroup()
+                        .addGroup(artikelPanelGroupLayout.createParallelGroup()
+                                .addComponent(kategorieLabel)
+                                .addComponent(kategorieField)
+                        )
+                        .addGroup(artikelPanelGroupLayout.createParallelGroup()
+                                .addComponent(produktLabel)
+                                .addComponent(produktField)
+                        )
+                        .addGroup(artikelPanelGroupLayout.createParallelGroup()
+                                .addComponent(produktNummerLabel)
+                                .addComponent(produktNummerField)
+                        )
+                        .addGroup(artikelPanelGroupLayout.createParallelGroup()
+                                .addComponent(einzelpreisLabel)
+                                .addComponent(einzelpreisField)
+                        )
+                        .addGroup(artikelPanelGroupLayout.createParallelGroup()
+                                .addComponent(mengeLabel)
+                                .addComponent(mengeField)
+                        )
+                        .addGroup(artikelPanelGroupLayout.createParallelGroup()
+                                .addComponent(summeLabel)
+                                .addComponent(summeField)
+                        )
+        );
+        artikelPanelGroupLayout.linkSize(SwingConstants.HORIZONTAL, kategorieLabel, produktLabel, produktNummerLabel, einzelpreisLabel,
+                mengeLabel, summeLabel);
+        artikelPanelGroupLayout.linkSize(SwingConstants.VERTICAL, kategorieField, produktField, produktNummerField, einzelpreisField,
+                mengeField, summeField);
+
+        //Panel mit den Buttons
+        panelButtons.setLayout(new GridLayout(6, 0));
         stornoButton.setMaximumSize(new Dimension(Integer.MAX_VALUE, stornoButton.getMinimumSize().height * 2));
         panelButtons.add(stornoButton);
         panelButtons.add(Box.createRigidArea(new Dimension(0, stornoButton.getMinimumSize().height * 2)));
@@ -69,12 +144,12 @@ public class Artikelinformation extends JPanel {
         panelButtons.add(Box.createRigidArea(new Dimension(0, stornoButton.getMinimumSize().height * 2)));
         verkaufAbbrechenButton.setMaximumSize(new Dimension(Integer.MAX_VALUE, verkaufAbbrechenButton.getMinimumSize().height * 4));
         panelButtons.add(verkaufAbbrechenButton);
-        
-        this.add(artikelinformationLabel);
+
+        //Hinzufügen der Panels auf das Artikelinformation Panel
         this.add(Box.createRigidArea(new Dimension(0, 5)));
         this.add(artikelPanel);
         this.add(Box.createRigidArea(new Dimension(0, 5)));
         this.add(panelButtons);
     }
-    
+
 }

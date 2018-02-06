@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -20,18 +21,26 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Warenliste extends JPanel {
 
-    JLabel warenlisteLabel = new JLabel("Warenliste");
     JTable table;
     DefaultTableModel tableModel = new DefaultTableModel();
 
     public Warenliste() {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.add(warenlisteLabel);
-        this.add(Box.createRigidArea(new Dimension(0, 5)));
-        setTable();
+        initComponents();
     }
 
-    private void setTable() {
+    private void initComponents() {
+        
+        JTextField summe = new JTextField();
+        summe.setEditable(false);
+        summe.setPreferredSize(new Dimension(Short.MAX_VALUE, 70));
+        summe.setMaximumSize(new Dimension(Short.MAX_VALUE, 70));
+        JTextField mwst = new JTextField();
+        mwst.setPreferredSize(new Dimension(Short.MAX_VALUE, 40));
+        mwst.setMaximumSize(new Dimension(Short.MAX_VALUE, 40));
+        mwst.setEditable(false);
+        
+        //Erstellen des Table Models und der JTabel
         tableModel.addColumn("Produkt");
         tableModel.addColumn("Kategorie");
         tableModel.addColumn("Rabatt");
@@ -41,23 +50,20 @@ public class Warenliste extends JPanel {
         table = new JTable(tableModel) {
             @Override
             public Class getColumnClass(int column) {
-                switch (column) {
-                    case 0:
-                        return String.class;
-                    case 1:
-                        return String.class;
-                    case 2:
-                        return String.class;
-                    case 3:
-                        return String.class;
-                    default:
-                        return Boolean.class;
-                }
+                return String.class;
             }
         };
+        table.getTableHeader().setReorderingAllowed(false);
         JScrollPane scrollpaneTable = new JScrollPane(table);
-        //scrollpaneTable.setPreferredSize(new Dimension(this.getMaximumSize().width, this.getMaximumSize().height));
+        
+        //Hinzufügen der Scroll Pane mit der Table
+        this.add(Box.createRigidArea(new Dimension(0, 5)));
         this.add(scrollpaneTable);
+        this.add(Box.createRigidArea(new Dimension(0, 5)));
+        this.add(summe);
+        this.add(Box.createRigidArea(new Dimension(0, 5)));
+        this.add(mwst);
+        this.add(Box.createRigidArea(new Dimension(0, 12)));
     }
     
 }
