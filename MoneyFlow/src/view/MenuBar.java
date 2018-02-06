@@ -20,12 +20,10 @@ public class MenuBar extends JMenuBar{
     JMenu ueber = new JMenu("Über");
     
     public MenuBar() {
-        
         this.add(datei);
         this.add(tools);
         this.add(hilfe);
         this.add(ueber);
-        
     }
     
 }

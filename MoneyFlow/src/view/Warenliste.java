@@ -5,7 +5,11 @@
  */
 package view;
 
+import Controller.Einkaufmanager;
+import Model.Artikel;
 import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -30,7 +34,7 @@ public class Warenliste extends JPanel {
     }
 
     private void initComponents() {
-        
+
         JTextField summe = new JTextField();
         summe.setEditable(false);
         summe.setPreferredSize(new Dimension(Short.MAX_VALUE, 70));
@@ -39,7 +43,7 @@ public class Warenliste extends JPanel {
         mwst.setPreferredSize(new Dimension(Short.MAX_VALUE, 40));
         mwst.setMaximumSize(new Dimension(Short.MAX_VALUE, 40));
         mwst.setEditable(false);
-        
+
         //Erstellen des Table Models und der JTabel
         tableModel.addColumn("Produkt");
         tableModel.addColumn("Kategorie");
@@ -55,9 +59,22 @@ public class Warenliste extends JPanel {
         };
         table.getTableHeader().setReorderingAllowed(false);
         JScrollPane scrollpaneTable = new JScrollPane(table);
-        String[] test = {"Banane", "Obst", "0%", "kg", "1,20€","0,23€"};
+        String[] test = {"Banane", "Obst", "0%", "kg", "1,20€", "0,23€"};
         tableModel.addRow(test);
-        
+
+        table.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int row = table.rowAtPoint(e.getPoint());
+                for (Artikel artikel : Einkaufmanager.getEinkaufskorb()) {
+                    if (tableModel.getValueAt(row, 0).equals(artikel.getName())) {
+                        Artikelinformation.setArtikelInformationen(artikel);
+                    }
+                }
+            }
+
+        });
+
         //Hinzufügen der Scroll Pane mit der Table
         this.add(Box.createRigidArea(new Dimension(0, 5)));
         this.add(scrollpaneTable);
@@ -67,9 +84,20 @@ public class Warenliste extends JPanel {
         this.add(mwst);
         this.add(Box.createRigidArea(new Dimension(0, 12)));
     }
-    
-    public void addRow(String[] row) {
-        tableModel.addRow(row);
+
+    public void addArtikel(Artikel artikel) {
+        tableModel.addRow(new String[]{artikel.getName(), artikel.getKategorie().getBezeichnung(),
+            "0%", String.valueOf(artikel.isEinheit()), String.valueOf(artikel.getPreis()),
+            String.valueOf(artikel.getMehrwertsteuersatz())});
     }
-    
+
+    public void removeArtikel(Artikel artikel) {
+        for (int row = 0; row < tableModel.getRowCount(); row++) {
+            if (tableModel.getValueAt(row, 0) == artikel.getName()) {
+                tableModel.removeRow(row);
+                return;
+            }
+        }
+    }
+
 }

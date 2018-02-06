@@ -5,6 +5,7 @@
  */
 package view;
 
+import Model.Artikel;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -30,24 +31,24 @@ import javax.swing.border.LineBorder;
  */
 public class Artikelinformation extends JPanel {
 
-    JPanel artikelPanel = new JPanel();
-    JLabel kategorieLabel = new JLabel("Kategorie:");
-    JLabel produktLabel = new JLabel("Produkt:");
-    JLabel produktNummerLabel = new JLabel("Produktnummer:");
-    JLabel einzelpreisLabel = new JLabel("Einzelpreis:");
-    JLabel mengeLabel = new JLabel("Menge:");
-    JLabel summeLabel = new JLabel("Summe:");
-    JTextField kategorieField = new JTextField();
-    JTextField produktField = new JTextField();
-    JTextField produktNummerField = new JTextField();
-    JTextField einzelpreisField = new JTextField();
-    JTextField mengeField = new JTextField();
-    JTextField summeField = new JTextField();
-    JPanel panelButtons = new JPanel();
-    JButton stornoButton = new JButton("Storno");
-    JButton produktnummerButton = new JButton("Produktnummer");
-    JButton rabattButton = new JButton("Rabatt");
-    JButton verkaufAbbrechenButton = new JButton("Verkauf abbrechen");
+    private JPanel artikelPanel = new JPanel();
+    private JLabel kategorieLabel = new JLabel("Kategorie:");
+    private JLabel produktLabel = new JLabel("Produkt:");
+    private JLabel produktNummerLabel = new JLabel("Produktnummer:");
+    private JLabel einzelpreisLabel = new JLabel("Einzelpreis:");
+    private JLabel mengeLabel = new JLabel("Menge:");
+    private JLabel summeLabel = new JLabel("Summe:");
+    private static JTextField kategorieField = new JTextField();
+    private static JTextField produktField = new JTextField();
+    private static JTextField produktNummerField = new JTextField();
+    private static JTextField einzelpreisField = new JTextField();
+    private static JTextField mengeField = new JTextField();
+    private static JTextField summeField = new JTextField();
+    private JPanel panelButtons = new JPanel();
+    private JButton stornoButton = new JButton("Storno");
+    private JButton produktnummerButton = new JButton("Produktnummer");
+    private JButton rabattButton = new JButton("Rabatt");
+    private JButton verkaufAbbrechenButton = new JButton("Verkauf abbrechen");
 
     public Artikelinformation() {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -150,6 +151,13 @@ public class Artikelinformation extends JPanel {
         this.add(artikelPanel);
         this.add(Box.createRigidArea(new Dimension(0, 5)));
         this.add(panelButtons);
+    }
+    
+    public static void setArtikelInformationen(Artikel artikel){
+        kategorieField.setText(artikel.getKategorie().getBezeichnung());
+        produktField.setText(artikel.getName());
+        produktNummerField.setText(String.valueOf(artikel.getArtikelnummer()));
+        einzelpreisField.setText(String.valueOf(artikel.getPreis()));
     }
 
 }
