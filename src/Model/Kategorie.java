@@ -20,7 +20,9 @@ public class Kategorie {
         this.kategorieId = kategorieId;
         this.bezeichnung = bezeichnung;
     }
-    
-    
+
+    public String getBezeichnung() {
+        return bezeichnung;
+    }
     
 }
