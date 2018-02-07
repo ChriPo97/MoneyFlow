@@ -152,7 +152,9 @@ public class Ziffernblock extends JPanel {
                         )
                         .addGroup(ziffernBlockGroupLayout.createSequentialGroup()
                                 .addComponent(produktNummerLabel)
+                                .addGap(20)
                                 .addComponent(mengeLabel)
+                                .addGap(20)
                                 .addComponent(rabattLabel)
                         )
                         .addGroup(ziffernBlockGroupLayout.createSequentialGroup()
@@ -184,6 +186,7 @@ public class Ziffernblock extends JPanel {
     }
 
     public static void setModeProduktnummer() {
+        preisField.setText("");
         mode = Mode.PRODUKTNUMMER;
         produktNummerLabel.setFont(new Font("Arial", 1, produktNummerLabel.getFont().getSize()));
         mengeLabel.setFont(new Font("Arial", 0, mengeLabel.getFont().getSize()));
@@ -191,6 +194,7 @@ public class Ziffernblock extends JPanel {
     }
 
     public static void setModeMenge() {
+        preisField.setText("");
         mode = Mode.MENGE;
         produktNummerLabel.setFont(new Font("Arial", 0, produktNummerLabel.getFont().getSize()));
         mengeLabel.setFont(new Font("Arial", 1, mengeLabel.getFont().getSize()));
@@ -198,6 +202,7 @@ public class Ziffernblock extends JPanel {
     }
 
     public static void setModeRabatt() {
+        preisField.setText("");
         mode = Mode.RABATT;
         produktNummerLabel.setFont(new Font("Arial", 0, produktNummerLabel.getFont().getSize()));
         mengeLabel.setFont(new Font("Arial", 0, mengeLabel.getFont().getSize()));

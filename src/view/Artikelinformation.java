@@ -5,6 +5,7 @@
  */
 package view;
 
+import Controller.Einkaufsmanager;
 import model.Artikel;
 import java.awt.Color;
 import java.awt.Component;
@@ -102,11 +103,17 @@ public class Artikelinformation extends JPanel {
         verkaufAbbrechenButton.setFont(new Font("Arial", 0, 24));
         verkaufAbbrechenButton.setForeground(new java.awt.Color(255, 51, 51));
         kategorieField.setEditable(false);
+        kategorieField.setBackground(Color.WHITE);
         produktField.setEditable(false);
+        produktField.setBackground(Color.WHITE);
         produktNummerField.setEditable(false);
+        produktNummerField.setBackground(Color.WHITE);
         einzelpreisField.setEditable(false);
+        einzelpreisField.setBackground(Color.WHITE);
         mengeField.setEditable(false);
+        mengeField.setBackground(Color.WHITE);
         summeField.setEditable(false);
+        summeField.setBackground(Color.WHITE);
         GroupLayout artikelPanelGroupLayout = new GroupLayout(artikelPanel);
         artikelPanelGroupLayout.setAutoCreateGaps(true);
         artikelPanel.setLayout(artikelPanelGroupLayout);
@@ -196,6 +203,8 @@ public class Artikelinformation extends JPanel {
         produktField.setText(artikel.getName());
         produktNummerField.setText(String.valueOf(artikel.getArtikelnummer()));
         einzelpreisField.setText(String.valueOf(artikel.getPreis()));
+        mengeField.setText(String.valueOf(artikel.getMenge()));
+        summeField.setText(String.valueOf(artikel.getMenge() * artikel.getPreis()));
     }
-
+ 
 }

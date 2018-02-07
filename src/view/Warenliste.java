@@ -9,6 +9,8 @@ import Controller.Einkaufsmanager;
 import model.Artikel;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.Box;
@@ -19,7 +21,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import model.Kategorie;
 
 /**
  *
@@ -27,14 +31,20 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Warenliste extends JPanel {
 
-    private JTextField summe = new JTextField();
-    private JTextField mwst = new JTextField();
+    private static JTextField summe = new JTextField("Summe:");
+    private static JTextField mwst = new JTextField("MwSt:");
     private static JTable table;
     private JScrollPane scrollpaneTable;
-    private static DefaultTableModel tableModel = new DefaultTableModel();
+    private static DefaultTableModel tableModel = new DefaultTableModel() {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false;
+        }
+    };
 
     public Warenliste() {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.setBorder(new EmptyBorder(new Insets(0, 10, 10, 10)));
         initComponents();
     }
 
@@ -44,10 +54,12 @@ public class Warenliste extends JPanel {
         summe.setPreferredSize(new Dimension(Short.MAX_VALUE, 70));
         summe.setMaximumSize(new Dimension(Short.MAX_VALUE, 70));
         summe.setBackground(Color.WHITE);
+        summe.setFont(new Font("Ariel", 0, 30));
         mwst.setPreferredSize(new Dimension(Short.MAX_VALUE, 40));
         mwst.setMaximumSize(new Dimension(Short.MAX_VALUE, 40));
         mwst.setEditable(false);
         mwst.setBackground(Color.WHITE);
+        mwst.setFont(new Font("Ariel", 0, 16));
 
         //Erstellen des Table Models und der JTabel
         tableModel.addColumn("Produkt");
@@ -64,8 +76,15 @@ public class Warenliste extends JPanel {
         };
         scrollpaneTable = new JScrollPane(table);
         table.getTableHeader().setReorderingAllowed(false);
-        String[] test = {"Banane", "Obst", "0%", "kg", "1,20â‚¬", "0,23â‚¬"};
-        tableModel.addRow(test);
+        
+        
+        //Dummy Daten
+        Artikel artikel = new Artikel("Banane", new Kategorie(0, "Obst"), 0, 2, Artikel.Einheit.GEWICHT, (float) 0.19, 2);
+        Einkaufsmanager.getEinkaufskorb().add(artikel);
+        addArtikel(artikel);
+        
+        
+        
         table.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -78,8 +97,9 @@ public class Warenliste extends JPanel {
             }
 
         });
-        table.setCellSelectionEnabled(true);
-        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        
+        //table.setCellSelectionEnabled(true);
+        //table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         //HinzufÃ¼gen der Scroll Pane mit der Table
         this.add(Box.createRigidArea(new Dimension(0, 5)));
@@ -88,16 +108,17 @@ public class Warenliste extends JPanel {
         this.add(summe);
         this.add(Box.createRigidArea(new Dimension(0, 5)));
         this.add(mwst);
-        this.add(Box.createRigidArea(new Dimension(0, 12)));
     }
 
     public void addArtikel(Artikel artikel) {
+        updateSummeField();
         tableModel.addRow(new String[]{artikel.getName(), artikel.getKategorie().getBezeichnung(),
             "0%", artikel.getEinheit().toString(), String.valueOf(artikel.getPreis()),
             String.valueOf(artikel.getMehrwertsteuersatz())});
     }
 
     public static void removeArtikel(Artikel artikel) {
+        updateSummeField();
         for (int row = 0; row < tableModel.getRowCount(); row++) {
             if (tableModel.getValueAt(row, 0) == artikel.getName()) {
                 tableModel.removeRow(row);
@@ -109,6 +130,10 @@ public class Warenliste extends JPanel {
     public static int getLastSelectedTableRow() {
         int rowIndex = table.getSelectedRow();
         return rowIndex;
+    }
+    
+    public static void updateSummeField() {
+        summe.setText("Summe: " + Einkaufsmanager.getGesamtpreis());
     }
 
 }

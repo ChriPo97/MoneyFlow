@@ -102,7 +102,7 @@ public class Einkaufsmanager {
      *
      * @return Der Gesamtpreis des Einkaufskorbs
      */
-    public int getGesamtpreis() {
+    public static int getGesamtpreis() {
         int gesamtpreis = 0;
         for (Artikel a : einkaufskorb) {
             gesamtpreis += a.getPreis();
