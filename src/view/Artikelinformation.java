@@ -14,6 +14,7 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Locale;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -50,6 +51,7 @@ public class Artikelinformation extends JPanel {
     private JPanel panelButtons = new JPanel();
     private JButton stornoButton = new JButton("Storno");
     private JButton produktnummerButton = new JButton("Produktnummer");
+    private JButton mengeButton = new JButton("Menge");
     private JButton rabattButton = new JButton("Rabatt");
     private JButton verkaufAbbrechenButton = new JButton("Verkauf abbrechen");
 
@@ -74,7 +76,29 @@ public class Artikelinformation extends JPanel {
         });
         
         produktnummerButton.setFont(new Font("Arial", 0, 24));
+        produktnummerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Ziffernblock.setModeProduktnummer();
+            }
+        });
+        
+        mengeButton.setFont(new Font("Arial", 0, 24));
+        mengeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Ziffernblock.setModeMenge();
+            }
+        });
+        
         rabattButton.setFont(new Font("Arial", 0, 24));
+        rabattButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Ziffernblock.setModeRabatt();
+            }
+        });
+        
         verkaufAbbrechenButton.setFont(new Font("Arial", 0, 24));
         verkaufAbbrechenButton.setForeground(new java.awt.Color(255, 51, 51));
         kategorieField.setEditable(false);
@@ -146,12 +170,14 @@ public class Artikelinformation extends JPanel {
                 mengeField, summeField);
 
         //Panel mit den Buttons
-        panelButtons.setLayout(new GridLayout(6, 0));
+        panelButtons.setLayout(new GridLayout(7, 0));
         stornoButton.setMaximumSize(new Dimension(Integer.MAX_VALUE, stornoButton.getMinimumSize().height * 2));
         panelButtons.add(stornoButton);
         panelButtons.add(Box.createRigidArea(new Dimension(0, stornoButton.getMinimumSize().height * 2)));
         produktnummerButton.setMaximumSize(new Dimension(Integer.MAX_VALUE, produktnummerButton.getMinimumSize().height * 2));
         panelButtons.add(produktnummerButton);
+        mengeButton.setMaximumSize(new Dimension(Integer.MAX_VALUE, mengeButton.getMinimumSize().height * 2));
+        panelButtons.add(mengeButton);
         rabattButton.setMaximumSize(new Dimension(Integer.MAX_VALUE, rabattButton.getMinimumSize().height * 2));
         panelButtons.add(rabattButton);
         panelButtons.add(Box.createRigidArea(new Dimension(0, stornoButton.getMinimumSize().height * 2)));

@@ -7,6 +7,7 @@ package view;
 
 import Controller.Einkaufsmanager;
 import model.Artikel;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -42,9 +43,11 @@ public class Warenliste extends JPanel {
         summe.setEditable(false);
         summe.setPreferredSize(new Dimension(Short.MAX_VALUE, 70));
         summe.setMaximumSize(new Dimension(Short.MAX_VALUE, 70));
+        summe.setBackground(Color.WHITE);
         mwst.setPreferredSize(new Dimension(Short.MAX_VALUE, 40));
         mwst.setMaximumSize(new Dimension(Short.MAX_VALUE, 40));
         mwst.setEditable(false);
+        mwst.setBackground(Color.WHITE);
 
         //Erstellen des Table Models und der JTabel
         tableModel.addColumn("Produkt");
@@ -61,7 +64,7 @@ public class Warenliste extends JPanel {
         };
         scrollpaneTable = new JScrollPane(table);
         table.getTableHeader().setReorderingAllowed(false);
-        String[] test = {"Banane", "Obst", "0%", "kg", "1,20€", "0,23€"};
+        String[] test = {"Banane", "Obst", "0%", "kg", "1,20â‚¬", "0,23â‚¬"};
         tableModel.addRow(test);
         table.addMouseListener(new MouseAdapter() {
             @Override
@@ -78,7 +81,7 @@ public class Warenliste extends JPanel {
         table.setCellSelectionEnabled(true);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        //Hinzufügen der Scroll Pane mit der Table
+        //HinzufÃ¼gen der Scroll Pane mit der Table
         this.add(Box.createRigidArea(new Dimension(0, 5)));
         this.add(scrollpaneTable);
         this.add(Box.createRigidArea(new Dimension(0, 5)));
