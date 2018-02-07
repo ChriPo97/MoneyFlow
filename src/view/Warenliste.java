@@ -5,8 +5,8 @@
  */
 package view;
 
-import Controller.Einkaufmanager;
-import Model.Artikel;
+import Controller.Einkaufsmanager;
+import model.Artikel;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -67,7 +67,7 @@ public class Warenliste extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 int row = table.rowAtPoint(e.getPoint());
-                for (Artikel artikel : Einkaufmanager.getEinkaufskorb()) {
+                for (Artikel artikel : Einkaufsmanager.getEinkaufskorb()) {
                     if (tableModel.getValueAt(row, 0).equals(artikel.getName())) {
                         Artikelinformation.setArtikelInformationen(artikel);
                     }
@@ -90,7 +90,7 @@ public class Warenliste extends JPanel {
 
     public void addArtikel(Artikel artikel) {
         tableModel.addRow(new String[]{artikel.getName(), artikel.getKategorie().getBezeichnung(),
-            "0%", String.valueOf(artikel.isEinheit()), String.valueOf(artikel.getPreis()),
+            "0%", artikel.getEinheit().toString(), String.valueOf(artikel.getPreis()),
             String.valueOf(artikel.getMehrwertsteuersatz())});
     }
 
