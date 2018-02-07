@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -25,8 +26,11 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Warenliste extends JPanel {
 
-    JTable table;
-    DefaultTableModel tableModel = new DefaultTableModel();
+    private JTextField summe = new JTextField();
+    private JTextField mwst = new JTextField();
+    private static JTable table;
+    private JScrollPane scrollpaneTable;
+    private static DefaultTableModel tableModel = new DefaultTableModel();
 
     public Warenliste() {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -35,11 +39,9 @@ public class Warenliste extends JPanel {
 
     private void initComponents() {
 
-        JTextField summe = new JTextField();
         summe.setEditable(false);
         summe.setPreferredSize(new Dimension(Short.MAX_VALUE, 70));
         summe.setMaximumSize(new Dimension(Short.MAX_VALUE, 70));
-        JTextField mwst = new JTextField();
         mwst.setPreferredSize(new Dimension(Short.MAX_VALUE, 40));
         mwst.setMaximumSize(new Dimension(Short.MAX_VALUE, 40));
         mwst.setEditable(false);
@@ -57,11 +59,10 @@ public class Warenliste extends JPanel {
                 return String.class;
             }
         };
+        scrollpaneTable = new JScrollPane(table);
         table.getTableHeader().setReorderingAllowed(false);
-        JScrollPane scrollpaneTable = new JScrollPane(table);
         String[] test = {"Banane", "Obst", "0%", "kg", "1,20€", "0,23€"};
         tableModel.addRow(test);
-
         table.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -74,6 +75,8 @@ public class Warenliste extends JPanel {
             }
 
         });
+        table.setCellSelectionEnabled(true);
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         //Hinzufügen der Scroll Pane mit der Table
         this.add(Box.createRigidArea(new Dimension(0, 5)));
@@ -91,13 +94,18 @@ public class Warenliste extends JPanel {
             String.valueOf(artikel.getMehrwertsteuersatz())});
     }
 
-    public void removeArtikel(Artikel artikel) {
+    public static void removeArtikel(Artikel artikel) {
         for (int row = 0; row < tableModel.getRowCount(); row++) {
             if (tableModel.getValueAt(row, 0) == artikel.getName()) {
                 tableModel.removeRow(row);
                 return;
             }
         }
+    }
+
+    public static int getLastSelectedTableRow() {
+        int rowIndex = table.getSelectedRow();
+        return rowIndex;
     }
 
 }

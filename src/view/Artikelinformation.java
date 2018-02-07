@@ -12,6 +12,9 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -61,6 +64,15 @@ public class Artikelinformation extends JPanel {
         //Artikel Panel mit den Artikelinformationen
         stornoButton.setFont(new Font("Arial", 0, 24));
         stornoButton.setForeground(new java.awt.Color(255, 51, 51));
+        stornoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(Warenliste.getLastSelectedTableRow() >= 0) {
+                    //Warenliste.removeArtikel(null);
+                }
+            }
+        });
+        
         produktnummerButton.setFont(new Font("Arial", 0, 24));
         rabattButton.setFont(new Font("Arial", 0, 24));
         verkaufAbbrechenButton.setFont(new Font("Arial", 0, 24));
