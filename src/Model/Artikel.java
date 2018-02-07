@@ -12,37 +12,38 @@ package Model;
  */
 public class Artikel {
 
-    private String name;
+    public static enum Einheit {NUMMER, GEWICHT}; 
+    private final String name;
     
-    private Kategorie kategorie;
+    private final Kategorie kategorie;
     
-    private int artikelnummer;
+    private final int artikelnummer;
     
     //Preise werden in Cent angegeben und bei Anzeige formatiert
-    private int preis;
-    
-    //true fuer zaehlbare Einheiten, false fuer Einheiten mit Gewicht
-    private boolean einheit;
-    
-    private float mehrwertsteuersatz;
+    private final int preis;
+    private int einheitspreis;
+    private final Einheit einheit;
+    private final float mehrwertsteuersatz;
+    private final float menge;
 
     /**
      * Konstruktor fuer einen Artikel.
-     * @param name
-     * @param kategorie
-     * @param artikelnummer
-     * @param preis
-     * @param einheit
-     * @param mehrwertsteuersatz 
+     * @param name Name des Artikels
+     * @param kategorie Die Kategorie zudem der Artikel gehoert
+     * @param artikelnummer Die Nummer des Artikels - Entspricht der ID aus der Datenbank
+     * @param einheitspreis Der Preis fuer eine Einheit - Also fuer ein Stueck oder 1kg
+     * @param einheit Ob der Artikel in Stueck oder Kilo abgerechnet wird.
+     * @param mehrwertsteuersatz Der Mehrwertsteuersatz des Artikels von 100% ausgehend, z.B. 1,09
+     * @param menge Die Menge des Artikels im Einkauf
      */
-    public Artikel(String name, Kategorie kategorie, int artikelnummer, int preis, boolean einheit, float mehrwertsteuersatz) {
-        
+    public Artikel(String name, Kategorie kategorie, int artikelnummer, int einheitspreis, Einheit einheit, float mehrwertsteuersatz, float menge) {
         this.name = name;
         this.kategorie = kategorie;
         this.artikelnummer = artikelnummer;
-        this.preis = preis;
+        this.preis = einheitspreis;
         this.einheit = einheit;
         this.mehrwertsteuersatz = mehrwertsteuersatz;
+        this.menge = menge;
         
     }
 
@@ -58,41 +59,32 @@ public class Artikel {
         return artikelnummer;
     }
 
+    /**
+     * Berechnet den Preis fuer dies Artikel-Objekt.
+     * @return Der Preis fuer diesen Eintrag. Entspricht (@code menge*einheitspreis) gerundet zum naechten Nachbarn.
+     */
     public int getPreis() {
-        return preis;
+        //TODO immer aufrunden?
+        return Math.round(menge*einheitspreis);
     }
 
-    public boolean isEinheit() {
+    public Einheit getEinheit() {
         return einheit;
     }
 
     public float getMehrwertsteuersatz() {
         return mehrwertsteuersatz;
+    }    
+
+    public int getEinheitspreis() {
+        return einheitspreis;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    @Override
+    public String toString() {
+        return super.toString(); //To change body of generated methods, choose Tools | Templates.
     }
-
-    public void setKategorie(Kategorie kategorie) {
-        this.kategorie = kategorie;
-    }
-
-    public void setArtikelnummer(int artikelnummer) {
-        this.artikelnummer = artikelnummer;
-    }
-
-    public void setPreis(int preis) {
-        this.preis = preis;
-    }
-
-    public void setEinheit(boolean einheit) {
-        this.einheit = einheit;
-    }
-
-    public void setMehrwertsteuersatz(float mehrwertsteuersatz) {
-        this.mehrwertsteuersatz = mehrwertsteuersatz;
-    }
+    
     
     
     
