@@ -5,7 +5,7 @@
  */
 package view;
 
-import controller.Einkaufmanager;
+import Controller.Einkaufmanager;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UIManager;
