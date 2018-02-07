@@ -5,8 +5,8 @@
  */
 package view;
 
-import controller.Einkaufmanager;
-import model.Artikel;
+import Controller.Einkaufmanager;
+import Model.Artikel;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
