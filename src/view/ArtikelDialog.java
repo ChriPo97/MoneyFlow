@@ -165,11 +165,8 @@ public class ArtikelDialog extends JDialog {
             public void valueChanged(TreeSelectionEvent e) {
                 for (Artikel artikel : Einkaufsmanager.getEinkaufskorb()) {
                     if (artikel.getName() == e.getPath().getLastPathComponent().toString()) {
-                        kategorieComboBox.setEnabled(false);
                         produktField.setText(artikel.getName());
-                        einheitComboBox.setEnabled(false);
                         einzelpreisField.setText(String.valueOf(artikel.getPreis()));
-                        mwstComboBox.setEnabled(false);
                     }
                 }
             }

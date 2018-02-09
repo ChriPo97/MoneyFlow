@@ -22,6 +22,7 @@ public class MenuBar extends JMenuBar{
     };
     JMenu datei = new JMenu("Datei");
     JMenu tools = new JMenu("Tools");
+    JMenu datenbank = new JMenu("Datenbank");
     JMenuItem addArtikel = new JMenuItem("Artikel hinzufügen");
     JMenuItem changeArtikel = new JMenuItem("Artikel ändern");
     JMenuItem deleteArtikel = new JMenuItem("Artikel löschen");
@@ -47,9 +48,10 @@ public class MenuBar extends JMenuBar{
                 ArtikelDialog artikelDialog = new ArtikelDialog(ArtikelMode.DELETE);
             }
         });
-        tools.add(addArtikel);
-        tools.add(changeArtikel);
-        tools.add(deleteArtikel);
+        datenbank.add(addArtikel);
+        datenbank.add(changeArtikel);
+        datenbank.add(deleteArtikel);
+        tools.add(datenbank);
         this.add(datei);
         this.add(tools);
         this.add(hilfe);
