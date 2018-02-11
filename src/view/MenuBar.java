@@ -20,16 +20,18 @@ public class MenuBar extends JMenuBar{
     public enum ArtikelMode {
         ADD, CHANGE, DELETE
     };
-    JMenu datei = new JMenu("Datei");
-    JMenu tools = new JMenu("Tools");
-    JMenu datenbank = new JMenu("Datenbank");
-    JMenuItem addArtikel = new JMenuItem("Artikel hinzufügen");
-    JMenuItem changeArtikel = new JMenuItem("Artikel ändern");
-    JMenuItem deleteArtikel = new JMenuItem("Artikel löschen");
-    JMenu hilfe = new JMenu("Hilfe");
-    JMenu ueber = new JMenu("Über");
+    private JMenu datei = new JMenu("Datei");
+    private JMenu tools = new JMenu("Tools");
+    private JMenu datenbank = new JMenu("Datenbank");
+    private JMenuItem addArtikel = new JMenuItem("Artikel hinzufügen");
+    private JMenuItem changeArtikel = new JMenuItem("Artikel ändern");
+    private JMenuItem deleteArtikel = new JMenuItem("Artikel löschen");
+    private JMenu hilfe = new JMenu("Hilfe");
+    private JMenu ueber = new JMenu("Über");
     
     public MenuBar() {
+        
+        //Listener für die MenutItems
         addArtikel.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

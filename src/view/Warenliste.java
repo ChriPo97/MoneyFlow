@@ -15,12 +15,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import model.Kategorie;
@@ -77,14 +75,7 @@ public class Warenliste extends JPanel {
         scrollpaneTable = new JScrollPane(table);
         table.getTableHeader().setReorderingAllowed(false);
         
-        
-        //Dummy Daten
-        Artikel artikel = new Artikel("Banane", new Kategorie(0, "Obst"), 0, 2, Artikel.Einheit.GEWICHT, (float) 0.19, 2);
-        Einkaufsmanager.getEinkaufskorb().add(artikel);
-        addArtikel(artikel);
-        
-        
-        
+        //MousListener für die Table - Artikelinformationen werden angezeigt
         table.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -110,13 +101,15 @@ public class Warenliste extends JPanel {
         this.add(mwst);
     }
 
-    public void addArtikel(Artikel artikel) {
+    //Funktion zum Hinzufügen eines Artikel in die Table
+    public static void addArtikel(Artikel artikel) {
         updateSummeField();
         tableModel.addRow(new String[]{artikel.getName(), artikel.getKategorie().getBezeichnung(),
             "0%", artikel.getEinheit().toString(), String.valueOf(artikel.getPreis()),
-            String.valueOf(artikel.getMehrwertsteuersatz())});
+            String.valueOf(artikel.getMehrwertsteuerklasse())});
     }
 
+    //Funktion zum Löschen eines Artikels in der Table
     public static void removeArtikel(Artikel artikel) {
         updateSummeField();
         for (int row = 0; row < tableModel.getRowCount(); row++) {
@@ -127,11 +120,13 @@ public class Warenliste extends JPanel {
         }
     }
 
+    //Funktion zum Suchen der zuletzt ausgewählten Reihe in der Table
     public static int getLastSelectedTableRow() {
         int rowIndex = table.getSelectedRow();
         return rowIndex;
     }
     
+    //Funktion zum Updaten des Summe Feldes
     public static void updateSummeField() {
         summe.setText("Summe: " + Einkaufsmanager.getGesamtpreis());
     }

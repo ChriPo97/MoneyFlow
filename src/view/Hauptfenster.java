@@ -6,17 +6,9 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.Button;
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.awt.event.HierarchyBoundsListener;
 import java.awt.event.HierarchyEvent;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 
 /**
@@ -53,17 +45,20 @@ public class Hauptfenster extends JFrame {
 //        this.add();
     }
 
+    //Funktion zum setzen einer neuen Größe für alle PAnels im Hauptfenster
     private void resize() {
         artikelinformation.setPreferredSize(new Dimension((int) (this.getSize().width * 0.25), this.getSize().height));
         warenliste.setPreferredSize(new Dimension((int) (this.getSize().width * 0.5), this.getSize().height));
         ziffernblock.setPreferredSize(new Dimension((int) (this.getSize().width * 0.25), this.getSize().height));
     }
 
+    //Hinzufügen der MenuBar
     private void setMenuBar() {
         MenuBar mb = new MenuBar();
         this.setJMenuBar(mb);
     }
 
+    //Ein Listener zum Resizen des Hauptfensters
     private void setFrameMovedListener() {
         this.getContentPane().addHierarchyBoundsListener(new HierarchyBoundsListener() {
             @Override

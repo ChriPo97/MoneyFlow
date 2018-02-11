@@ -10,7 +10,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Artikel;
 
-
 /**
  *
  * @author Josua
@@ -36,7 +35,6 @@ public class DBVerbindung {
         artikelTest();
         verbindungSchliessen();
 
-   
     }
 
 //Verbindung zur Datenbank herstellen
@@ -78,6 +76,22 @@ public class DBVerbindung {
             Logger.getLogger(DBVerbindung.class.getName()).log(Level.SEVERE, null, ex);
         }
         return artikelID;
+    }
+
+    // zu gegebenem ArtikelID Artikelnamen ausgeben   
+    public static String artikelIDtoArtikelName(int artikelid) {
+        String artikelName = "";
+        try {
+            ps = con.prepareStatement("SELECT Artikelname FROM Artikel WHERE AID = ?");
+            ps.setInt(1, artikelid);
+            rs = ps.executeQuery();
+            rs.next();
+            artikelName = rs.getString("Artikelname");
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBVerbindung.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return artikelName;
     }
 
     //zu gegebenem Artikelnamen Kategorie ausgeben
@@ -208,7 +222,7 @@ public class DBVerbindung {
                     + "artikelnummer, "
                     + "preis, "
                     + "einheit, "
-                   // + "mehrwersteuerklasse, "
+                    // + "mehrwersteuerklasse, "
                     + "menge) "
                     + "VALUES (?,?,?,?,?,?)");
             ps.setString(1, artikelname);
@@ -224,7 +238,7 @@ public class DBVerbindung {
         }
     }
 
-        public static void artikelTest() {
+    public static void artikelTest() {
         String artikelname = "Erdbeere";
         String kategorie = "Obst";
         int artiklenummer = 123459648;
@@ -255,5 +269,5 @@ public class DBVerbindung {
             Logger.getLogger(DBVerbindung.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
 }

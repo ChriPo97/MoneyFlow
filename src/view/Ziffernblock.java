@@ -5,6 +5,7 @@
  */
 package view;
 
+import Controller.DBVerbindung;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -22,6 +23,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import model.Artikel;
+import model.Kategorie;
 
 /**
  *
@@ -109,6 +112,14 @@ public class Ziffernblock extends JPanel {
         enter.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(mode == Mode.PRODUKTNUMMER) {
+                    DBVerbindung.verbinden();
+                    int artikelID = Integer.valueOf(preisField.getText());
+                    String artikelName = DBVerbindung.artikelIDtoArtikelName(artikelID);
+                    Artikel artikel = new Artikel(artikelName, new Kategorie(1, DBVerbindung.artikelNametoKategorie(artikelName)), artikelID, DBVerbindung.artikelNametoPreis(artikelName), Artikel.Einheit.NUMMER, DBVerbindung.artikelNametoMehrwersteuerklasse(artikelName).toCharArray()[0], 1);
+                    Warenliste.addArtikel(artikel);
+                    DBVerbindung.verbindungSchliessen();
+                }
                 preisField.setText("");
             }
         });

@@ -28,18 +28,20 @@ import model.Artikel;
 
 /**
  *
- * @author Christoph
+ * @author Christoph 
+ * Klasse zur Erstellunbg eines Dialog fensters für das 
+ * Hinzufügen/Ändern/Löschen eines Artikels in der Datenbank
  */
 public class ArtikelDialog extends JDialog {
 
-    JPanel dialogPanel = new JPanel();
-    JPanel artikelPanel = new JPanel();
-    JPanel listPanel = new JPanel();
-    GridLayout listLayout;
-    JScrollPane listPane;
-    JTree tree;
-    GroupLayout artikelPanelGroupLayout;
-    GridLayout dialogLayout;
+    private JPanel dialogPanel = new JPanel();
+    private JPanel artikelPanel = new JPanel();
+    private JPanel listPanel = new JPanel();
+    private GridLayout listLayout;
+    private JScrollPane listPane;
+    private JTree tree;
+    private GroupLayout artikelPanelGroupLayout;
+    private GridLayout dialogLayout;
     private JLabel kategorieLabel = new JLabel("Kategorie:");
     private JLabel produktLabel = new JLabel("Produkt:");
     private JLabel einheitLabel = new JLabel("Einheit:");
@@ -57,6 +59,7 @@ public class ArtikelDialog extends JDialog {
         initComponents();
         dialogPanel.setBorder(new EmptyBorder(new Insets(10, 10, 10, 10)));
 
+        //Die Größe des Fensters wird anhand des Modes festgelegt
         if (artikelMode == MenuBar.ArtikelMode.ADD) {
             this.setMinimumSize(new Dimension(300, 250));
             modeButton.setText("Artikel hinzufügen");
@@ -64,7 +67,7 @@ public class ArtikelDialog extends JDialog {
         if (artikelMode == MenuBar.ArtikelMode.CHANGE) {
             this.setMinimumSize(new Dimension(600, 250));
             modeButton.setText("Artikel ändern");
-            initList();
+            initTree();
         }
         if (artikelMode == MenuBar.ArtikelMode.DELETE) {
             this.setMinimumSize(new Dimension(600, 250));
@@ -74,7 +77,7 @@ public class ArtikelDialog extends JDialog {
             einheitComboBox.setEnabled(false);
             einzelpreisField.setEnabled(false);
             mwstComboBox.setEnabled(false);
-            initList();
+            initTree();
         }
 
         this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -84,6 +87,7 @@ public class ArtikelDialog extends JDialog {
 
     }
 
+    //Initiert alle Komponenten des Dialogfensters, außer den Tree
     private void initComponents() {
         dialogLayout = new GridLayout(1, 2);
         dialogPanel.setLayout(dialogLayout);
@@ -152,7 +156,8 @@ public class ArtikelDialog extends JDialog {
         this.add(dialogPanel);
     }
 
-    private void initList() {
+    //Initiert des Tree mit allen Artikeln
+    private void initTree() {
         DefaultMutableTreeNode top = new DefaultMutableTreeNode("Artikel");
         DefaultMutableTreeNode obst = new DefaultMutableTreeNode("Obst");
         DefaultMutableTreeNode banane = new DefaultMutableTreeNode("Banane");
