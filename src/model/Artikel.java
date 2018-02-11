@@ -22,9 +22,10 @@ public class Artikel {
     private float rabatt = 1;
 
     //Preise werden in Cent angegeben und bei Anzeige formatiert
-    private int einheitspreis;
+    private final int einheitspreis;
     private final Einheit einheit;
-    private final float mehrwertsteuersatz;
+//    private final float mehrwertsteuersatz;
+    private final char mehrwertsteuerklasse;
     // Menge wird in Stueck angegeben oder gramm fuer Gewichtsangaben
     private int menge;
 
@@ -38,18 +39,18 @@ public class Artikel {
      * @param einheitspreis Der Preis fuer eine Einheit - Also fuer ein Stueck
      * oder 1,000g
      * @param einheit Ob der Artikel in Stueck oder Gewicht abgerechnet wird.
-     * @param mehrwertsteuersatz Der Mehrwertsteuersatz des Artikels von 100%
-     * ausgehend, z.B. 1,09
+     * @param mehrwertsteuerklasse Die Mehrwertsteuerklasse des Artikels. Ein einzelner (@code char) wie z.B. 'A'
      * @param menge Die Menge des Artikels im Einkauf
      */
-    public Artikel(String name, Kategorie kategorie, int artikelnummer, int einheitspreis, Einheit einheit, float mehrwertsteuersatz, int menge) {
+    public Artikel(String name, Kategorie kategorie, int artikelnummer, int einheitspreis, Einheit einheit, char mehrwertsteuerklasse, int menge) {
         this.name = name;
         this.kategorie = kategorie;
         this.artikelnummer = artikelnummer;
         this.einheitspreis = einheitspreis;
         this.einheit = einheit;
-        this.mehrwertsteuersatz = mehrwertsteuersatz;
+        this.mehrwertsteuerklasse = mehrwertsteuerklasse;
         this.menge = menge;
+        
     }
 
     public String getName() {
@@ -76,15 +77,15 @@ public class Artikel {
      */
     public int getPreis() {
         //TODO immer aufrunden?
-        return Math.round(menge * einheitspreis * rabatt);
+        return Math.round((this.einheit == Artikel.Einheit.GEWICHT ? menge / 1000 : menge) * einheitspreis * rabatt);
     }
 
     public Einheit getEinheit() {
         return einheit;
     }
 
-    public float getMehrwertsteuersatz() {
-        return mehrwertsteuersatz;
+    public float getMehrwertsteuerklasse() {
+        return mehrwertsteuerklasse;
     }
 
     public int getEinheitspreis() {
@@ -104,6 +105,19 @@ public class Artikel {
     @Override
     public String toString() {
         return name;
+    }
+    
+    public String getMengeFormatiert() {
+        
+        String zeichen = "%dstk";
+        if (einheit == Artikel.Einheit.GEWICHT) {
+            if (menge > 999) {
+                zeichen = "%dkg";
+            } else {
+                zeichen = "%dg";
+            }
+        }
+        return "todo";
     }
 
 }

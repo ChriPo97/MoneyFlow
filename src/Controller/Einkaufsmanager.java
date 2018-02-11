@@ -18,14 +18,19 @@ import java.util.HashMap;
  */
 public class Einkaufsmanager {
 
+    //Aktuell nicht in Benutzung
     private HashMap artikelTabelle = new HashMap();
-    private static ArrayList<Artikel> einkaufskorb = new ArrayList<>();
+    private static final ArrayList<Artikel> einkaufskorb = new ArrayList<>();
+    
+    public static final HashMap<Character, Float> MWSTKLASSEN = new HashMap<>();
 
-    public Einkaufsmanager() {
+    private Einkaufsmanager() {
     }
 
     public void ladenDatenbank() {
         //TODO Josy soll mal die DB-Methoden machen LUL
+        MWSTKLASSEN.put('A', 1.19f);
+        MWSTKLASSEN.put('B', 1.07f);
     }
 
     /**
@@ -35,10 +40,10 @@ public class Einkaufsmanager {
      * @return (@code true) wenn der Artikel erfolgreich in der Datenbank
      * gefunden wurde, (@code false) wenn nicht.
      */
-    public boolean hinzufuegenArtikel(int id, int menge) {
+    public static boolean hinzufuegenArtikel(int id, int menge) {
 
         //Logik um aus der DB Artikel nach id zu holen
-        Artikel dummy = new Artikel("dummy", new Kategorie(-1, "dummy"), -1, 100, Artikel.Einheit.NUMMER, 1.09f, 10);
+        Artikel dummy = new Artikel("dummy", new Kategorie(-1, "dummy"), -1, 100, Artikel.Einheit.NUMMER, 'A', 10);
         // Ist der Artikel bereits enthalten wird die Menge addiert. Sonst wird der Artikel dem Einkaufskorb hinzugefuegt.
         boolean bereitsEnthalten = false;
         for (Artikel a : einkaufskorb) {
@@ -49,6 +54,7 @@ public class Einkaufsmanager {
         }
         if (!bereitsEnthalten) {
             //hinzufuegen eines neuen Artikels
+            einkaufskorb.add(dummy);
         }
         return false;
     }
@@ -58,7 +64,7 @@ public class Einkaufsmanager {
      *
      * @param artikel der Artikel der storniert werden soll.
      */
-    public void stornierenArtikel(Artikel artikel) {
+    public static void stornierenArtikel(Artikel artikel) {
         einkaufskorb.remove(artikel);
     }
 
@@ -66,7 +72,7 @@ public class Einkaufsmanager {
      * Entfernt den letzen Artikel aus dem Einkaufskorb. Ist der Einkaufskorb
      * leer passiert nichts.
      */
-    public void stornierenLetztenArtikel() {
+    public static void stornierenLetztenArtikel() {
 
         if (einkaufskorb.size() > 0) {
             einkaufskorb.remove(einkaufskorb.size() - 1);
@@ -76,7 +82,7 @@ public class Einkaufsmanager {
     /**
      * Storniert den Einkauf.
      */
-    public void stornierenEinkauf() {
+    public static void stornierenEinkauf() {
 
         einkaufskorb.clear();
     }
@@ -87,7 +93,7 @@ public class Einkaufsmanager {
      *
      * @return Ein Kassenbon-Objekt
      */
-    public Kassenbon abschliessenEinkauf() {
+    public static Kassenbon abschliessenEinkauf() {
 
         //Erstellt einen neue Liste und uebergibt sie einem Kassenbon. Danach wird der aktuelle Einkaufskorb geleert.
         ArrayList<Artikel> einkaufsbonkorb = new ArrayList<>();
