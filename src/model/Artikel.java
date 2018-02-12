@@ -12,7 +12,7 @@ package model;
 public class Artikel {
 
     public static enum Einheit {
-        NUMMER, GEWICHT
+        STÜCK, GEWICHT
     };
 
     private final String name;

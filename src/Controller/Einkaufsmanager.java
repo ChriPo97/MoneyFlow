@@ -43,7 +43,7 @@ public class Einkaufsmanager {
     public static boolean hinzufuegenArtikel(int id, int menge) {
 
         //Logik um aus der DB Artikel nach id zu holen
-        Artikel dummy = new Artikel("dummy", new Kategorie(-1, "dummy"), -1, 100, Artikel.Einheit.NUMMER, 'A', 10);
+        Artikel dummy = new Artikel("dummy", new Kategorie(-1, "dummy"), -1, 100, Artikel.Einheit.STÜCK, 'A', 10);
         // Ist der Artikel bereits enthalten wird die Menge addiert. Sonst wird der Artikel dem Einkaufskorb hinzugefuegt.
         boolean bereitsEnthalten = false;
         for (Artikel a : einkaufskorb) {

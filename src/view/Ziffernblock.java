@@ -117,7 +117,7 @@ public class Ziffernblock extends JPanel {
                     DBVerbindung.verbinden();
                     int artikelID = Integer.valueOf(preisField.getText());
                     String artikelName = DBVerbindung.artikelIDtoArtikelName(artikelID);
-                    Artikel artikel = new Artikel(artikelName, new Kategorie(1, DBVerbindung.artikelNametoKategorie(artikelName)), artikelID, DBVerbindung.artikelNametoPreis(artikelName), Artikel.Einheit.NUMMER, DBVerbindung.artikelNametoMehrwersteuerklasse(artikelName).toCharArray()[0], 1);
+                    Artikel artikel = new Artikel(artikelName, new Kategorie(1, DBVerbindung.artikelNametoKategorie(artikelName)), artikelID, DBVerbindung.artikelNametoPreis(artikelName), Artikel.Einheit.STÜCK, DBVerbindung.artikelNametoMehrwersteuerklasse(artikelName).toCharArray()[0], 1);
                     Warenliste.addArtikel(artikel);
                     Einkaufsmanager.hinzufuegenArtikel(artikelID, 1);
                     DBVerbindung.verbindungSchliessen();
