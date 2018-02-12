@@ -8,6 +8,9 @@ package Controller;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Artikel;
+import model.Artikel.Einheit;
+import model.Kategorie;
 
 /**
  *
@@ -31,8 +34,9 @@ public class DBVerbindung {
         //System.out.println(artikelNametoPreis("Mango"));
         //System.out.println(artikelNametoMenge("Mango"));
         //System.out.println(mehrwersteuerklassetoMehrwertsteuer("1"));
-        artikelAnlegen("Wodka", "Alkohol", 1000, "Stück", 1, 38);
-
+        //artikelAnlegen("Wodka", "Alkohol", 1000, "Stück", 1, 38);
+        Artikel a = getArtikelbyID(4);
+        System.out.println(a.getName());
         //artikelTest();
         verbindungSchliessen();
 
@@ -219,7 +223,6 @@ public class DBVerbindung {
     public static void artikelTest() {
         String artikelname = "Mango";
         String kategorie = "Obst";
-        int artiklenummer = 12323148;
         int preis = 70;
         String einheit = "Stück";
         int mwst = 2;
@@ -244,6 +247,45 @@ public class DBVerbindung {
         } catch (SQLException ex) {
             Logger.getLogger(DBVerbindung.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public static Artikel getArtikelbyID(int artikelID) {
+        String name = "";
+        Kategorie kategorie = null;
+        int preis = 0;
+        Einheit einheit = null;
+        char mehrwertsteuerklasse = 'A';
+        int menge = 0;
+
+        try {
+            ps = con.prepareStatement("SELECT * FROM Artikel WHERE AID = ?");
+            ps.setInt(1, artikelID);
+            rs = ps.executeQuery();
+            rs.next();
+            name = rs.getString("Artikelname");
+            kategorie = new Kategorie(1, rs.getString("Kategorie"));
+            preis = rs.getInt("Preis");
+            String tmp = rs.getString("Einheit");
+            if (tmp.equals("Stück")) {
+                einheit = Artikel.Einheit.STÜCK;
+            } else if (tmp.equals("Gewicht")) {
+                einheit = Artikel.Einheit.GEWICHT;
+            }
+            int mehrwertsteuerklasse2 = rs.getInt("Mehrwertsteuerklasse");
+            if (mehrwertsteuerklasse2 == 1) {
+                mehrwertsteuerklasse = 'A';
+            } else if (mehrwertsteuerklasse2 == 2) {
+                mehrwertsteuerklasse = 'B';
+            }
+
+            menge = rs.getInt("Menge");
+            rs.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DBVerbindung.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Artikel artikelObjekt = new Artikel(name, kategorie, artikelID, preis, einheit, mehrwertsteuerklasse, menge);
+        return artikelObjekt;
     }
 
 }
