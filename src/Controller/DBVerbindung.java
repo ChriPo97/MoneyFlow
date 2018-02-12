@@ -8,7 +8,6 @@ package Controller;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.Artikel;
 
 /**
  *
@@ -17,7 +16,7 @@ import model.Artikel;
 public class DBVerbindung {
 
     private static Connection con = null;
-    private static String url = "jdbc:sqlite:src/Controller/MoneyDB.db";
+    private static final String URL = "jdbc:sqlite:DB/MoneyDB.db";
     private static PreparedStatement ps;
     private static ResultSet rs;
 
@@ -29,10 +28,12 @@ public class DBVerbindung {
         //System.out.println(artikelNametoArtikelNummer("Bier"));
         //System.out.println(artikelNametoMehrwersteuerklasse("Apfel"));
         //System.out.println(artikelNametoEinheit("Bier"));
-        //System.out.println(artikelNametoPreis("Bier"));
+        //System.out.println(artikelNametoPreis("Mango"));
+        //System.out.println(artikelNametoMenge("Mango"));
         //System.out.println(mehrwersteuerklassetoMehrwertsteuer("1"));
+        artikelAnlegen("Wodka", "Alkohol", 1000, "Stück", 1, 38);
 
-        artikelTest();
+        //artikelTest();
         verbindungSchliessen();
 
     }
@@ -45,7 +46,7 @@ public class DBVerbindung {
             Logger.getLogger(DBVerbindung.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
-            con = DriverManager.getConnection(url);
+            con = DriverManager.getConnection(URL);
             System.out.println("Opened database successfully");
         } catch (SQLException ex) {
             Logger.getLogger(DBVerbindung.class.getName()).log(Level.SEVERE, null, ex);
@@ -78,22 +79,6 @@ public class DBVerbindung {
         return artikelID;
     }
 
-    // zu gegebenem ArtikelID Artikelnamen ausgeben   
-    public static String artikelIDtoArtikelName(int artikelid) {
-        String artikelName = "";
-        try {
-            ps = con.prepareStatement("SELECT Artikelname FROM Artikel WHERE AID = ?");
-            ps.setInt(1, artikelid);
-            rs = ps.executeQuery();
-            rs.next();
-            artikelName = rs.getString("Artikelname");
-            rs.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(DBVerbindung.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return artikelName;
-    }
-
     //zu gegebenem Artikelnamen Kategorie ausgeben
     public static String artikelNametoKategorie(String artikelname) {
         String kategorie = "";
@@ -108,22 +93,6 @@ public class DBVerbindung {
             Logger.getLogger(DBVerbindung.class.getName()).log(Level.SEVERE, null, ex);
         }
         return kategorie;
-    }
-
-    //zu gegebenem Artikelnamen Artikelnummer ausgeben
-    public static int artikelNametoArtikelNummer(String artikelname) {
-        int artikelnummer = 0;
-        try {
-            ps = con.prepareStatement("SELECT Artikelnummer FROM Artikel WHERE Artikelname = ?");
-            ps.setString(1, artikelname);
-            rs = ps.executeQuery();
-            rs.next();
-            artikelnummer = rs.getInt("Artikelnummer");
-            rs.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(DBVerbindung.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return artikelnummer;
     }
 
     //zu gegebenem Artikelnamen Preis ausgeben
@@ -206,30 +175,39 @@ public class DBVerbindung {
         return mwst;
     }
 
+    // zu gegebenem ArtikelID Artikelnamen ausgeben   
+    public static String artikelIDtoArtikelName(int artikelid) {
+        String artikelName = "";
+        try {
+            ps = con.prepareStatement("SELECT Artikelname FROM Artikel WHERE AID = ?");
+            ps.setInt(1, artikelid);
+            rs = ps.executeQuery();
+            rs.next();
+            artikelName = rs.getString("Artikelname");
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBVerbindung.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return artikelName;
+    }
+
     //neuen Artikel anlegen
-    public static void artikelAnlegen(Artikel a) {
-        String artikelname = a.getName();
-        String kategorie = a.getKategorie().getBezeichnung();
-        int artiklenummer = a.getArtikelnummer();
-        int preis = a.getPreis();
-        String einheit = a.getEinheit().toString();
-        //mehrwertsteuersatz
-        int menge = a.getMenge();
+    public static void artikelAnlegen(String artikelname, String kategorie, int preis, String einheit, int mehrwertsteuerklasse, int menge) {
+
         try {
             ps = con.prepareStatement("INSERT INTO Artikel "
                     + "(artikelname, "
                     + "kategorie, "
-                    + "artikelnummer, "
                     + "preis, "
                     + "einheit, "
-                    // + "mehrwersteuerklasse, "
+                    + "mehrwertsteuerklasse, "
                     + "menge) "
                     + "VALUES (?,?,?,?,?,?)");
             ps.setString(1, artikelname);
             ps.setString(2, kategorie);
-            ps.setInt(3, artiklenummer);
-            ps.setInt(4, preis);
-            ps.setString(5, einheit);
+            ps.setInt(3, preis);
+            ps.setString(4, einheit);
+            ps.setInt(5, mehrwertsteuerklasse);
             ps.setInt(6, menge);
             ps.execute();
             ps.close();
@@ -239,30 +217,28 @@ public class DBVerbindung {
     }
 
     public static void artikelTest() {
-        String artikelname = "Erdbeere";
+        String artikelname = "Mango";
         String kategorie = "Obst";
-        int artiklenummer = 123459648;
-        int preis = 60;
+        int artiklenummer = 12323148;
+        int preis = 70;
         String einheit = "Stück";
         int mwst = 2;
-        int menge = 23;
+        int menge = 100;
         try {
             ps = con.prepareStatement("INSERT INTO Artikel "
                     + "(artikelname, "
                     + "kategorie, "
-                    + "artikelnummer, "
                     + "preis, "
                     + "einheit, "
                     + "mehrwertsteuerklasse, "
                     + "menge) "
-                    + "VALUES (?,?,?,?,?,?,?)");
+                    + "VALUES (?,?,?,?,?,?)");
             ps.setString(1, artikelname);
             ps.setString(2, kategorie);
-            ps.setInt(3, artiklenummer);
-            ps.setInt(4, preis);
-            ps.setString(5, einheit);
-            ps.setInt(6, mwst);
-            ps.setInt(7, menge);
+            ps.setInt(3, preis);
+            ps.setString(4, einheit);
+            ps.setInt(5, mwst);
+            ps.setInt(6, menge);
             ps.execute();
             ps.close();
         } catch (SQLException ex) {
