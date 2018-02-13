@@ -6,6 +6,7 @@
 package view;
 
 import Controller.DBVerbindung;
+import Controller.Propertymanager;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -27,6 +28,8 @@ public class Main {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
         DBVerbindung.verbinden();
+        Propertymanager.ladenProperties();
+        System.out.println(Propertymanager.getProperty("MoneyFlow.Impressum"));
         Hauptfenster hf = new Hauptfenster();
         hf.setVisible(true);
 
