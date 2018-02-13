@@ -153,8 +153,8 @@ public class Artikel {
 
             //Ist der Teil vor dem Komma laenger als 3 Zeichen, werden Orientierungszeichen eingefuegt
             int i = 3;
-            String restlinks = vorKomma.substring(0, vorKomma.length() - i);
-            String restrechts = vorKomma.substring(vorKomma.length() - i);
+            String restlinks;
+            String restrechts;
             while (i < vorKomma.length()) {
                 restlinks = vorKomma.substring(0, vorKomma.length() - i);
                 restrechts = vorKomma.substring(vorKomma.length() - i);
