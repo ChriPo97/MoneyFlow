@@ -150,4 +150,16 @@ public class Warenliste extends JPanel {
         updateWarenliste();
     }
 
+    public static void changeMenge(int menge) {
+        if (getLastSelectedTableRow() >= 0) {
+            for (Artikel artikelEinkaufskorb : Einkaufsmanager.getEinkaufskorb()) {
+                if (artikelEinkaufskorb.getName() == tableModel.getValueAt(getLastSelectedTableRow(), 1)) {
+                    artikelEinkaufskorb.setMenge(menge);
+                }
+            }
+        }
+        updateSummeField();
+        updateWarenliste();
+    }
+
 }

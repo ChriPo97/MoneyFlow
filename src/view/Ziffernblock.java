@@ -120,6 +120,9 @@ public class Ziffernblock extends JPanel {
                 if(mode == Mode.RABATT) {
                     Warenliste.discountArtikel(Integer.valueOf(preisField.getText()));
                 }
+                if(mode == Mode.MENGE) {
+                    Warenliste.changeMenge(Integer.valueOf(preisField.getText()));
+                }
                 preisField.setText("");
             }
         });

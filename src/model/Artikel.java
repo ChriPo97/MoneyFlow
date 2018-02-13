@@ -68,6 +68,10 @@ public class Artikel {
     public int getMenge() {
         return menge;
     }
+    
+    public void setMenge(int menge) {
+        this.menge = menge;
+    }
 
     /**
      * Berechnet den Preis fuer dieses Artikel-Objekt.
