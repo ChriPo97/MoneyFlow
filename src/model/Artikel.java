@@ -18,8 +18,8 @@ public class Artikel {
     private final String name;
     private final Kategorie kategorie;
     private final int artikelnummer;
-    //Gibt den Anteil des Preises nach Rabbatt an, z.B. 20% Rabatt -> 0.8
-    private float rabatt = 1;
+    //Gibt den Anteil des Preises nach Rabbatt an, z.B. 20% Rabatt -> 80
+    private int rabatt = 100;
 
     //Preise werden in Cent angegeben und bei Anzeige formatiert
     private final int einheitspreis;
@@ -77,19 +77,24 @@ public class Artikel {
      */
     public int getPreis() {
         //TODO immer aufrunden?
-        return Math.round((this.einheit == Artikel.Einheit.GEWICHT ? menge / 1000 : menge) * einheitspreis * rabatt);
+        float rabattAsFloat = (float) (rabatt * 0.01);
+        return Math.round((this.einheit == Artikel.Einheit.GEWICHT ? menge / 1000 : menge) * einheitspreis * rabattAsFloat);
     }
 
     public Einheit getEinheit() {
         return einheit;
     }
 
-    public float getMehrwertsteuerklasse() {
+    public char getMehrwertsteuerklasse() {
         return mehrwertsteuerklasse;
     }
 
     public int getEinheitspreis() {
         return einheitspreis;
+    }
+    
+    public int getRabatt() {
+        return rabatt;
     }
 
     public void erhoehenMenge(int anzahl) {
@@ -98,7 +103,7 @@ public class Artikel {
         }
     }
 
-    public void rabattieren(float rabatt) {
+    public void rabattieren(int rabatt) {
         this.rabatt = rabatt;
     }
 

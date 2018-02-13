@@ -42,21 +42,28 @@ public class Einkaufsmanager {
      */
     public static boolean hinzufuegenArtikel(int id, int menge) {
 
-        //Logik um aus der DB Artikel nach id zu holen
-        Artikel dummy = new Artikel("dummy", new Kategorie(-1, "dummy"), -1, 100, Artikel.Einheit.STÜCK, 'A', 10);
+        String artikelName = DBVerbindung.artikelIDtoArtikelName(id);
+        Artikel.Einheit artikelEinheit;
+        if(DBVerbindung.artikelNametoEinheit(artikelName).toUpperCase() == Artikel.Einheit.GEWICHT.toString()) {
+            artikelEinheit = Artikel.Einheit.GEWICHT;
+        }
+        else {
+            artikelEinheit = Artikel.Einheit.STÜCK;
+        }
+        Artikel artikel = new Artikel(artikelName, new Kategorie(1, DBVerbindung.artikelNametoKategorie(artikelName)), id, DBVerbindung.artikelNametoPreis(artikelName), artikelEinheit, DBVerbindung.artikelNametoMehrwersteuerklasse(artikelName).charAt(0), 1);
         // Ist der Artikel bereits enthalten wird die Menge addiert. Sonst wird der Artikel dem Einkaufskorb hinzugefuegt.
         boolean bereitsEnthalten = false;
         for (Artikel a : einkaufskorb) {
             if (a.getArtikelnummer() == id) {
                 a.erhoehenMenge(menge);
                 bereitsEnthalten = true;
+                return false;
             }
         }
         if (!bereitsEnthalten) {
-            //hinzufuegen eines neuen Artikels
-            einkaufskorb.add(dummy);
+            einkaufskorb.add(artikel);
         }
-        return false;
+        return true;
     }
 
     /**

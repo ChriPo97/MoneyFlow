@@ -5,6 +5,7 @@
  */
 package view;
 
+import Controller.DBVerbindung;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -25,6 +26,7 @@ public class Main {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
+        DBVerbindung.verbinden();
         Hauptfenster hf = new Hauptfenster();
         hf.setVisible(true);
 

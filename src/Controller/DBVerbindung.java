@@ -51,7 +51,6 @@ public class DBVerbindung {
         }
         try {
             con = DriverManager.getConnection(URL);
-            System.out.println("Opened database successfully");
         } catch (SQLException ex) {
             Logger.getLogger(DBVerbindung.class.getName()).log(Level.SEVERE, null, ex);
         }

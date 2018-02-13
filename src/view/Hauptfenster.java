@@ -94,13 +94,7 @@ public class Hauptfenster extends JFrame implements KeyListener {
         }
         if (e.getKeyChar() == '/' && barCodeActive) {
             barCodeActive = false;
-            DBVerbindung.verbinden();
-            int artikelID = Integer.valueOf(barCode);
-            String artikelName = DBVerbindung.artikelIDtoArtikelName(artikelID);
-            Artikel artikel = new Artikel(artikelName, new Kategorie(1, DBVerbindung.artikelNametoKategorie(artikelName)), artikelID, DBVerbindung.artikelNametoPreis(artikelName), Artikel.Einheit.STÜCK, DBVerbindung.artikelNametoMehrwersteuerklasse(artikelName).toCharArray()[0], 1);
-            Warenliste.addArtikel(artikel);
-            Einkaufsmanager.hinzufuegenArtikel(artikelID, 1);
-            DBVerbindung.verbindungSchliessen();
+            Warenliste.addArtikel(Integer.valueOf(barCode));
             barCode = "";
             return;
         }

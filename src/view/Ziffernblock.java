@@ -60,6 +60,7 @@ public class Ziffernblock extends JPanel {
     private GridLayout checkoutGridLayout = new GridLayout(1, 1, 5, 5);
 
     private static enum Mode {
+
         PRODUKTNUMMER, MENGE, RABATT
     };
     private static Mode mode = Mode.MENGE;
@@ -107,25 +108,22 @@ public class Ziffernblock extends JPanel {
         num00.addActionListener(new ZiffernblockActionListener());
         numKomma.setFont(new Font("Arial", 1, 30));
         numKomma.addActionListener(new ZiffernblockActionListener());
-        
+
         enter.setForeground(new java.awt.Color(0, 204, 51));
         enter.setFont(enter.getFont().deriveFont(34f));
         enter.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(mode == Mode.PRODUKTNUMMER) {
-                    DBVerbindung.verbinden();
-                    int artikelID = Integer.valueOf(preisField.getText());
-                    String artikelName = DBVerbindung.artikelIDtoArtikelName(artikelID);
-                    Artikel artikel = new Artikel(artikelName, new Kategorie(1, DBVerbindung.artikelNametoKategorie(artikelName)), artikelID, DBVerbindung.artikelNametoPreis(artikelName), Artikel.Einheit.STÜCK, DBVerbindung.artikelNametoMehrwersteuerklasse(artikelName).toCharArray()[0], 1);
-                    Warenliste.addArtikel(artikel);
-                    Einkaufsmanager.hinzufuegenArtikel(artikelID, 1);
-                    DBVerbindung.verbindungSchliessen();
+                if (mode == Mode.PRODUKTNUMMER) {
+                    Warenliste.addArtikel(Integer.valueOf(preisField.getText()));
+                }
+                if(mode == Mode.RABATT) {
+                    Warenliste.discountArtikel(Integer.valueOf(preisField.getText()));
                 }
                 preisField.setText("");
             }
         });
-        
+
         delete.setFont(new Font("Arial", 1, 30));
         delete.setForeground(new java.awt.Color(255, 51, 51));
         delete.addActionListener(new ActionListener() {
@@ -134,7 +132,7 @@ public class Ziffernblock extends JPanel {
                 preisField.setText("");
             }
         });
-        
+
         checkout.setFont(new Font("Arial", 1, 30));
 
         ziffernPanel.setLayout(ziffernGridLayout);
@@ -160,41 +158,41 @@ public class Ziffernblock extends JPanel {
 
         ziffernBlockGroupLayout.setHorizontalGroup(
                 ziffernBlockGroupLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
-                        .addGroup(ziffernBlockGroupLayout.createSequentialGroup()
-                                .addComponent(preisField)
-                        )
-                        .addGroup(ziffernBlockGroupLayout.createSequentialGroup()
-                                .addComponent(produktNummerLabel)
-                                .addGap(20)
-                                .addComponent(mengeLabel)
-                                .addGap(20)
-                                .addComponent(rabattLabel)
-                        )
-                        .addGroup(ziffernBlockGroupLayout.createSequentialGroup()
-                                .addComponent(ziffernPanel)
-                        )
-                        .addGroup(ziffernBlockGroupLayout.createSequentialGroup()
-                                .addComponent(checkoutPanel)
-                        )
+                .addGroup(ziffernBlockGroupLayout.createSequentialGroup()
+                        .addComponent(preisField)
+                )
+                .addGroup(ziffernBlockGroupLayout.createSequentialGroup()
+                        .addComponent(produktNummerLabel)
+                        .addGap(20)
+                        .addComponent(mengeLabel)
+                        .addGap(20)
+                        .addComponent(rabattLabel)
+                )
+                .addGroup(ziffernBlockGroupLayout.createSequentialGroup()
+                        .addComponent(ziffernPanel)
+                )
+                .addGroup(ziffernBlockGroupLayout.createSequentialGroup()
+                        .addComponent(checkoutPanel)
+                )
         );
         ziffernBlockGroupLayout.setVerticalGroup(
                 ziffernBlockGroupLayout.createSequentialGroup()
-                        .addGroup(ziffernBlockGroupLayout.createSequentialGroup()
-                                .addGap(5)
-                                .addComponent(preisField)
-                        )
-                        .addGroup(ziffernBlockGroupLayout.createParallelGroup()
-                                .addComponent(produktNummerLabel)
-                                .addComponent(mengeLabel)
-                                .addComponent(rabattLabel)
-                        )
-                        .addGroup(ziffernBlockGroupLayout.createSequentialGroup()
-                                .addComponent(ziffernPanel)
-                                .addGap(50)
-                        )
-                        .addGroup(ziffernBlockGroupLayout.createParallelGroup()
-                                .addComponent(checkoutPanel)
-                        )
+                .addGroup(ziffernBlockGroupLayout.createSequentialGroup()
+                        .addGap(5)
+                        .addComponent(preisField)
+                )
+                .addGroup(ziffernBlockGroupLayout.createParallelGroup()
+                        .addComponent(produktNummerLabel)
+                        .addComponent(mengeLabel)
+                        .addComponent(rabattLabel)
+                )
+                .addGroup(ziffernBlockGroupLayout.createSequentialGroup()
+                        .addComponent(ziffernPanel)
+                        .addGap(50)
+                )
+                .addGroup(ziffernBlockGroupLayout.createParallelGroup()
+                        .addComponent(checkoutPanel)
+                )
         );
     }
 
