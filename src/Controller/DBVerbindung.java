@@ -6,11 +6,14 @@
 package Controller;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Artikel;
 import model.Artikel.Einheit;
 import model.Kategorie;
+import model.Mehrwertsteuer;
 
 /**
  *
@@ -22,6 +25,7 @@ public class DBVerbindung {
     private static final String URL = "jdbc:sqlite:DB/MoneyDB.db";
     private static PreparedStatement ps;
     private static ResultSet rs;
+    private static ArrayList<Mehrwertsteuer> mwstListe = new ArrayList<>();
 
     public static void main(String args[]) {
 
@@ -52,6 +56,13 @@ public class DBVerbindung {
         try {
             con = DriverManager.getConnection(URL);
             System.out.println("Opened database successfully");
+            // Lade die Mwstklassen
+            ps = con.prepareStatement("SELECT * FROM Mehrwertsteuer");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                mwstListe.add(new Mehrwertsteuer(rs.getInt(1), rs.getString(2).charAt(0), rs.getFloat(3)));
+            }
+            rs.close();
         } catch (SQLException ex) {
             Logger.getLogger(DBVerbindung.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -261,31 +272,37 @@ public class DBVerbindung {
             ps = con.prepareStatement("SELECT * FROM Artikel WHERE AID = ?");
             ps.setInt(1, artikelID);
             rs = ps.executeQuery();
-            rs.next();
-            name = rs.getString("Artikelname");
-            kategorie = new Kategorie(1, rs.getString("Kategorie"));
-            preis = rs.getInt("Preis");
-            String tmp = rs.getString("Einheit");
-            if (tmp.equals("Stück")) {
-                einheit = Artikel.Einheit.STÜCK;
-            } else if (tmp.equals("Gewicht")) {
-                einheit = Artikel.Einheit.GEWICHT;
+            if (rs.next()) {
+                name = rs.getString("Artikelname");
+                kategorie = new Kategorie(1, rs.getString("Kategorie"));
+                preis = rs.getInt("Preis");
+                String tmp = rs.getString("Einheit");
+                if (tmp.equals("Stück")) {
+                    einheit = Artikel.Einheit.STÜCK;
+                } else {
+                    if (tmp.equals("Gewicht")) {
+                        einheit = Artikel.Einheit.GEWICHT;
+                    }
+                }
+                //Mehrwertsteuerklasse ermitteln
+                int mwstId = rs.getInt("Mehrwertsteuerklasse");
+                for (Mehrwertsteuer m : mwstListe) {
+                    if (mwstId == m.getId()) {
+                        mehrwertsteuerklasse = m.getKlasse();
+                    }
+                }
+                menge = rs.getInt("Menge");
+                Artikel artikelObjekt = new Artikel(name, kategorie, artikelID, preis, einheit, mehrwertsteuerklasse, menge);
+                return artikelObjekt;
             }
-            int mehrwertsteuerklasse2 = rs.getInt("Mehrwertsteuerklasse");
-            if (mehrwertsteuerklasse2 == 1) {
-                mehrwertsteuerklasse = 'A';
-            } else if (mehrwertsteuerklasse2 == 2) {
-                mehrwertsteuerklasse = 'B';
-            }
-
-            menge = rs.getInt("Menge");
             rs.close();
-
         } catch (SQLException ex) {
             Logger.getLogger(DBVerbindung.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Artikel artikelObjekt = new Artikel(name, kategorie, artikelID, preis, einheit, mehrwertsteuerklasse, menge);
-        return artikelObjekt;
+        return null;
     }
 
+    public static ArrayList<Mehrwertsteuer> getMwstListe() {
+        return mwstListe;
+    }
 }

@@ -5,6 +5,8 @@
  */
 package model;
 
+import java.text.DecimalFormat;
+
 /**
  *
  * @author lykoju Laufzeitklasse fuer einen Artikel im Einkauf.
@@ -14,10 +16,11 @@ public class Artikel {
     public static enum Einheit {
         STÜCK, GEWICHT
     };
+//    public static final DecimalFormat kgFormatter = new DecimalFormat(###)
 
     private final String name;
     private final Kategorie kategorie;
-    private final int artikelnummer;
+    private final int id;
     //Gibt den Anteil des Preises nach Rabbatt an, z.B. 20% Rabatt -> 0.8
     private float rabatt = 1;
 
@@ -34,7 +37,7 @@ public class Artikel {
      *
      * @param name Name des Artikels
      * @param kategorie Die Kategorie zudem der Artikel gehoert
-     * @param artikelnummer Die Nummer des Artikels - Entspricht der ID aus der
+     * @param id Die Nummer des Artikels - Entspricht der ID aus der
      * Datenbank
      * @param einheitspreis Der Preis fuer eine Einheit - Also fuer ein Stueck
      * oder 1,000g
@@ -42,10 +45,10 @@ public class Artikel {
      * @param mehrwertsteuerklasse Die Mehrwertsteuerklasse des Artikels. Ein einzelner (@code char) wie z.B. 'A'
      * @param menge Die Menge des Artikels im Einkauf
      */
-    public Artikel(String name, Kategorie kategorie, int artikelnummer, int einheitspreis, Einheit einheit, char mehrwertsteuerklasse, int menge) {
+    public Artikel(String name, Kategorie kategorie, int id, int einheitspreis, Einheit einheit, char mehrwertsteuerklasse, int menge) {
         this.name = name;
         this.kategorie = kategorie;
-        this.artikelnummer = artikelnummer;
+        this.id = id;
         this.einheitspreis = einheitspreis;
         this.einheit = einheit;
         this.mehrwertsteuerklasse = mehrwertsteuerklasse;
@@ -61,8 +64,8 @@ public class Artikel {
         return kategorie;
     }
 
-    public int getArtikelnummer() {
-        return artikelnummer;
+    public int getId() {
+        return id;
     }
 
     public int getMenge() {

@@ -11,6 +11,7 @@ import model.Kassenbon;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import model.Mehrwertsteuer;
 
 /**
  *
@@ -21,42 +22,31 @@ public class Einkaufsmanager {
     //Aktuell nicht in Benutzung
     private HashMap artikelTabelle = new HashMap();
     private static final ArrayList<Artikel> einkaufskorb = new ArrayList<>();
-    
-    public static final HashMap<Character, Float> MWSTKLASSEN = new HashMap<>();
-
     private Einkaufsmanager() {
-    }
-
-    public void ladenDatenbank() {
-        //TODO Josy soll mal die DB-Methoden machen LUL
-        MWSTKLASSEN.put('A', 1.19f);
-        MWSTKLASSEN.put('B', 1.07f);
     }
 
     /**
      * Fuegt dem Einkaufskorb einen Artikel anhand der ID hinzu.
      *
      * @param id ID des Artikels in der Datenbank
-     * @return (@code true) wenn der Artikel erfolgreich in der Datenbank
-     * gefunden wurde, (@code false) wenn nicht.
+     * @return Der Artikel der hinzugefuegt wurde, oder (@code null) wenn dieser nicht gefunden wurde.
      */
-    public static boolean hinzufuegenArtikel(int id, int menge) {
+    public static Artikel hinzufuegenArtikel(int id, int menge) {
 
-        //Logik um aus der DB Artikel nach id zu holen
-        Artikel dummy = new Artikel("dummy", new Kategorie(-1, "dummy"), -1, 100, Artikel.Einheit.STÜCK, 'A', 10);
+        Artikel artikel = DBVerbindung.getArtikelbyID(id);
         // Ist der Artikel bereits enthalten wird die Menge addiert. Sonst wird der Artikel dem Einkaufskorb hinzugefuegt.
         boolean bereitsEnthalten = false;
         for (Artikel a : einkaufskorb) {
-            if (a.getArtikelnummer() == id) {
+            if (a.getId() == id) {
                 a.erhoehenMenge(menge);
                 bereitsEnthalten = true;
             }
         }
         if (!bereitsEnthalten) {
             //hinzufuegen eines neuen Artikels
-            einkaufskorb.add(dummy);
+            einkaufskorb.add(artikel);
         }
-        return false;
+        return artikel;
     }
 
     /**
