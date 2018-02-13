@@ -14,6 +14,7 @@ public class Mehrwertsteuer {
     private final int id;
     private final char klasse;
     private final float steuer;
+    public static final Mehrwertsteuer MWST_NULL = new Mehrwertsteuer(-1, '#', 1.00f);
 
     /**
      * Konstruktor.

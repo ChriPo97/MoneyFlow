@@ -60,10 +60,10 @@ public class Warenliste extends JPanel {
         mwst.setFont(new Font("Ariel", 0, 16));
 
         //Erstellen des Table Models und der JTabel
+        tableModel.addColumn("Menge");
         tableModel.addColumn("Produkt");
         tableModel.addColumn("Kategorie");
         tableModel.addColumn("Rabatt");
-        tableModel.addColumn("Einheit");
         tableModel.addColumn("Preis");
         tableModel.addColumn("MwSt");
         table = new JTable(tableModel) {
@@ -74,7 +74,7 @@ public class Warenliste extends JPanel {
         };
         scrollpaneTable = new JScrollPane(table);
         table.getTableHeader().setReorderingAllowed(false);
-        
+
         //MousListener für die Table - Artikelinformationen werden angezeigt
         table.addMouseListener(new MouseAdapter() {
             @Override
@@ -88,10 +88,9 @@ public class Warenliste extends JPanel {
             }
 
         });
-        
+
         //table.setCellSelectionEnabled(true);
         //table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
         //HinzufÃ¼gen der Scroll Pane mit der Table
         this.add(Box.createRigidArea(new Dimension(0, 5)));
         this.add(scrollpaneTable);
@@ -102,11 +101,10 @@ public class Warenliste extends JPanel {
     }
 
     //Funktion zum Hinzufügen eines Artikel in die Table
-    public static void addArtikel(Artikel artikel) {
+    public static void addArtikel(int id) {
+        Einkaufsmanager.hinzufuegenArtikel(id, 1);
+        updateWarenliste();
         updateSummeField();
-        tableModel.addRow(new String[]{artikel.getName(), artikel.getKategorie().getBezeichnung(),
-            "0%", artikel.getEinheit().toString(), String.valueOf(artikel.getPreis()),
-            String.valueOf(artikel.getMehrwertsteuerklasse())});
     }
 
     //Funktion zum Löschen eines Artikels in der Table
@@ -125,10 +123,43 @@ public class Warenliste extends JPanel {
         int rowIndex = table.getSelectedRow();
         return rowIndex;
     }
-    
+
     //Funktion zum Updaten des Summe Feldes
     public static void updateSummeField() {
         summe.setText("Summe: " + Einkaufsmanager.getGesamtpreis());
+    }
+
+    public static void updateWarenliste() {
+        tableModel.setRowCount(0);
+        for (Artikel artikelEinkaufskorb : Einkaufsmanager.getEinkaufskorb()) {
+            tableModel.addRow(new String[]{String.valueOf(artikelEinkaufskorb.getMenge()), artikelEinkaufskorb.getName(), artikelEinkaufskorb.getKategorie().getBezeichnung(),
+                String.valueOf((100 - artikelEinkaufskorb.getRabatt())) + "%", String.valueOf(artikelEinkaufskorb.getPreis()),
+                String.valueOf(artikelEinkaufskorb.getMehrwertsteuerklasse())});
+        }
+    }
+
+    public static void discountArtikel(int rabatt) {
+        if (getLastSelectedTableRow() >= 0) {
+            for (Artikel artikelEinkaufskorb : Einkaufsmanager.getEinkaufskorb()) {
+                if (artikelEinkaufskorb.getName() == tableModel.getValueAt(getLastSelectedTableRow(), 1)) {
+                    artikelEinkaufskorb.rabattieren(100 - rabatt);
+                }
+            }
+        }
+        updateSummeField();
+        updateWarenliste();
+    }
+
+    public static void changeMenge(int menge) {
+        if (getLastSelectedTableRow() >= 0) {
+            for (Artikel artikelEinkaufskorb : Einkaufsmanager.getEinkaufskorb()) {
+                if (artikelEinkaufskorb.getName() == tableModel.getValueAt(getLastSelectedTableRow(), 1)) {
+                    artikelEinkaufskorb.setMenge(menge);
+                }
+            }
+        }
+        updateSummeField();
+        updateWarenliste();
     }
 
 }

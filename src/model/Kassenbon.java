@@ -6,6 +6,7 @@
 
 package model;
 
+import Controller.DBVerbindung;
 import Controller.Einkaufsmanager;
 import Controller.Propertymanager;
 import java.time.LocalDate;
@@ -80,7 +81,7 @@ public class Kassenbon {
     public int getNettoByMwstklasse(char mwstklasse) {
         
         //Ermittle den Mehrwertsteuersatz fuer die gesuchte Klasse;
-        float satz = Einkaufsmanager.MWSTKLASSEN.get(mwstklasse);
+        float satz = DBVerbindung.getMwstByKlasse(mwstklasse).getSteuer();
         int netto = 0;
         //Summiere alle Preise
         for (Artikel a:warenkorb) {

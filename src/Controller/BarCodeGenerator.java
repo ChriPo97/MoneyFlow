@@ -23,8 +23,8 @@ public class BarCodeGenerator {
 
     public static void generateCode128Barcode(int code) throws FileNotFoundException, IOException {
         Code128Bean eanBean = new Code128Bean();
-        final int dpi = 300;
-        eanBean.setModuleWidth(UnitConv.in2mm(3.0f / dpi));
+        final int dpi = 150;
+        eanBean.setModuleWidth(UnitConv.in2mm(1.0f / dpi));
         eanBean.setFontSize(2.0);
         eanBean.doQuietZone(true);
         File outputFile = new File("barcodes" + "/" + code + ".png");

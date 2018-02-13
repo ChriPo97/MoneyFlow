@@ -302,7 +302,21 @@ public class DBVerbindung {
         return null;
     }
 
-    public static ArrayList<Mehrwertsteuer> getMwstListe() {
-        return mwstListe;
+    public static Mehrwertsteuer getMwstById(int id) {
+        for (Mehrwertsteuer m : mwstListe) {
+            if (m.getId() == id) {
+                return m;
+            }
+        }
+        return Mehrwertsteuer.MWST_NULL;
+    }
+
+    public static Mehrwertsteuer getMwstByKlasse(char klasse) {
+        for (Mehrwertsteuer m : mwstListe) {
+            if (m.getKlasse() == klasse) {
+                return m;
+            }
+        }
+        return Mehrwertsteuer.MWST_NULL;
     }
 }

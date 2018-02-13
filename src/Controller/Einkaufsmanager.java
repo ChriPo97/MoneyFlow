@@ -22,6 +22,7 @@ public class Einkaufsmanager {
     //Aktuell nicht in Benutzung
     private HashMap artikelTabelle = new HashMap();
     private static final ArrayList<Artikel> einkaufskorb = new ArrayList<>();
+
     private Einkaufsmanager() {
     }
 
@@ -29,7 +30,8 @@ public class Einkaufsmanager {
      * Fuegt dem Einkaufskorb einen Artikel anhand der ID hinzu.
      *
      * @param id ID des Artikels in der Datenbank
-     * @return Der Artikel der hinzugefuegt wurde, oder (@code null) wenn dieser nicht gefunden wurde.
+     * @return Der Artikel der hinzugefuegt wurde, oder (@code null) wenn dieser
+     * nicht gefunden wurde.
      */
     public static Artikel hinzufuegenArtikel(int id, int menge) {
 
@@ -40,6 +42,7 @@ public class Einkaufsmanager {
             if (a.getId() == id) {
                 a.erhoehenMenge(menge);
                 bereitsEnthalten = true;
+                return artikel;
             }
         }
         if (!bereitsEnthalten) {
@@ -108,5 +111,10 @@ public class Einkaufsmanager {
 
     public static ArrayList<Artikel> getEinkaufskorb() {
         return einkaufskorb;
+    }
+
+    public static String getGesamtPreisString() {
+        String nullen = String.format("%04d€", getGesamtpreis());
+        return nullen.substring(0, nullen.length() - 3) + ',' + nullen.substring(nullen.length() - 3);
     }
 }

@@ -5,18 +5,26 @@
  */
 package view;
 
+import Controller.DBVerbindung;
+import Controller.Einkaufsmanager;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.HierarchyBoundsListener;
 import java.awt.event.HierarchyEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import javax.swing.JFrame;
+import model.Artikel;
+import model.Kategorie;
 
 /**
  *
  * @author Christoph
  */
-public class Hauptfenster extends JFrame {
+public class Hauptfenster extends JFrame implements KeyListener {
 
+    String barCode = "";
+    boolean barCodeActive = false;
     Artikelinformation artikelinformation = new Artikelinformation();
     Warenliste warenliste = new Warenliste();
     Ziffernblock ziffernblock = new Ziffernblock();
@@ -26,6 +34,8 @@ public class Hauptfenster extends JFrame {
         this.setMinimumSize(new Dimension(1024, 768));
         this.setTitle("Kassensystem MoneyFlow");
         this.setLocationRelativeTo(null);
+        this.addKeyListener(this);
+        this.setFocusable(true);
         setLayout();
         setFrameMovedListener();
         setMenuBar();
@@ -70,6 +80,32 @@ public class Hauptfenster extends JFrame {
             public void ancestorMoved(HierarchyEvent e) {
             }
         });
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        if (e.getKeyChar() == '/' && !(barCodeActive)) {
+            barCodeActive = true;
+            return;
+        }
+        if (barCodeActive && !(e.getKeyChar() == '/')) {
+            barCode = barCode + String.valueOf(e.getKeyChar());
+            return;
+        }
+        if (e.getKeyChar() == '/' && barCodeActive) {
+            barCodeActive = false;
+            Warenliste.addArtikel(Integer.valueOf(barCode));
+            barCode = "";
+            return;
+        }
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
     }
 
 }
