@@ -6,11 +6,8 @@
 package model;
 
 import Controller.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,15 +16,14 @@ import java.util.List;
  */
 public class Kassenbon {
 
-    private ArrayList<Artikel> warenkorb = new ArrayList<>();
-    private final LocalDate datum;
-    private final LocalTime zeit;
+    private final List<Artikel> warenkorb;
+    private final LocalDateTime zeitstempel;
     private final String impressum;
-    private static final DateTimeFormatter ZEITFORMATTER = DateTimeFormatter.ISO_DATE_TIME;
+    private static final DateTimeFormatter ZEITFORMATTER = DateTimeFormatter.ofPattern("HH:mm");
+    private static final DateTimeFormatter DATUMFORMATTER = DateTimeFormatter.ofPattern("E, dd.MM.YY");
 
-    public Kassenbon(ArrayList<Artikel> warenkorb) {
-        zeit = LocalTime.now();
-        datum = LocalDate.now();
+    public Kassenbon(List<Artikel> warenkorb) {
+        zeitstempel = LocalDateTime.now();
         this.warenkorb = warenkorb;
         impressum = Propertymanager.getProperty("MoneyFlow.Impressum");
     }
@@ -42,7 +38,7 @@ public class Kassenbon {
      * @return Der Zeitpunkt des Einkaufs als String
      */
     public String getZeitString() {
-        return zeit.format(Kassenbon.ZEITFORMATTER);
+        return zeitstempel.format(Kassenbon.ZEITFORMATTER);
     }
 
     /**
@@ -51,7 +47,7 @@ public class Kassenbon {
      * @return Der Zeitpunkt des Einkaufs als String
      */
     public String getDatumString() {
-        return datum.format(Kassenbon.ZEITFORMATTER);
+        return zeitstempel.format(Kassenbon.DATUMFORMATTER);
     }
 
     public String getImpressum() {
@@ -91,11 +87,27 @@ public class Kassenbon {
         return netto;
     }
 
+    /**
+     * Gibt einen String aus, welcher den Gesamtpreis einer Mehrwertsteuerklasse
+     * in Brutto (Ladenpreis) formatiert anzeigt.
+     *
+     * @param mwstklasse die Klasse der Mehrwertsteuer, z.B. 'A'
+     * @return ein formatierter String des Gesamtpreises einer
+     * Mehrwertsteuerklasse in Brutto
+     */
     public String getBruttoByMwstklasseString(char mwstklasse) {
         String nullen = String.format("%04d€", getBruttoByMwstklasse(mwstklasse));
         return nullen.substring(0, nullen.length() - 3) + ',' + nullen.substring(nullen.length() - 3);
     }
 
+    /**
+     * Gibt einen String aus, welcher den Gesamtpreis einer Mehrwertsteuerklasse
+     * in Netto (vor Steuer) formatiert anzeigt.
+     *
+     * @param mwstklasse die Klasse der Mehrwertsteuer, z.B. 'A'
+     * @return ein formatierter String des Gesamtpreises einer
+     * Mehrwertsteuerklasse in Netto
+     */
     public String getNettoByMwstklasseString(char mwstklasse) {
         String nullen = String.format("%04d€", getNettoByMwstklasse(mwstklasse));
         return nullen.substring(0, nullen.length() - 3) + ',' + nullen.substring(nullen.length() - 3);
