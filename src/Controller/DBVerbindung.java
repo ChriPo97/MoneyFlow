@@ -266,7 +266,7 @@ public class DBVerbindung {
         int preis = 0;
         Einheit einheit = null;
         char mehrwertsteuerklasse = 'A';
-        int menge = 0;
+        int menge = 1;
 
         try {
             ps = con.prepareStatement("SELECT * FROM Artikel WHERE AID = ?");
@@ -291,7 +291,6 @@ public class DBVerbindung {
                         mehrwertsteuerklasse = m.getKlasse();
                     }
                 }
-                menge = rs.getInt("Menge");
                 Artikel artikelObjekt = new Artikel(name, kategorie, artikelID, preis, einheit, mehrwertsteuerklasse, menge);
                 return artikelObjekt;
             }

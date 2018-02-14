@@ -109,7 +109,7 @@ public class Artikel {
         }
     }
 
-    public void rabattieren(int rabatt) {
+    public void rabattieren(float rabatt) {
         this.rabatt = rabatt;
     }
 
