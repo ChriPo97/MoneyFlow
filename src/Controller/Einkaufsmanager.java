@@ -6,12 +6,10 @@
 package Controller;
 
 import model.Artikel;
-import model.Kategorie;
 import model.Kassenbon;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import model.Mehrwertsteuer;
 
 /**
  *
@@ -34,7 +32,6 @@ public class Einkaufsmanager {
      * nicht gefunden wurde.
      */
     public static Artikel hinzufuegenArtikel(int id, int menge) {
-
         Artikel artikel = DBVerbindung.getArtikelbyID(id, menge);
         // Ist der Artikel bereits enthalten wird die Menge addiert. Sonst wird der Artikel dem Einkaufskorb hinzugefuegt.
         boolean bereitsEnthalten = false;
@@ -76,7 +73,6 @@ public class Einkaufsmanager {
      * Storniert den Einkauf.
      */
     public static void stornierenEinkauf() {
-
         einkaufskorb.clear();
     }
 
@@ -87,7 +83,6 @@ public class Einkaufsmanager {
      * @return Ein Kassenbon-Objekt
      */
     public static Kassenbon abschliessenEinkauf() {
-
         //Erstellt einen neue Liste und uebergibt sie einem Kassenbon. Danach wird der aktuelle Einkaufskorb geleert.
         ArrayList<Artikel> einkaufsbonkorb = new ArrayList<>();
         Collections.copy(einkaufsbonkorb, einkaufskorb);
