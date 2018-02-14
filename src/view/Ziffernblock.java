@@ -5,8 +5,6 @@
  */
 package view;
 
-import Controller.DBVerbindung;
-import Controller.Einkaufsmanager;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -15,17 +13,13 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-import model.Artikel;
-import model.Kategorie;
 
 /**
  *

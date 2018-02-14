@@ -5,8 +5,6 @@
  */
 package view;
 
-import Controller.DBVerbindung;
-import Controller.Einkaufsmanager;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.HierarchyBoundsListener;
@@ -14,8 +12,6 @@ import java.awt.event.HierarchyEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.JFrame;
-import model.Artikel;
-import model.Kategorie;
 
 /**
  *

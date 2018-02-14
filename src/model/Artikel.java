@@ -17,7 +17,7 @@ public class Artikel {
 //    public static final DecimalFormat kgFormatter = new DecimalFormat(###)
 
     private final String name;
-    private final Kategorie kategorie;
+    private final String kategorie;
     private final int id;
     //Gibt den Anteil des Preises nach Rabbatt an, z.B. 20% Rabatt -> 0.8
     private float rabatt = 1;
@@ -43,7 +43,7 @@ public class Artikel {
      * einzelner (@code char) wie z.B. 'A'
      * @param menge Die Menge des Artikels im Einkauf
      */
-    public Artikel(String name, Kategorie kategorie, int id, int einheitspreis, Einheit einheit, char mehrwertsteuerklasse, int menge) {
+    public Artikel(String name, String kategorie, int id, int einheitspreis, Einheit einheit, char mehrwertsteuerklasse, int menge) {
         this.name = name;
         this.kategorie = kategorie;
         this.id = id;
@@ -58,7 +58,7 @@ public class Artikel {
         return name;
     }
 
-    public Kategorie getKategorie() {
+    public String getKategorie() {
         return kategorie;
     }
 

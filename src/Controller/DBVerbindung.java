@@ -9,10 +9,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.Artikel;
-import model.Artikel.Einheit;
-import model.Kategorie;
-import model.Mehrwertsteuer;
+import model.*;
 
 /**
  *
@@ -242,9 +239,9 @@ public class DBVerbindung {
 
     public static Artikel getArtikelbyID(int artikelID, int menge) {
         String name;
-        Kategorie kategorie;
+        String kategorie;
         int preis;
-        Einheit einheit = null;
+        Artikel.Einheit einheit = null;
         char mehrwertsteuerklasse;
         try {
             ps = con.prepareStatement("SELECT * FROM Artikel WHERE AID = ?");
@@ -252,7 +249,7 @@ public class DBVerbindung {
             rs = ps.executeQuery();
             if (rs.next()) {
                 name = rs.getString("Artikelname");
-                kategorie = new Kategorie(1, rs.getString("Kategorie"));
+                kategorie = rs.getString("Kategorie");
                 preis = rs.getInt("Preis");
                 String tmp = rs.getString("Einheit");
                 if (tmp.equals("Stück")) {
