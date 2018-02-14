@@ -208,7 +208,7 @@ public class Artikelinformation extends JPanel {
     public static void setArtikelInformationen(Artikel artikel) {
         mengeField.setText(String.valueOf(artikel.getMenge()));
         produktField.setText(artikel.getName());
-        kategorieField.setText(artikel.getKategorie().getBezeichnung());
+        kategorieField.setText(artikel.getKategorie());
         mwstField.setText(String.valueOf(artikel.getMehrwertsteuerklasse()));
         produktNummerField.setText(String.valueOf(artikel.getId()));
         einzelpreisField.setText(String.valueOf(artikel.getEinheitspreisString()));
