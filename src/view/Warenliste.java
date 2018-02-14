@@ -133,7 +133,7 @@ public class Warenliste extends JPanel {
         tableModel.setRowCount(0);
         for (Artikel artikelEinkaufskorb : Einkaufsmanager.getEinkaufskorb()) {
             tableModel.addRow(new String[]{String.valueOf(artikelEinkaufskorb.getMenge()), artikelEinkaufskorb.getName(), artikelEinkaufskorb.getKategorie().getBezeichnung(),
-                String.valueOf((100 - artikelEinkaufskorb.getRabatt())) + "%", String.valueOf(artikelEinkaufskorb.getPreis()),
+                String.valueOf((100 - (artikelEinkaufskorb.getRabatt()*100))) + "%", String.valueOf(artikelEinkaufskorb.getPreis()),
                 String.valueOf(artikelEinkaufskorb.getMehrwertsteuerklasse())});
         }
     }
@@ -142,7 +142,7 @@ public class Warenliste extends JPanel {
         if (getLastSelectedTableRow() >= 0) {
             for (Artikel artikelEinkaufskorb : Einkaufsmanager.getEinkaufskorb()) {
                 if (artikelEinkaufskorb.getName() == tableModel.getValueAt(getLastSelectedTableRow(), 1)) {
-                    artikelEinkaufskorb.rabattieren(100 - rabatt);
+                    artikelEinkaufskorb.rabattieren((float) ((100 - rabatt) * 0.01));
                 }
             }
         }
