@@ -5,8 +5,6 @@
  */
 package model;
 
-import java.text.DecimalFormat;
-
 /**
  *
  * @author lykoju Laufzeitklasse fuer einen Artikel im Einkauf.
@@ -14,7 +12,7 @@ import java.text.DecimalFormat;
 public class Artikel {
 
     public static enum Einheit {
-        STÜCK, GEWICHT
+        STUECK, GEWICHT
     };
 //    public static final DecimalFormat kgFormatter = new DecimalFormat(###)
 

@@ -7,7 +7,6 @@ package Controller;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Artikel;
@@ -25,26 +24,7 @@ public class DBVerbindung {
     private static final String URL = "jdbc:sqlite:DB/MoneyDB.db";
     private static PreparedStatement ps;
     private static ResultSet rs;
-    private static ArrayList<Mehrwertsteuer> mwstListe = new ArrayList<>();
-
-    public static void main(String args[]) {
-
-        verbinden();
-        //System.out.println(artikelNametoArtikelID("Bier"));
-        // System.out.println(artikelNametoKategorie("Stuhl"));
-        //System.out.println(artikelNametoArtikelNummer("Bier"));
-        //System.out.println(artikelNametoMehrwersteuerklasse("Apfel"));
-        //System.out.println(artikelNametoEinheit("Bier"));
-        //System.out.println(artikelNametoPreis("Mango"));
-        //System.out.println(artikelNametoMenge("Mango"));
-        //System.out.println(mehrwersteuerklassetoMehrwertsteuer("1"));
-        //artikelAnlegen("Wodka", "Alkohol", 1000, "Stück", 1, 38);
-        Artikel a = getArtikelbyID(4);
-        System.out.println(a.getName());
-        //artikelTest();
-        verbindungSchliessen();
-
-    }
+    private static final ArrayList<Mehrwertsteuer> MWSTLISTE = new ArrayList<>();
 
 //Verbindung zur Datenbank herstellen
     public static void verbinden() {
@@ -60,7 +40,7 @@ public class DBVerbindung {
             ps = con.prepareStatement("SELECT * FROM Mehrwertsteuer");
             rs = ps.executeQuery();
             while (rs.next()) {
-                mwstListe.add(new Mehrwertsteuer(rs.getInt(1), rs.getString(2).charAt(0), rs.getFloat(3)));
+                MWSTLISTE.add(new Mehrwertsteuer(rs.getInt(1), rs.getString(2).charAt(0), rs.getFloat(3)));
             }
             rs.close();
         } catch (SQLException ex) {
@@ -260,14 +240,12 @@ public class DBVerbindung {
         }
     }
 
-    public static Artikel getArtikelbyID(int artikelID) {
-        String name = "";
-        Kategorie kategorie = null;
-        int preis = 0;
+    public static Artikel getArtikelbyID(int artikelID, int menge) {
+        String name;
+        Kategorie kategorie;
+        int preis;
         Einheit einheit = null;
-        char mehrwertsteuerklasse = 'A';
-        int menge = 0;
-
+        char mehrwertsteuerklasse;
         try {
             ps = con.prepareStatement("SELECT * FROM Artikel WHERE AID = ?");
             ps.setInt(1, artikelID);
@@ -278,20 +256,14 @@ public class DBVerbindung {
                 preis = rs.getInt("Preis");
                 String tmp = rs.getString("Einheit");
                 if (tmp.equals("Stück")) {
-                    einheit = Artikel.Einheit.STÜCK;
+                    einheit = Artikel.Einheit.STUECK;
                 } else {
                     if (tmp.equals("Gewicht")) {
                         einheit = Artikel.Einheit.GEWICHT;
                     }
                 }
                 //Mehrwertsteuerklasse ermitteln
-                int mwstId = rs.getInt("Mehrwertsteuerklasse");
-                for (Mehrwertsteuer m : mwstListe) {
-                    if (mwstId == m.getId()) {
-                        mehrwertsteuerklasse = m.getKlasse();
-                    }
-                }
-                menge = rs.getInt("Menge");
+                mehrwertsteuerklasse = DBVerbindung.getMwstById(rs.getInt("Mehrwertsteuerklasse")).getKlasse();
                 Artikel artikelObjekt = new Artikel(name, kategorie, artikelID, preis, einheit, mehrwertsteuerklasse, menge);
                 return artikelObjekt;
             }
@@ -303,7 +275,7 @@ public class DBVerbindung {
     }
 
     public static Mehrwertsteuer getMwstById(int id) {
-        for (Mehrwertsteuer m : mwstListe) {
+        for (Mehrwertsteuer m : MWSTLISTE) {
             if (m.getId() == id) {
                 return m;
             }
@@ -312,7 +284,7 @@ public class DBVerbindung {
     }
 
     public static Mehrwertsteuer getMwstByKlasse(char klasse) {
-        for (Mehrwertsteuer m : mwstListe) {
+        for (Mehrwertsteuer m : MWSTLISTE) {
             if (m.getKlasse() == klasse) {
                 return m;
             }
