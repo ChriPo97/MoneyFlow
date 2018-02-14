@@ -26,25 +26,23 @@ public class Einkaufsmanager {
      *
      * @param id ID des Artikels in der Datenbank
      * @param menge die Menge des Artikels im Einkauf
-     * @return der Artikel der hinzugefuegt wurde, oder {@code null} wenn dieser
-     * nicht gefunden wurde
+     * @return {@code true} wenn der Artikel erfolgreich hinzugefuegt wurde, sonst {@code false}
      */
-    public static Artikel hinzufuegenArtikel(int id, int menge) {
+    public static boolean hinzufuegenArtikel(int id, int menge) {
         Artikel artikel = DBVerbindung.getArtikelbyID(id, menge);
+        if (artikel == null) {
+            return false;
+        }
         // Ist der Artikel bereits enthalten wird die Menge addiert. Sonst wird der Artikel dem Einkaufskorb hinzugefuegt.
-        boolean bereitsEnthalten = false;
         for (Artikel a : EINKAUFSKORB) {
             if (a.getId() == id) {
                 a.erhoehenMenge(menge);
-                bereitsEnthalten = true;
-                return artikel;
+                return true;
             }
         }
-        if (!bereitsEnthalten) {
             //hinzufuegen eines neuen Artikels
             EINKAUFSKORB.add(artikel);
-        }
-        return artikel;
+        return true;
     }
 
     /**
