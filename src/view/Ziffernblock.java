@@ -251,7 +251,7 @@ public class Ziffernblock extends JPanel {
             }
         }
         if (mode == Mode.RABATT) {
-            if (!preisField.getText().contains(",") && !newText.contains(",") && (preisField.getText().length() < 2)) {
+            if (!preisField.getText().contains(",") && !newText.contains(",") && (Integer.valueOf(preisField.getText() + newText) <= 100)) {
                 preisField.setText(preisField.getText() + newText);
             }
         }

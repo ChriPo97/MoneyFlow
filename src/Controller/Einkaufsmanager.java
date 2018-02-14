@@ -37,7 +37,6 @@ public class Einkaufsmanager {
 
         Artikel artikel = DBVerbindung.getArtikelbyID(id, menge);
         // Ist der Artikel bereits enthalten wird die Menge addiert. Sonst wird der Artikel dem Einkaufskorb hinzugefuegt.
-        System.out.println(artikel.getMenge());
         boolean bereitsEnthalten = false;
         for (Artikel a : einkaufskorb) {
             if (a.getId() == id) {

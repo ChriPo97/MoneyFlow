@@ -62,10 +62,8 @@ public class Warenliste extends JPanel {
         //Erstellen des Table Models und der JTabel
         tableModel.addColumn("Menge");
         tableModel.addColumn("Produkt");
-        tableModel.addColumn("Kategorie");
         tableModel.addColumn("Rabatt");
         tableModel.addColumn("Preis");
-        tableModel.addColumn("MwSt");
         table = new JTable(tableModel) {
             @Override
             public Class getColumnClass(int column) {
@@ -81,7 +79,7 @@ public class Warenliste extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 int row = table.rowAtPoint(e.getPoint());
                 for (Artikel artikel : Einkaufsmanager.getEinkaufskorb()) {
-                    if (tableModel.getValueAt(row, 0).equals(artikel.getName())) {
+                    if (tableModel.getValueAt(row, 1).equals(artikel.getName())) {
                         Artikelinformation.setArtikelInformationen(artikel);
                     }
                 }
@@ -132,9 +130,8 @@ public class Warenliste extends JPanel {
     public static void updateWarenliste() {
         tableModel.setRowCount(0);
         for (Artikel artikelEinkaufskorb : Einkaufsmanager.getEinkaufskorb()) {
-            tableModel.addRow(new String[]{String.valueOf(artikelEinkaufskorb.getMenge()), artikelEinkaufskorb.getName(), artikelEinkaufskorb.getKategorie().getBezeichnung(),
-                String.valueOf((100 - (artikelEinkaufskorb.getRabatt()*100))) + "%", String.valueOf(artikelEinkaufskorb.getPreis()),
-                String.valueOf(artikelEinkaufskorb.getMehrwertsteuerklasse())});
+            tableModel.addRow(new String[]{String.valueOf(artikelEinkaufskorb.getMenge()), artikelEinkaufskorb.getName(),
+                String.valueOf((100 - (artikelEinkaufskorb.getRabatt()*100))) + "%", String.valueOf(artikelEinkaufskorb.getPreis())});
         }
     }
 
