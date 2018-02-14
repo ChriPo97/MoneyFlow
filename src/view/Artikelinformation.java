@@ -30,18 +30,20 @@ import javax.swing.border.EmptyBorder;
 public class Artikelinformation extends JPanel {
 
     private JPanel artikelPanel = new JPanel();
-    private JLabel kategorieLabel = new JLabel("Kategorie:");
+    private JLabel mengeLabel = new JLabel("Menge:");
     private JLabel produktLabel = new JLabel("Produkt:");
+    private JLabel kategorieLabel = new JLabel("Kategorie:");
+    private JLabel mwstLabel = new JLabel("MwSt:");
     private JLabel produktNummerLabel = new JLabel("Produktnummer:");
     private JLabel einzelpreisLabel = new JLabel("Einzelpreis:");
-    private JLabel mengeLabel = new JLabel("Menge:");
-    private JLabel summeLabel = new JLabel("Summe:");
-    private static JTextField kategorieField = new JTextField();
+    private JLabel gesamtLabel = new JLabel("Gesamtpreis:");
+    private static JTextField mengeField = new JTextField();
     private static JTextField produktField = new JTextField();
+    private static JTextField kategorieField = new JTextField();
+    private static JTextField mwstField = new JTextField();
     private static JTextField produktNummerField = new JTextField();
     private static JTextField einzelpreisField = new JTextField();
-    private static JTextField mengeField = new JTextField();
-    private static JTextField summeField = new JTextField();
+    private static JTextField gesamtField = new JTextField();
     private JPanel panelButtons = new JPanel();
     private JButton stornoButton = new JButton("Storno");
     private JButton produktnummerButton = new JButton("Produktnummer");
@@ -63,12 +65,12 @@ public class Artikelinformation extends JPanel {
         stornoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(Warenliste.getLastSelectedTableRow() >= 0) {
+                if (Warenliste.getLastSelectedTableRow() >= 0) {
                     //Warenliste.removeArtikel(null);
                 }
             }
         });
-        
+
         produktnummerButton.setFont(new Font("Arial", 0, 24));
         produktnummerButton.addActionListener(new ActionListener() {
             @Override
@@ -76,7 +78,7 @@ public class Artikelinformation extends JPanel {
                 Ziffernblock.setModeProduktnummer();
             }
         });
-        
+
         mengeButton.setFont(new Font("Arial", 0, 24));
         mengeButton.addActionListener(new ActionListener() {
             @Override
@@ -84,7 +86,7 @@ public class Artikelinformation extends JPanel {
                 Ziffernblock.setModeMenge();
             }
         });
-        
+
         rabattButton.setFont(new Font("Arial", 0, 24));
         rabattButton.addActionListener(new ActionListener() {
             @Override
@@ -92,34 +94,44 @@ public class Artikelinformation extends JPanel {
                 Ziffernblock.setModeRabatt();
             }
         });
-        
+
         verkaufAbbrechenButton.setFont(new Font("Arial", 0, 24));
         verkaufAbbrechenButton.setForeground(new java.awt.Color(255, 51, 51));
-        kategorieField.setEditable(false);
-        kategorieField.setBackground(Color.WHITE);
+        mengeField.setEditable(false);
+        mengeField.setBackground(Color.WHITE);
         produktField.setEditable(false);
         produktField.setBackground(Color.WHITE);
+        kategorieField.setEditable(false);
+        kategorieField.setBackground(Color.WHITE);
+        mwstField.setEditable(false);
+        mwstField.setBackground(Color.WHITE);
         produktNummerField.setEditable(false);
         produktNummerField.setBackground(Color.WHITE);
         einzelpreisField.setEditable(false);
         einzelpreisField.setBackground(Color.WHITE);
-        mengeField.setEditable(false);
-        mengeField.setBackground(Color.WHITE);
-        summeField.setEditable(false);
-        summeField.setBackground(Color.WHITE);
-        
+        gesamtField.setEditable(false);
+        gesamtField.setBackground(Color.WHITE);
+
         GroupLayout artikelPanelGroupLayout = new GroupLayout(artikelPanel);
         artikelPanelGroupLayout.setAutoCreateGaps(true);
         artikelPanel.setLayout(artikelPanelGroupLayout);
         artikelPanelGroupLayout.setHorizontalGroup(
                 artikelPanelGroupLayout.createParallelGroup()
                         .addGroup(artikelPanelGroupLayout.createSequentialGroup()
-                                .addComponent(kategorieLabel)
-                                .addComponent(kategorieField)
+                                .addComponent(mengeLabel)
+                                .addComponent(mengeField)
                         )
                         .addGroup(artikelPanelGroupLayout.createSequentialGroup()
                                 .addComponent(produktLabel)
                                 .addComponent(produktField)
+                        )
+                        .addGroup(artikelPanelGroupLayout.createSequentialGroup()
+                                .addComponent(kategorieLabel)
+                                .addComponent(kategorieField)
+                        )
+                        .addGroup(artikelPanelGroupLayout.createSequentialGroup()
+                                .addComponent(mwstLabel)
+                                .addComponent(mwstField)
                         )
                         .addGroup(artikelPanelGroupLayout.createSequentialGroup()
                                 .addComponent(produktNummerLabel)
@@ -130,23 +142,27 @@ public class Artikelinformation extends JPanel {
                                 .addComponent(einzelpreisField)
                         )
                         .addGroup(artikelPanelGroupLayout.createSequentialGroup()
-                                .addComponent(mengeLabel)
-                                .addComponent(mengeField)
-                        )
-                        .addGroup(artikelPanelGroupLayout.createSequentialGroup()
-                                .addComponent(summeLabel)
-                                .addComponent(summeField)
+                                .addComponent(gesamtLabel)
+                                .addComponent(gesamtField)
                         )
         );
         artikelPanelGroupLayout.setVerticalGroup(
                 artikelPanelGroupLayout.createSequentialGroup()
                         .addGroup(artikelPanelGroupLayout.createParallelGroup()
-                                .addComponent(kategorieLabel)
-                                .addComponent(kategorieField)
+                                .addComponent(mengeLabel)
+                                .addComponent(mengeField)
                         )
                         .addGroup(artikelPanelGroupLayout.createParallelGroup()
                                 .addComponent(produktLabel)
                                 .addComponent(produktField)
+                        )
+                        .addGroup(artikelPanelGroupLayout.createParallelGroup()
+                                .addComponent(kategorieLabel)
+                                .addComponent(kategorieField)
+                        )
+                        .addGroup(artikelPanelGroupLayout.createParallelGroup()
+                                .addComponent(mwstLabel)
+                                .addComponent(mwstField)
                         )
                         .addGroup(artikelPanelGroupLayout.createParallelGroup()
                                 .addComponent(produktNummerLabel)
@@ -157,18 +173,14 @@ public class Artikelinformation extends JPanel {
                                 .addComponent(einzelpreisField)
                         )
                         .addGroup(artikelPanelGroupLayout.createParallelGroup()
-                                .addComponent(mengeLabel)
-                                .addComponent(mengeField)
-                        )
-                        .addGroup(artikelPanelGroupLayout.createParallelGroup()
-                                .addComponent(summeLabel)
-                                .addComponent(summeField)
+                                .addComponent(gesamtLabel)
+                                .addComponent(gesamtField)
                         )
         );
         artikelPanelGroupLayout.linkSize(SwingConstants.HORIZONTAL, kategorieLabel, produktLabel, produktNummerLabel, einzelpreisLabel,
-                mengeLabel, summeLabel);
+                mengeLabel, gesamtLabel, mwstLabel);
         artikelPanelGroupLayout.linkSize(SwingConstants.VERTICAL, kategorieField, produktField, produktNummerField, einzelpreisField,
-                mengeField, summeField);
+                mengeField, gesamtField, mwstField);
 
         //Panel mit den Buttons
         panelButtons.setLayout(new GridLayout(7, 0));
@@ -191,15 +203,16 @@ public class Artikelinformation extends JPanel {
         this.add(Box.createRigidArea(new Dimension(0, 5)));
         this.add(panelButtons);
     }
-    
+
     //Setzt das Panel der Artkelinformationen anhand eines übergeben Artikels
-    public static void setArtikelInformationen(Artikel artikel){
-        kategorieField.setText(artikel.getKategorie());
-        produktField.setText(artikel.getName());
-        produktNummerField.setText(String.valueOf(artikel.getId()));
-        einzelpreisField.setText(String.valueOf(artikel.getPreis()));
+    public static void setArtikelInformationen(Artikel artikel) {
         mengeField.setText(String.valueOf(artikel.getMenge()));
-        summeField.setText(String.valueOf(artikel.getMenge() * artikel.getPreis()));
+        produktField.setText(artikel.getName());
+        kategorieField.setText(artikel.getKategorie().getBezeichnung());
+        mwstField.setText(String.valueOf(artikel.getMehrwertsteuerklasse()));
+        produktNummerField.setText(String.valueOf(artikel.getId()));
+        einzelpreisField.setText(String.valueOf(artikel.getEinheitspreisString()));
+        gesamtField.setText(String.valueOf(artikel.getPreisString()));
     }
- 
+
 }

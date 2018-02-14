@@ -122,8 +122,8 @@ public class Artikel {
      * @return Ein String, der den Preis ordentlich anzeigt
      */
     public String getPreisString() {
-        String nullen = String.format("%04d€", getPreis());
-        return nullen.substring(0, nullen.length() - 2) + ',' + nullen.substring(nullen.length() - 2);
+        String nullen = String.format("%03d€", getPreis());
+        return nullen.substring(0, nullen.length() - 3) + ',' + nullen.substring(nullen.length() - 3);
     }
 
     /**
@@ -132,7 +132,7 @@ public class Artikel {
      * @return Ein String, der den Einheitspreis ordentlich anzeigt
      */
     public String getEinheitspreisString() {
-        String nullen = String.format("%04d€", einheitspreis);
+        String nullen = String.format("%03d€", einheitspreis);
         return nullen.substring(0, nullen.length() - 3) + ',' + nullen.substring(nullen.length() - 3);
     }
 
