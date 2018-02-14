@@ -5,6 +5,9 @@
  */
 package model;
 
+import Controller.DBVerbindung;
+import Controller.Einkaufsmanager;
+
 /**
  *
  * @author lykoju Laufzeitklasse fuer einen Artikel im Einkauf.
@@ -14,7 +17,6 @@ public class Artikel {
     public static enum Einheit {
         STUECK, GEWICHT
     };
-//    public static final DecimalFormat kgFormatter = new DecimalFormat(###)
 
     private final String name;
     private final String kategorie;
@@ -40,7 +42,7 @@ public class Artikel {
      * oder 1,000g
      * @param einheit Ob der Artikel in Stueck oder Gewicht abgerechnet wird.
      * @param mehrwertsteuerklasse Die Mehrwertsteuerklasse des Artikels. Ein
-     * einzelner (@code char) wie z.B. 'A'
+     * einzelner {@code char} wie z.B. 'A'
      * @param menge Die Menge des Artikels im Einkauf
      */
     public Artikel(String name, String kategorie, int id, int einheitspreis, Einheit einheit, char mehrwertsteuerklasse, int menge) {

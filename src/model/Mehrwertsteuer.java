@@ -22,7 +22,7 @@ public class Mehrwertsteuer {
      * @param id ID der Mehrwertsteuer in der DB
      * @param klasse Der Bezeichner fuer die Klasse
      * @param steuer Der Prozentsatz der Mehrwertsteuer von 1 ausgehend, z.B.
-     * 19% -> 1.19
+     * 19% bedeutet 1.19
      */
     public Mehrwertsteuer(int id, char klasse, float steuer) {
         this.id = id;

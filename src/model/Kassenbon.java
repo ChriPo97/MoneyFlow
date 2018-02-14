@@ -5,7 +5,8 @@
  */
 package model;
 
-import Controller.*;
+import Controller.DBVerbindung;
+import Controller.Propertymanager;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
