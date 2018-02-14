@@ -111,7 +111,7 @@ public class Einkaufsmanager {
      * @return der Gesamtpreis formatiert als String
      */
     public static String getGesamtPreisString() {
-        String nullen = String.format("%04d€", getGesamtpreis());
+        String nullen = String.format("%03d€", getGesamtpreis());
         return nullen.substring(0, nullen.length() - 3) + ',' + nullen.substring(nullen.length() - 3);
     }
 }

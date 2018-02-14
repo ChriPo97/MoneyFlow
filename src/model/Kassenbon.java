@@ -60,7 +60,7 @@ public class Kassenbon {
         for (Artikel a : warenkorb) {
             gesamtpreis += a.getPreis();
         }
-        String nullen = String.format("%04d€", gesamtpreis);
+        String nullen = String.format("%03d€", gesamtpreis);
         return nullen.substring(0, nullen.length() - 3) + ',' + nullen.substring(nullen.length() - 3);
     }
 
@@ -97,7 +97,7 @@ public class Kassenbon {
      * Mehrwertsteuerklasse in Brutto
      */
     public String getBruttoByMwstklasseString(char mwstklasse) {
-        String nullen = String.format("%04d€", getBruttoByMwstklasse(mwstklasse));
+        String nullen = String.format("%03d€", getBruttoByMwstklasse(mwstklasse));
         return nullen.substring(0, nullen.length() - 3) + ',' + nullen.substring(nullen.length() - 3);
     }
 
@@ -110,7 +110,7 @@ public class Kassenbon {
      * Mehrwertsteuerklasse in Netto
      */
     public String getNettoByMwstklasseString(char mwstklasse) {
-        String nullen = String.format("%04d€", getNettoByMwstklasse(mwstklasse));
+        String nullen = String.format("%03d€", getNettoByMwstklasse(mwstklasse));
         return nullen.substring(0, nullen.length() - 3) + ',' + nullen.substring(nullen.length() - 3);
     }
 
