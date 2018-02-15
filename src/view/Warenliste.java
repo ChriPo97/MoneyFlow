@@ -125,14 +125,14 @@ public class Warenliste extends JPanel {
 
     //Funktion zum Updaten des Summe Feldes
     public static void updateSummeField() {
-        summe.setText("Summe: " + Einkaufsmanager.getGesamtpreis());
+        summe.setText("Summe: " + Einkaufsmanager.getGesamtPreisString());
     }
 
     public static void updateWarenliste() {
         tableModel.setRowCount(0);
         for (Artikel artikelEinkaufskorb : Einkaufsmanager.getEinkaufskorb()) {
-            tableModel.addRow(new String[]{String.valueOf(artikelEinkaufskorb.getMenge()), artikelEinkaufskorb.getName(),
-                String.valueOf((100 - (artikelEinkaufskorb.getRabatt() * 100))) + "%", String.valueOf(artikelEinkaufskorb.getPreis())});
+            tableModel.addRow(new String[]{String.valueOf(artikelEinkaufskorb.getMengeFormatiert()), artikelEinkaufskorb.getName(),
+                String.valueOf((100 - (artikelEinkaufskorb.getRabatt() * 100))) + "%", String.valueOf(artikelEinkaufskorb.getPreisString())});
         }
     }
 

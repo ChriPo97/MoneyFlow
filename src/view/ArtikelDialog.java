@@ -28,8 +28,7 @@ import model.Artikel;
 
 /**
  *
- * @author Christoph 
- * Klasse zur Erstellunbg eines Dialog fensters für das 
+ * @author Christoph Klasse zur Erstellunbg eines Dialog fensters für das
  * Hinzufügen/Ändern/Löschen eines Artikels in der Datenbank
  */
 public class ArtikelDialog extends JDialog {
@@ -46,12 +45,12 @@ public class ArtikelDialog extends JDialog {
     private JLabel produktLabel = new JLabel("Produkt:");
     private JLabel einheitLabel = new JLabel("Einheit:");
     private JLabel einzelpreisLabel = new JLabel("Einzelpreis:");
-    private JLabel mwstLabel = new JLabel("Mehrwertsteuersatz:");
-    private static JComboBox kategorieComboBox = new JComboBox(new String[]{"Obst", "Sexspielzeug"});
+    private JLabel mwstLabel = new JLabel("MwSt:");
+    private static JTextField kategorieComboBox = new JTextField();
     private static JTextField produktField = new JTextField();
-    private static JComboBox einheitComboBox = new JComboBox(new String[]{"Kg", "Menge"});
+    private static JComboBox einheitComboBox = new JComboBox();
     private static JTextField einzelpreisField = new JTextField();
-    private static JComboBox mwstComboBox = new JComboBox(new String[]{"A", "B"});
+    private static JComboBox mwstComboBox = new JComboBox();
     JButton modeButton = new JButton();
 
     public ArtikelDialog(MenuBar.ArtikelMode artikelMode) {
@@ -98,55 +97,55 @@ public class ArtikelDialog extends JDialog {
         artikelPanel.setBorder(new EmptyBorder(new Insets(0, 0, 0, 10)));
         artikelPanelGroupLayout.setHorizontalGroup(
                 artikelPanelGroupLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
-                        .addGroup(artikelPanelGroupLayout.createSequentialGroup()
-                                .addComponent(kategorieLabel)
-                                .addComponent(kategorieComboBox)
-                        )
-                        .addGroup(artikelPanelGroupLayout.createSequentialGroup()
-                                .addComponent(produktLabel)
-                                .addComponent(produktField)
-                        )
-                        .addGroup(artikelPanelGroupLayout.createSequentialGroup()
-                                .addComponent(einheitLabel)
-                                .addComponent(einheitComboBox)
-                        )
-                        .addGroup(artikelPanelGroupLayout.createSequentialGroup()
-                                .addComponent(einzelpreisLabel)
-                                .addComponent(einzelpreisField)
-                        )
-                        .addGroup(artikelPanelGroupLayout.createSequentialGroup()
-                                .addComponent(mwstLabel)
-                                .addComponent(mwstComboBox)
-                        )
-                        .addGroup(artikelPanelGroupLayout.createSequentialGroup()
-                                .addComponent(modeButton)
-                        )
+                .addGroup(artikelPanelGroupLayout.createSequentialGroup()
+                        .addComponent(produktLabel)
+                        .addComponent(produktField)
+                )
+                .addGroup(artikelPanelGroupLayout.createSequentialGroup()
+                        .addComponent(einheitLabel)
+                        .addComponent(einheitComboBox)
+                )
+                .addGroup(artikelPanelGroupLayout.createSequentialGroup()
+                        .addComponent(kategorieLabel)
+                        .addComponent(kategorieComboBox)
+                )
+                .addGroup(artikelPanelGroupLayout.createSequentialGroup()
+                        .addComponent(mwstLabel)
+                        .addComponent(mwstComboBox)
+                )
+                .addGroup(artikelPanelGroupLayout.createSequentialGroup()
+                        .addComponent(einzelpreisLabel)
+                        .addComponent(einzelpreisField)
+                )
+                .addGroup(artikelPanelGroupLayout.createSequentialGroup()
+                        .addComponent(modeButton)
+                )
         );
         artikelPanelGroupLayout.setVerticalGroup(
                 artikelPanelGroupLayout.createSequentialGroup()
-                        .addGroup(artikelPanelGroupLayout.createParallelGroup()
-                                .addComponent(kategorieLabel)
-                                .addComponent(kategorieComboBox)
-                        )
-                        .addGroup(artikelPanelGroupLayout.createParallelGroup()
-                                .addComponent(produktLabel)
-                                .addComponent(produktField)
-                        )
-                        .addGroup(artikelPanelGroupLayout.createParallelGroup()
-                                .addComponent(einheitLabel)
-                                .addComponent(einheitComboBox)
-                        )
-                        .addGroup(artikelPanelGroupLayout.createParallelGroup()
-                                .addComponent(einzelpreisLabel)
-                                .addComponent(einzelpreisField)
-                        )
-                        .addGroup(artikelPanelGroupLayout.createParallelGroup()
-                                .addComponent(mwstLabel)
-                                .addComponent(mwstComboBox)
-                        )
-                        .addGroup(artikelPanelGroupLayout.createParallelGroup()
-                                .addComponent(modeButton)
-                        )
+                .addGroup(artikelPanelGroupLayout.createParallelGroup()
+                        .addComponent(produktLabel)
+                        .addComponent(produktField)
+                )
+                .addGroup(artikelPanelGroupLayout.createParallelGroup()
+                        .addComponent(einheitLabel)
+                        .addComponent(einheitComboBox)
+                )
+                .addGroup(artikelPanelGroupLayout.createParallelGroup()
+                        .addComponent(kategorieLabel)
+                        .addComponent(kategorieComboBox)
+                )
+                .addGroup(artikelPanelGroupLayout.createParallelGroup()
+                        .addComponent(mwstLabel)
+                        .addComponent(mwstComboBox)
+                )
+                .addGroup(artikelPanelGroupLayout.createParallelGroup()
+                        .addComponent(einzelpreisLabel)
+                        .addComponent(einzelpreisField)
+                )
+                .addGroup(artikelPanelGroupLayout.createParallelGroup()
+                        .addComponent(modeButton)
+                )
         );
         artikelPanelGroupLayout.linkSize(SwingConstants.HORIZONTAL, kategorieLabel, produktLabel, einheitLabel, einzelpreisLabel,
                 mwstLabel);

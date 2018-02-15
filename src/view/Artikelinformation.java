@@ -33,6 +33,7 @@ public class Artikelinformation extends JPanel {
     private JPanel artikelPanel = new JPanel();
     private JLabel mengeLabel = new JLabel("Menge:");
     private JLabel produktLabel = new JLabel("Produkt:");
+    private JLabel einheitLabel = new JLabel("Einheit:");
     private JLabel kategorieLabel = new JLabel("Kategorie:");
     private JLabel mwstLabel = new JLabel("MwSt:");
     private JLabel produktNummerLabel = new JLabel("Produktnummer:");
@@ -40,6 +41,7 @@ public class Artikelinformation extends JPanel {
     private JLabel gesamtLabel = new JLabel("Gesamtpreis:");
     private static JTextField mengeField = new JTextField();
     private static JTextField produktField = new JTextField();
+    private static JTextField einheitField = new JTextField();
     private static JTextField kategorieField = new JTextField();
     private static JTextField mwstField = new JTextField();
     private static JTextField produktNummerField = new JTextField();
@@ -111,6 +113,8 @@ public class Artikelinformation extends JPanel {
         mengeField.setBackground(Color.WHITE);
         produktField.setEditable(false);
         produktField.setBackground(Color.WHITE);
+        einheitField.setEditable(false);
+        einheitField.setBackground(Color.WHITE);
         kategorieField.setEditable(false);
         kategorieField.setBackground(Color.WHITE);
         mwstField.setEditable(false);
@@ -134,6 +138,10 @@ public class Artikelinformation extends JPanel {
                         .addGroup(artikelPanelGroupLayout.createSequentialGroup()
                                 .addComponent(produktLabel)
                                 .addComponent(produktField)
+                        )
+                        .addGroup(artikelPanelGroupLayout.createSequentialGroup()
+                                .addComponent(einheitLabel)
+                                .addComponent(einheitField)
                         )
                         .addGroup(artikelPanelGroupLayout.createSequentialGroup()
                                 .addComponent(kategorieLabel)
@@ -167,6 +175,10 @@ public class Artikelinformation extends JPanel {
                                 .addComponent(produktField)
                         )
                         .addGroup(artikelPanelGroupLayout.createParallelGroup()
+                                .addComponent(einheitLabel)
+                                .addComponent(einheitField)
+                        )
+                        .addGroup(artikelPanelGroupLayout.createParallelGroup()
                                 .addComponent(kategorieLabel)
                                 .addComponent(kategorieField)
                         )
@@ -188,15 +200,15 @@ public class Artikelinformation extends JPanel {
                         )
         );
         artikelPanelGroupLayout.linkSize(SwingConstants.HORIZONTAL, kategorieLabel, produktLabel, produktNummerLabel, einzelpreisLabel,
-                mengeLabel, gesamtLabel, mwstLabel);
+                mengeLabel, gesamtLabel, mwstLabel, einheitLabel);
         artikelPanelGroupLayout.linkSize(SwingConstants.VERTICAL, kategorieField, produktField, produktNummerField, einzelpreisField,
-                mengeField, gesamtField, mwstField);
+                mengeField, gesamtField, mwstField, einheitField);
 
         //Panel mit den Buttons
         panelButtons.setLayout(new GridLayout(7, 0));
         stornoButton.setMaximumSize(new Dimension(Integer.MAX_VALUE, stornoButton.getMinimumSize().height * 2));
         panelButtons.add(stornoButton);
-        panelButtons.add(Box.createRigidArea(new Dimension(0, stornoButton.getMinimumSize().height * 2)));
+        //panelButtons.add(Box.createRigidArea(new Dimension(0, stornoButton.getMinimumSize().height * 2)));
         produktnummerButton.setMaximumSize(new Dimension(Integer.MAX_VALUE, produktnummerButton.getMinimumSize().height * 2));
         panelButtons.add(produktnummerButton);
         mengeButton.setMaximumSize(new Dimension(Integer.MAX_VALUE, mengeButton.getMinimumSize().height * 2));
@@ -216,8 +228,9 @@ public class Artikelinformation extends JPanel {
 
     //Setzt das Panel der Artkelinformationen anhand eines übergeben Artikels
     public static void setArtikelInformationen(Artikel artikel) {
-        mengeField.setText(String.valueOf(artikel.getMenge()));
+        mengeField.setText(artikel.getMengeFormatiert());
         produktField.setText(artikel.getName());
+        einheitField.setText(artikel.getEinheit().toString());
         kategorieField.setText(artikel.getKategorie());
         mwstField.setText(String.valueOf(artikel.getMehrwertsteuerklasse()));
         produktNummerField.setText(String.valueOf(artikel.getId()));
