@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Artikel;
+import model.Artikel.Einheit;
 import model.Mehrwertsteuer;
 
 /**
@@ -274,6 +275,127 @@ public class DBVerbindung {
             Logger.getLogger(DBVerbindung.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    //alle Artikel aus Datenbank auslesen
+    public static ArrayList<Artikel> alleArtikelAuslesen() {
+        ArrayList<Artikel> artikelListe = new ArrayList<>();
+        Artikel artikel;
+        int artikelID;
+        String artikelname;
+        String kategorie;
+        int preis;
+        Artikel.Einheit einheit = null;
+        char mwstklasse;
+        try {
+
+            ps = con.prepareStatement("SELECT * FROM Artikel");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                //auslesen der einzelnen Artikeldaten
+                artikelID = rs.getInt("AID");
+                artikelname = rs.getString("Artikelname");
+                kategorie = rs.getString("Kategorie");
+                preis = rs.getInt("Preis");
+                 String tmp = rs.getString("Einheit");
+                if (tmp.equals("Stück")) {
+                    einheit = Artikel.Einheit.STUECK;
+                } else {
+                    if (tmp.equals("Gewicht")) {
+                        einheit = Artikel.Einheit.GEWICHT;
+                    }
+                }
+                
+               mwstklasse = DBVerbindung.getMwstById(rs.getInt("Mehrwertsteuerklasse")).getKlasse();
+               //Erstellen eines Artikel mit seinen zugehörigen Informationen
+                artikel = new Artikel(artikelname, kategorie, artikelID, preis, einheit, mwstklasse,0);
+                //Hinzufügen des Artikels zur ArrayList
+                artikelListe.add(artikel);
+           
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DBVerbindung.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return artikelListe;
+    }
+
+    //Artikel bearbeiten basierend auf AID
+    //Artikelname bearbeiten
+    public static void artikelBearbeitenName(int artikelID, String artikelnameNeu) {
+        try {
+            ps = con.prepareStatement("UPDATE Artikel SET Artikelname=? WHERE AID=?");
+            ps.setString(1, artikelnameNeu);
+            ps.setInt(2, artikelID);
+            ps.execute();
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBVerbindung.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    //Artikelkategorie bearbeiten
+    public static void artikelBearbeitenKategorie(int artikelID, String kategorieNeu) {
+        try {
+            ps = con.prepareStatement("UPDATE Artikel SET Kategorie=? WHERE AID=?");
+            ps.setString(1, kategorieNeu);
+            ps.setInt(2, artikelID);
+            ps.execute();
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBVerbindung.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    //Artikelpreis bearbeiten
+    public static void artikelBearbeitenPreis(int artikelID, int preisNeu) {
+        try {
+            ps = con.prepareStatement("UPDATE Artikel SET Preis=? WHERE AID=?");
+            ps.setInt(1, preisNeu);
+            ps.setInt(2, artikelID);
+            ps.execute();
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBVerbindung.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    //Artikeleinheit bearbeiten
+    public static void artikelBearbeitenEinheit(int artikelID, String einheitNeu) {
+        try {
+            ps = con.prepareStatement("UPDATE Artikel SET Einheit=? WHERE AID=?");
+            ps.setString(1, einheitNeu);
+            ps.setInt(2, artikelID);
+            ps.execute();
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBVerbindung.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    //Artikelmehrwertsteuer bearbeiten
+
+    public static void artikelBearbeitenMwstklasse(int artikelID, int mwstNeu) {
+        try {
+            ps = con.prepareStatement("UPDATE Artikel SET Mehrwertsteuerklasse=? WHERE AID=?");
+            ps.setInt(1, mwstNeu);
+            ps.setInt(2, artikelID);
+            ps.execute();
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBVerbindung.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    //Artikel basierend auf der AID löschen
+    public static void artikelLoeschen(int artikelID) {
+        try {
+            ps = con.prepareStatement("DELETE FROM Artikel WHERE AID=?");
+            ps.setInt(1, artikelID);
+            ps.execute();
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBVerbindung.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public static Mehrwertsteuer getMwstById(int id) {
