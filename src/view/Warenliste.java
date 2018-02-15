@@ -105,11 +105,12 @@ public class Warenliste extends JPanel {
     }
 
     //Funktion zum Löschen eines Artikels in der Table
-    public static void removeArtikel(Artikel artikel) {
-        updateSummeField();
-        for (int row = 0; row < tableModel.getRowCount(); row++) {
-            if (tableModel.getValueAt(row, 0) == artikel.getName()) {
+    public static void removeArtikel(int row) {
+        for (Artikel artikel : Einkaufsmanager.getEinkaufskorb()) {
+            if (tableModel.getValueAt(row, 1) == artikel.getName()) {
+                Einkaufsmanager.stornierenArtikel(artikel);
                 tableModel.removeRow(row);
+                updateSummeField();
                 return;
             }
         }
@@ -130,7 +131,7 @@ public class Warenliste extends JPanel {
         tableModel.setRowCount(0);
         for (Artikel artikelEinkaufskorb : Einkaufsmanager.getEinkaufskorb()) {
             tableModel.addRow(new String[]{String.valueOf(artikelEinkaufskorb.getMenge()), artikelEinkaufskorb.getName(),
-                String.valueOf((100 - (artikelEinkaufskorb.getRabatt()*100))) + "%", String.valueOf(artikelEinkaufskorb.getPreis())});
+                String.valueOf((100 - (artikelEinkaufskorb.getRabatt() * 100))) + "%", String.valueOf(artikelEinkaufskorb.getPreis())});
         }
     }
 

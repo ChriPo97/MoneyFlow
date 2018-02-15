@@ -66,7 +66,7 @@ public class Artikelinformation extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (Warenliste.getLastSelectedTableRow() >= 0) {
-                    //Warenliste.removeArtikel(null);
+                    Warenliste.removeArtikel(Warenliste.getLastSelectedTableRow());
                 }
             }
         });
