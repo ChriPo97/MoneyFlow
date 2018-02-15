@@ -111,6 +111,7 @@ public class Warenliste extends JPanel {
                 Einkaufsmanager.stornierenArtikel(artikel);
                 tableModel.removeRow(row);
                 updateSummeField();
+                updateWarenliste();
                 return;
             }
         }
@@ -155,6 +156,12 @@ public class Warenliste extends JPanel {
                 }
             }
         }
+        updateSummeField();
+        updateWarenliste();
+    }
+    
+    public static void clearTable() {
+        tableModel.setRowCount(0);
         updateSummeField();
         updateWarenliste();
     }

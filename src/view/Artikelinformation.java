@@ -5,6 +5,7 @@
  */
 package view;
 
+import Controller.Einkaufsmanager;
 import model.Artikel;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -97,6 +98,15 @@ public class Artikelinformation extends JPanel {
 
         verkaufAbbrechenButton.setFont(new Font("Arial", 0, 24));
         verkaufAbbrechenButton.setForeground(new java.awt.Color(255, 51, 51));
+        verkaufAbbrechenButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Einkaufsmanager.stornierenEinkauf();
+                Warenliste.clearTable();
+                Ziffernblock.setModeMenge();
+            }
+        });
+        
         mengeField.setEditable(false);
         mengeField.setBackground(Color.WHITE);
         produktField.setEditable(false);
