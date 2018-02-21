@@ -5,10 +5,14 @@
  */
 package view;
 
+import Controller.DBVerbindung;
 import Controller.Einkaufsmanager;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -46,11 +50,11 @@ public class ArtikelDialog extends JDialog {
     private JLabel einheitLabel = new JLabel("Einheit:");
     private JLabel einzelpreisLabel = new JLabel("Einzelpreis:");
     private JLabel mwstLabel = new JLabel("MwSt:");
-    private static JTextField kategorieComboBox = new JTextField();
+    private static JTextField kategorieField = new JTextField();
     private static JTextField produktField = new JTextField();
-    private static JComboBox einheitComboBox = new JComboBox();
+    private static JComboBox einheitComboBox = new JComboBox(new String[]{"STUECK", "GEWICHT"});
     private static JTextField einzelpreisField = new JTextField();
-    private static JComboBox mwstComboBox = new JComboBox();
+    private static JComboBox mwstComboBox = new JComboBox(new String[]{"A", "B"});
     JButton modeButton = new JButton();
 
     public ArtikelDialog(MenuBar.ArtikelMode artikelMode) {
@@ -62,21 +66,61 @@ public class ArtikelDialog extends JDialog {
         if (artikelMode == MenuBar.ArtikelMode.ADD) {
             this.setMinimumSize(new Dimension(300, 250));
             modeButton.setText("Artikel hinzufügen");
+            kategorieField.setEnabled(true);
+            produktField.setEnabled(true);
+            einheitComboBox.setEnabled(true);
+            einzelpreisField.setEnabled(true);
+            mwstComboBox.setEnabled(true);
+            modeButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (produktField.getText() != "") {
+                        //DBVerbindung.artikelAnlegen(produktField.getText(), kategorieField.getText(), 0, einheitComboBox.getSelectedItem().toString(), 0, 0);
+                    }
+                }
+            });
         }
         if (artikelMode == MenuBar.ArtikelMode.CHANGE) {
             this.setMinimumSize(new Dimension(600, 250));
             modeButton.setText("Artikel ändern");
+            kategorieField.setEnabled(true);
+            produktField.setEnabled(true);
+            einheitComboBox.setEnabled(true);
+            einzelpreisField.setEnabled(true);
+            mwstComboBox.setEnabled(true);
             initTree();
+            modeButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (produktField.getText() != "") {
+                        int id = DBVerbindung.artikelNametoArtikelID(produktField.getText());
+                        DBVerbindung.artikelBearbeitenKategorie(id, kategorieField.getText());
+                        DBVerbindung.artikelBearbeitenName(id, produktField.getText());
+                        //DBVerbindung.artikelBearbeitenEinheit(id, einheitComboBox.getSelectedItem().toString());
+                        //DBVerbindung.artikelBearbeitenPreis(id, einzelpreisField.getText());
+                        //DBVerbindung.artikelBearbeitenMwstklasse(id, );
+                    }
+                }
+            });
         }
         if (artikelMode == MenuBar.ArtikelMode.DELETE) {
             this.setMinimumSize(new Dimension(600, 250));
             modeButton.setText("Artikel löschen");
-            kategorieComboBox.setEnabled(false);
+            kategorieField.setEnabled(false);
             produktField.setEnabled(false);
             einheitComboBox.setEnabled(false);
             einzelpreisField.setEnabled(false);
             mwstComboBox.setEnabled(false);
             initTree();
+            modeButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (produktField.getText() != "") {
+                        int id = DBVerbindung.artikelNametoArtikelID(produktField.getText());
+                        DBVerbindung.artikelLoeschen(id);
+                    }
+                }
+            });
         }
 
         this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -97,59 +141,59 @@ public class ArtikelDialog extends JDialog {
         artikelPanel.setBorder(new EmptyBorder(new Insets(0, 0, 0, 10)));
         artikelPanelGroupLayout.setHorizontalGroup(
                 artikelPanelGroupLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
-                .addGroup(artikelPanelGroupLayout.createSequentialGroup()
-                        .addComponent(produktLabel)
-                        .addComponent(produktField)
-                )
-                .addGroup(artikelPanelGroupLayout.createSequentialGroup()
-                        .addComponent(einheitLabel)
-                        .addComponent(einheitComboBox)
-                )
-                .addGroup(artikelPanelGroupLayout.createSequentialGroup()
-                        .addComponent(kategorieLabel)
-                        .addComponent(kategorieComboBox)
-                )
-                .addGroup(artikelPanelGroupLayout.createSequentialGroup()
-                        .addComponent(mwstLabel)
-                        .addComponent(mwstComboBox)
-                )
-                .addGroup(artikelPanelGroupLayout.createSequentialGroup()
-                        .addComponent(einzelpreisLabel)
-                        .addComponent(einzelpreisField)
-                )
-                .addGroup(artikelPanelGroupLayout.createSequentialGroup()
-                        .addComponent(modeButton)
-                )
+                        .addGroup(artikelPanelGroupLayout.createSequentialGroup()
+                                .addComponent(produktLabel)
+                                .addComponent(produktField)
+                        )
+                        .addGroup(artikelPanelGroupLayout.createSequentialGroup()
+                                .addComponent(einheitLabel)
+                                .addComponent(einheitComboBox)
+                        )
+                        .addGroup(artikelPanelGroupLayout.createSequentialGroup()
+                                .addComponent(kategorieLabel)
+                                .addComponent(kategorieField)
+                        )
+                        .addGroup(artikelPanelGroupLayout.createSequentialGroup()
+                                .addComponent(mwstLabel)
+                                .addComponent(mwstComboBox)
+                        )
+                        .addGroup(artikelPanelGroupLayout.createSequentialGroup()
+                                .addComponent(einzelpreisLabel)
+                                .addComponent(einzelpreisField)
+                        )
+                        .addGroup(artikelPanelGroupLayout.createSequentialGroup()
+                                .addComponent(modeButton)
+                        )
         );
         artikelPanelGroupLayout.setVerticalGroup(
                 artikelPanelGroupLayout.createSequentialGroup()
-                .addGroup(artikelPanelGroupLayout.createParallelGroup()
-                        .addComponent(produktLabel)
-                        .addComponent(produktField)
-                )
-                .addGroup(artikelPanelGroupLayout.createParallelGroup()
-                        .addComponent(einheitLabel)
-                        .addComponent(einheitComboBox)
-                )
-                .addGroup(artikelPanelGroupLayout.createParallelGroup()
-                        .addComponent(kategorieLabel)
-                        .addComponent(kategorieComboBox)
-                )
-                .addGroup(artikelPanelGroupLayout.createParallelGroup()
-                        .addComponent(mwstLabel)
-                        .addComponent(mwstComboBox)
-                )
-                .addGroup(artikelPanelGroupLayout.createParallelGroup()
-                        .addComponent(einzelpreisLabel)
-                        .addComponent(einzelpreisField)
-                )
-                .addGroup(artikelPanelGroupLayout.createParallelGroup()
-                        .addComponent(modeButton)
-                )
+                        .addGroup(artikelPanelGroupLayout.createParallelGroup()
+                                .addComponent(produktLabel)
+                                .addComponent(produktField)
+                        )
+                        .addGroup(artikelPanelGroupLayout.createParallelGroup()
+                                .addComponent(einheitLabel)
+                                .addComponent(einheitComboBox)
+                        )
+                        .addGroup(artikelPanelGroupLayout.createParallelGroup()
+                                .addComponent(kategorieLabel)
+                                .addComponent(kategorieField)
+                        )
+                        .addGroup(artikelPanelGroupLayout.createParallelGroup()
+                                .addComponent(mwstLabel)
+                                .addComponent(mwstComboBox)
+                        )
+                        .addGroup(artikelPanelGroupLayout.createParallelGroup()
+                                .addComponent(einzelpreisLabel)
+                                .addComponent(einzelpreisField)
+                        )
+                        .addGroup(artikelPanelGroupLayout.createParallelGroup()
+                                .addComponent(modeButton)
+                        )
         );
         artikelPanelGroupLayout.linkSize(SwingConstants.HORIZONTAL, kategorieLabel, produktLabel, einheitLabel, einzelpreisLabel,
                 mwstLabel);
-        artikelPanelGroupLayout.linkSize(SwingConstants.VERTICAL, kategorieComboBox, produktField, einheitComboBox, einzelpreisField,
+        artikelPanelGroupLayout.linkSize(SwingConstants.VERTICAL, kategorieField, produktField, einheitComboBox, einzelpreisField,
                 mwstComboBox);
         dialogPanel.add(artikelPanel);
         this.add(dialogPanel);
@@ -158,19 +202,36 @@ public class ArtikelDialog extends JDialog {
     //Initiert des Tree mit allen Artikeln
     private void initTree() {
         DefaultMutableTreeNode top = new DefaultMutableTreeNode("Artikel");
-        DefaultMutableTreeNode obst = new DefaultMutableTreeNode("Obst");
-        DefaultMutableTreeNode banane = new DefaultMutableTreeNode("Banane");
-        obst.add(banane);
-        top.add(obst);
+        ArrayList<String> tempKategorien = new ArrayList<String>();
+        ArrayList<Artikel> tempArtikel = DBVerbindung.alleArtikelAuslesen();
+        for (Artikel artikel : tempArtikel) {
+            if (!tempKategorien.contains(artikel.getKategorie())) {
+                tempKategorien.add(artikel.getKategorie());
+            }
+        }
+        for (String tempKategorie : tempKategorien) {
+            DefaultMutableTreeNode kategorieNode = new DefaultMutableTreeNode(tempKategorie);
+            for (Artikel artikel : tempArtikel) {
+                if (artikel.getKategorie().equals(tempKategorie)) {
+                    DefaultMutableTreeNode artikelNode = new DefaultMutableTreeNode(artikel.getName());
+                    kategorieNode.add(artikelNode);
+                }
+            }
+            top.add(kategorieNode);
+        }
         tree = new JTree(top);
+
         tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         tree.addTreeSelectionListener(new TreeSelectionListener() {
             @Override
             public void valueChanged(TreeSelectionEvent e) {
-                for (Artikel artikel : Einkaufsmanager.getEinkaufskorb()) {
-                    if (artikel.getName() == e.getPath().getLastPathComponent().toString()) {
+                for (Artikel artikel : DBVerbindung.alleArtikelAuslesen()) {
+                    if (artikel.getName().equals(e.getPath().getLastPathComponent().toString())) {
+                        kategorieField.setText(artikel.getKategorie());
                         produktField.setText(artikel.getName());
-                        einzelpreisField.setText(String.valueOf(artikel.getPreis()));
+                        einheitComboBox.setSelectedItem(artikel.getEinheit().toString());
+                        einzelpreisField.setText(String.valueOf(artikel.getPreisString()));
+                        mwstComboBox.setSelectedItem(String.valueOf(artikel.getMehrwertsteuerklasse()));
                     }
                 }
             }
