@@ -7,6 +7,7 @@ package Controller;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.AbstractMap;
 import java.util.AbstractMap.SimpleEntry;
@@ -39,6 +40,14 @@ public class Propertymanager {
             Logger.getLogger(Propertymanager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public static void schreibenProperties() {
+        try (FileOutputStream out = new FileOutputStream("MoneyFlow.properties")) {
+            PROPS.store(out, "MoneyFlow.properties");
+        } catch (IOException ex) {
+            Logger.getLogger(Propertymanager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     public static String getProperty(String property) {
         return PROPS.getProperty(property);
@@ -46,10 +55,6 @@ public class Propertymanager {
     
     public static void setProperty(String property, String propertyText) {
         PROPS.setProperty(property, propertyText);
-    }
-
-       public static void setProperty(String property, String wertNeu) {
-        PROPS.setProperty(property, wertNeu);
     }
 
     public static List<Entry<String, String>> getAlleProperties() {
