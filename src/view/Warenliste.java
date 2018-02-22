@@ -58,7 +58,7 @@ public class Warenliste extends JPanel {
         mwst.setEditable(false);
         mwst.setBackground(Color.WHITE);
         mwst.setFont(new Font("Ariel", 0, 16));
-        mwst.setText("MwSt: "+ Einkaufsmanager.getGesamtPreisString());
+        mwst.setText("MwSt: "+ Einkaufsmanager.getGesamtMwstString());
 
         //Erstellen des Table Models und der JTabel
         tableModel.addColumn("Menge");
@@ -128,7 +128,7 @@ public class Warenliste extends JPanel {
     //Funktion zum Updaten des Summe Feldes
     public static void updateSummeUndMwst() {
         summe.setText("Summe: " + Einkaufsmanager.getGesamtPreisString());
-        mwst.setText("MwSt: " + Einkaufsmanager.getGesamtPreisString());
+        mwst.setText("MwSt: " + Einkaufsmanager.getGesamtMwstString());
     }
 
     public static void updateWarenliste() {

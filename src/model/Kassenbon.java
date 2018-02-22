@@ -77,7 +77,7 @@ public class Kassenbon {
 
     public int getNettoByMwstklasse(char mwstklasse) {
         //Ermittle den Mehrwertsteuersatz fuer die gesuchte Klasse;
-        float satz = DBVerbindung.getMwstByKlasse(mwstklasse).getSteuer();
+        float satz = 1 + DBVerbindung.getMwstByKlasse(mwstklasse).getSteuer();
         int netto = 0;
         //Summiere alle Preise
         for (Artikel a : warenkorb) {

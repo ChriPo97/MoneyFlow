@@ -122,9 +122,12 @@ public class Einkaufsmanager {
      */
     public static String getGesamtMwstString() {
         int gesamtmwst = 0;
+        float mwst;
         for (Artikel a : EINKAUFSKORB) {
-            gesamtmwst += a.getPreis() / DBVerbindung.getMwstByKlasse(a.getMehrwertsteuerklasse()).getSteuer();
+            mwst = DBVerbindung.getMwstByKlasse(a.getMehrwertsteuerklasse()).getSteuer();
+            gesamtmwst += Math.round((a.getPreis() / 1+mwst)*mwst);
         }
-        return String.format("%03d€", gesamtmwst);
+        String gesamtString = String.format("%03d€", gesamtmwst);
+        return gesamtString.substring(0, gesamtString.length() - 3) + ',' + gesamtString.substring(gesamtString.length() - 3);
     }
 }

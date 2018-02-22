@@ -8,7 +8,13 @@ package Controller;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.AbstractMap;
+import java.util.AbstractMap.SimpleEntry;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map.Entry;
 import java.util.Properties;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,20 +25,27 @@ import java.util.logging.Logger;
  */
 public class Propertymanager {
 
-    private static Properties props = new Properties();
-    
+    private static final Properties PROPS = new Properties();
+    private static final List<Entry<String, String>> ALLE_PROPS = new ArrayList<>();
+
     public static void ladenProperties() {
-        try {
-            FileInputStream in = new FileInputStream("MoneyFlow.properties");
-            props.load(in);
-            in.close();
+        try (FileInputStream in = new FileInputStream("MoneyFlow.properties")) {
+            PROPS.load(in);
+            for (Entry e : PROPS.entrySet()) {
+                Entry newEntry = new SimpleEntry<>(e.getKey(), e.getValue());
+                ALLE_PROPS.add(newEntry);
+            }
         } catch (IOException ex) {
             Logger.getLogger(Propertymanager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     public static String getProperty(String property) {
-        return props.getProperty(property);
+        return PROPS.getProperty(property);
+    }
+
+    public static List<Entry<String, String>> getAlleProperties() {
+        return ALLE_PROPS;
     }
 
 }

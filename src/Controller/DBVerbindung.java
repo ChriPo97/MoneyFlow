@@ -43,7 +43,7 @@ public class DBVerbindung {
             ps = con.prepareStatement("SELECT * FROM Mehrwertsteuer");
             rs = ps.executeQuery();
             while (rs.next()) {
-                MWSTLISTE.add(new Mehrwertsteuer(rs.getInt(1), rs.getString(2).charAt(0), rs.getFloat(3)));
+                MWSTLISTE.add(new Mehrwertsteuer(rs.getInt(1), rs.getString(2).charAt(0), rs.getFloat(3)/100));
             }
             rs.close();
         } catch (SQLException ex) {
