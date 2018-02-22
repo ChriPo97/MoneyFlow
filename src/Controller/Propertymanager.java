@@ -43,6 +43,10 @@ public class Propertymanager {
     public static String getProperty(String property) {
         return PROPS.getProperty(property);
     }
+    
+    public static void setProperty(String property, String propertyText) {
+        PROPS.setProperty(property, propertyText);
+    }
 
        public static void setProperty(String property, String wertNeu) {
         PROPS.setProperty(property, wertNeu);
