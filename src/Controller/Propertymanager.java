@@ -44,6 +44,10 @@ public class Propertymanager {
         return PROPS.getProperty(property);
     }
 
+       public static void setProperty(String property, String wertNeu) {
+        PROPS.setProperty(property, wertNeu);
+    }
+
     public static List<Entry<String, String>> getAlleProperties() {
         return ALLE_PROPS;
     }
