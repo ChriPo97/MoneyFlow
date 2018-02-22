@@ -9,6 +9,7 @@ import model.Artikel;
 import model.Kassenbon;
 import java.util.ArrayList;
 import java.util.Collections;
+import model.Mehrwertsteuer;
 
 /**
  *
@@ -26,7 +27,8 @@ public class Einkaufsmanager {
      *
      * @param id ID des Artikels in der Datenbank
      * @param menge die Menge des Artikels im Einkauf
-     * @return {@code true} wenn der Artikel erfolgreich hinzugefuegt wurde, sonst {@code false}
+     * @return {@code true} wenn der Artikel erfolgreich hinzugefuegt wurde,
+     * sonst {@code false}
      */
     public static boolean hinzufuegenArtikel(int id, int menge) {
         Artikel artikel = DBVerbindung.getArtikelbyID(id, menge);
@@ -40,8 +42,8 @@ public class Einkaufsmanager {
                 return true;
             }
         }
-            //hinzufuegen eines neuen Artikels
-            EINKAUFSKORB.add(artikel);
+        //hinzufuegen eines neuen Artikels
+        EINKAUFSKORB.add(artikel);
         return true;
     }
 
@@ -106,10 +108,23 @@ public class Einkaufsmanager {
 
     /**
      * Gibt einen String aus welcher den Gesamtpreis formatiert anzeigt.
+     *
      * @return der Gesamtpreis formatiert als String
      */
     public static String getGesamtPreisString() {
         String nullen = String.format("%03d€", getGesamtpreis());
         return nullen.substring(0, nullen.length() - 3) + ',' + nullen.substring(nullen.length() - 3);
+    }
+
+    /**
+     * Gibt einen String aus welcher die Nettomehrwertsteuer fuer den gesamten Einkauf formatiert anzeigt.
+     * @return die Nettomehrwertsteuer formatiert als String
+     */
+    public static String getGesamtMwstString() {
+        int gesamtmwst = 0;
+        for (Artikel a : EINKAUFSKORB) {
+            gesamtmwst += a.getPreis() / DBVerbindung.getMwstByKlasse(a.getMehrwertsteuerklasse()).getSteuer();
+        }
+        return String.format("%03d€", gesamtmwst);
     }
 }
