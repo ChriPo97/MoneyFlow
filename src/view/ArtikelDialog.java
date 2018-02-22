@@ -79,6 +79,7 @@ public class ArtikelDialog extends JDialog {
                     }
                 }
             });
+            //Barcode generieren
         }
         if (artikelMode == MenuBar.ArtikelMode.CHANGE) {
             this.setMinimumSize(new Dimension(600, 250));

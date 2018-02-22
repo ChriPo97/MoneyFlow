@@ -52,11 +52,13 @@ public class Warenliste extends JPanel {
         summe.setMaximumSize(new Dimension(Short.MAX_VALUE, 70));
         summe.setBackground(Color.WHITE);
         summe.setFont(new Font("Ariel", 0, 30));
+        summe.setText("Summe: " + Einkaufsmanager.getGesamtPreisString());
         mwst.setPreferredSize(new Dimension(Short.MAX_VALUE, 40));
         mwst.setMaximumSize(new Dimension(Short.MAX_VALUE, 40));
         mwst.setEditable(false);
         mwst.setBackground(Color.WHITE);
         mwst.setFont(new Font("Ariel", 0, 16));
+        mwst.setText("MwSt: "+ Einkaufsmanager.getGesamtPreisString());
 
         //Erstellen des Table Models und der JTabel
         tableModel.addColumn("Menge");
@@ -101,7 +103,7 @@ public class Warenliste extends JPanel {
     public static void addArtikel(int id) {
         Einkaufsmanager.hinzufuegenArtikel(id, 1);
         updateWarenliste();
-        updateSummeField();
+        updateSummeUndMwst();
     }
 
     //Funktion zum Löschen eines Artikels in der Table
@@ -110,7 +112,7 @@ public class Warenliste extends JPanel {
             if (tableModel.getValueAt(row, 1) == artikel.getName()) {
                 Einkaufsmanager.stornierenArtikel(artikel);
                 tableModel.removeRow(row);
-                updateSummeField();
+                updateSummeUndMwst();
                 updateWarenliste();
                 return;
             }
@@ -124,8 +126,9 @@ public class Warenliste extends JPanel {
     }
 
     //Funktion zum Updaten des Summe Feldes
-    public static void updateSummeField() {
+    public static void updateSummeUndMwst() {
         summe.setText("Summe: " + Einkaufsmanager.getGesamtPreisString());
+        mwst.setText("MwSt: " + Einkaufsmanager.getGesamtPreisString());
     }
 
     public static void updateWarenliste() {
@@ -144,7 +147,7 @@ public class Warenliste extends JPanel {
                 }
             }
         }
-        updateSummeField();
+        updateSummeUndMwst();
         updateWarenliste();
     }
 
@@ -156,13 +159,13 @@ public class Warenliste extends JPanel {
                 }
             }
         }
-        updateSummeField();
+        updateSummeUndMwst();
         updateWarenliste();
     }
     
     public static void clearTable() {
         tableModel.setRowCount(0);
-        updateSummeField();
+        updateSummeUndMwst();
         updateWarenliste();
     }
 

@@ -108,16 +108,18 @@ public class Ziffernblock extends JPanel {
         enter.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (mode == Mode.PRODUKTNUMMER) {
-                    Warenliste.addArtikel(Integer.valueOf(preisField.getText()));
+                if (!preisField.getText().equals("")) {
+                    if (mode == Mode.PRODUKTNUMMER) {
+                        Warenliste.addArtikel(Integer.valueOf(preisField.getText()));
+                    }
+                    if (mode == Mode.RABATT) {
+                        Warenliste.discountArtikel(Integer.valueOf(preisField.getText()));
+                    }
+                    if (mode == Mode.MENGE) {
+                        Warenliste.changeMenge(Integer.valueOf(preisField.getText()));
+                    }
+                    preisField.setText("");
                 }
-                if(mode == Mode.RABATT) {
-                    Warenliste.discountArtikel(Integer.valueOf(preisField.getText()));
-                }
-                if(mode == Mode.MENGE) {
-                    Warenliste.changeMenge(Integer.valueOf(preisField.getText()));
-                }
-                preisField.setText("");
             }
         });
 
@@ -155,41 +157,41 @@ public class Ziffernblock extends JPanel {
 
         ziffernBlockGroupLayout.setHorizontalGroup(
                 ziffernBlockGroupLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
-                .addGroup(ziffernBlockGroupLayout.createSequentialGroup()
-                        .addComponent(preisField)
-                )
-                .addGroup(ziffernBlockGroupLayout.createSequentialGroup()
-                        .addComponent(produktNummerLabel)
-                        .addGap(20)
-                        .addComponent(mengeLabel)
-                        .addGap(20)
-                        .addComponent(rabattLabel)
-                )
-                .addGroup(ziffernBlockGroupLayout.createSequentialGroup()
-                        .addComponent(ziffernPanel)
-                )
-                .addGroup(ziffernBlockGroupLayout.createSequentialGroup()
-                        .addComponent(checkoutPanel)
-                )
+                        .addGroup(ziffernBlockGroupLayout.createSequentialGroup()
+                                .addComponent(preisField)
+                        )
+                        .addGroup(ziffernBlockGroupLayout.createSequentialGroup()
+                                .addComponent(produktNummerLabel)
+                                .addGap(20)
+                                .addComponent(mengeLabel)
+                                .addGap(20)
+                                .addComponent(rabattLabel)
+                        )
+                        .addGroup(ziffernBlockGroupLayout.createSequentialGroup()
+                                .addComponent(ziffernPanel)
+                        )
+                        .addGroup(ziffernBlockGroupLayout.createSequentialGroup()
+                                .addComponent(checkoutPanel)
+                        )
         );
         ziffernBlockGroupLayout.setVerticalGroup(
                 ziffernBlockGroupLayout.createSequentialGroup()
-                .addGroup(ziffernBlockGroupLayout.createSequentialGroup()
-                        .addGap(5)
-                        .addComponent(preisField)
-                )
-                .addGroup(ziffernBlockGroupLayout.createParallelGroup()
-                        .addComponent(produktNummerLabel)
-                        .addComponent(mengeLabel)
-                        .addComponent(rabattLabel)
-                )
-                .addGroup(ziffernBlockGroupLayout.createSequentialGroup()
-                        .addComponent(ziffernPanel)
-                        .addGap(50)
-                )
-                .addGroup(ziffernBlockGroupLayout.createParallelGroup()
-                        .addComponent(checkoutPanel)
-                )
+                        .addGroup(ziffernBlockGroupLayout.createSequentialGroup()
+                                .addGap(5)
+                                .addComponent(preisField)
+                        )
+                        .addGroup(ziffernBlockGroupLayout.createParallelGroup()
+                                .addComponent(produktNummerLabel)
+                                .addComponent(mengeLabel)
+                                .addComponent(rabattLabel)
+                        )
+                        .addGroup(ziffernBlockGroupLayout.createSequentialGroup()
+                                .addComponent(ziffernPanel)
+                                .addGap(50)
+                        )
+                        .addGroup(ziffernBlockGroupLayout.createParallelGroup()
+                                .addComponent(checkoutPanel)
+                        )
         );
     }
 
