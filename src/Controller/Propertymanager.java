@@ -32,15 +32,11 @@ public class Propertymanager {
     public static void ladenProperties() {
         try (FileInputStream in = new FileInputStream("MoneyFlow.properties")) {
             PROPS.load(in);
-            for (Entry e : PROPS.entrySet()) {
-                Entry newEntry = new SimpleEntry<>(e.getKey(), e.getValue());
-                ALLE_PROPS.add(newEntry);
-            }
         } catch (IOException ex) {
             Logger.getLogger(Propertymanager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public static void schreibenProperties() {
         try (FileOutputStream out = new FileOutputStream("MoneyFlow.properties")) {
             PROPS.store(out, "MoneyFlow.properties");
@@ -52,12 +48,16 @@ public class Propertymanager {
     public static String getProperty(String property) {
         return PROPS.getProperty(property);
     }
-    
+
     public static void setProperty(String property, String propertyText) {
         PROPS.setProperty(property, propertyText);
     }
 
     public static List<Entry<String, String>> getAlleProperties() {
+        for (Entry e : PROPS.entrySet()) {
+            Entry newEntry = new SimpleEntry<>(e.getKey(), e.getValue());
+            ALLE_PROPS.add(newEntry);
+        }
         return ALLE_PROPS;
     }
 
