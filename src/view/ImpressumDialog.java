@@ -60,6 +60,7 @@ public class ImpressumDialog extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Propertymanager.setProperty("MoneyFlow.Impressum", "\"" + textArea.getText() + "\"");
+                Propertymanager.schreibenProperties();
                 disposeDialog();
                 JOptionPane.showMessageDialog(null, "Impressum geändert");
             }
