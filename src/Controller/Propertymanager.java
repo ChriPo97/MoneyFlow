@@ -27,7 +27,6 @@ import java.util.logging.Logger;
 public class Propertymanager {
 
     private static final Properties PROPS = new Properties();
-    private static final List<Entry<String, String>> ALLE_PROPS = new ArrayList<>();
 
     public static void ladenProperties() {
         try (FileInputStream in = new FileInputStream("MoneyFlow.properties")) {
@@ -54,11 +53,12 @@ public class Propertymanager {
     }
 
     public static List<Entry<String, String>> getAlleProperties() {
+        List<Entry<String, String>> propListe = new ArrayList<>();
         for (Entry e : PROPS.entrySet()) {
             Entry newEntry = new SimpleEntry<>(e.getKey(), e.getValue());
-            ALLE_PROPS.add(newEntry);
+            propListe.add(newEntry);
         }
-        return ALLE_PROPS;
+        return propListe;
     }
 
 }
