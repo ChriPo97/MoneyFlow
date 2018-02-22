@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JSeparator;
 
 /**
  *
@@ -23,11 +24,13 @@ public class MenuBar extends JMenuBar{
     private JMenu datei = new JMenu("Datei");
     private JMenu tools = new JMenu("Tools");
     private JMenu datenbank = new JMenu("Datenbank");
+    private JMenuItem impressum = new JMenuItem("Impressum ändern");
     private JMenuItem addArtikel = new JMenuItem("Artikel hinzufügen");
     private JMenuItem changeArtikel = new JMenuItem("Artikel ändern");
     private JMenuItem deleteArtikel = new JMenuItem("Artikel löschen");
     private JMenu hilfe = new JMenu("Hilfe");
     private JMenu ueber = new JMenu("Über");
+    private JSeparator seperator = new JSeparator();
     
     public MenuBar() {
         
@@ -50,10 +53,18 @@ public class MenuBar extends JMenuBar{
                 ArtikelDialog artikelDialog = new ArtikelDialog(ArtikelMode.DELETE);
             }
         });
+        impressum.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ImpressumDialog impressumDialog = new ImpressumDialog();
+            }
+        });
         datenbank.add(addArtikel);
         datenbank.add(changeArtikel);
         datenbank.add(deleteArtikel);
         tools.add(datenbank);
+        tools.add(seperator);
+        tools.add(impressum);
         this.add(datei);
         this.add(tools);
         this.add(hilfe);
