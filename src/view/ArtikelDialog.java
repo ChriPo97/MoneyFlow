@@ -64,6 +64,7 @@ public class ArtikelDialog extends JDialog {
 
         //Die Größe des Fensters wird anhand des Modes festgelegt
         if (artikelMode == MenuBar.ArtikelMode.ADD) {
+            this.setTitle("Artikel hinzufügen");
             this.setMinimumSize(new Dimension(300, 250));
             modeButton.setText("Artikel hinzufügen");
             kategorieField.setEnabled(true);
@@ -82,6 +83,7 @@ public class ArtikelDialog extends JDialog {
             //Barcode generieren
         }
         if (artikelMode == MenuBar.ArtikelMode.CHANGE) {
+            this.setTitle("Artikel ändern");
             this.setMinimumSize(new Dimension(600, 250));
             modeButton.setText("Artikel ändern");
             kategorieField.setEnabled(true);
@@ -105,6 +107,7 @@ public class ArtikelDialog extends JDialog {
             });
         }
         if (artikelMode == MenuBar.ArtikelMode.DELETE) {
+            this.setTitle("Artikel löschen");
             this.setMinimumSize(new Dimension(600, 250));
             modeButton.setText("Artikel löschen");
             kategorieField.setEnabled(false);
