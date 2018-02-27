@@ -26,6 +26,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -148,14 +149,36 @@ public class Ziffernblock extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (!Einkaufsmanager.getEinkaufskorb().isEmpty()) {
-                    try {
-                        Kassenbon bon = new Kassenbon(Einkaufsmanager.getEinkaufskorb());
-                        File bonFile = new File(Propertymanager.getProperty("BonDirectory") + "bon_" + bon.getZeitString() + "_" + bon.getDatumString() + ".txt");
-                        bonFile.getParentFile().mkdirs();
-                        bonFile.createNewFile();
-                        Files.write(bonFile.toPath(), bon.getKassebonAufbereitet(), Charset.forName(Propertymanager.getProperty("BonCharset")));
-                    } catch (IOException ex) {
-                        Logger.getLogger(Ziffernblock.class.getName()).log(Level.SEVERE, null, ex);
+                    Object[] optionsCheckout = {"Ja", "Nein"};
+                    int selectedOptionCheckout = JOptionPane.showOptionDialog(null,
+                            "Möchten Sie den Einkauf beenden?",
+                            "Checkout",
+                            JOptionPane.DEFAULT_OPTION,
+                            JOptionPane.INFORMATION_MESSAGE,
+                            null, optionsCheckout, optionsCheckout[0]);
+                    
+                    if (selectedOptionCheckout == 0) {
+                        try {
+                            Kassenbon bon = new Kassenbon(Einkaufsmanager.getEinkaufskorb());
+                            File bonFile = new File(Propertymanager.getProperty("BonDirectory") + "bon_" + bon.getZeitString() + "_" + bon.getDatumString() + ".txt");
+                            bonFile.getParentFile().mkdirs();
+                            bonFile.createNewFile();
+                            Files.write(bonFile.toPath(), bon.getKassebonAufbereitet(), Charset.forName(Propertymanager.getProperty("BonCharset")));
+                        } catch (IOException ex) {
+                            JOptionPane.showMessageDialog(null, "Ein Bon konnte nicht erstellt werden.", "I/O Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                        
+                        Object[] optionsBon = {"Ja", "Nein"};
+                        int selectedOptionBon = JOptionPane.showOptionDialog(null,
+                                "Bon erfolgreich gespeichert!\nSoll der Bon gedruckt werden?",
+                                "Checkout - Bon",
+                                JOptionPane.DEFAULT_OPTION,
+                                JOptionPane.INFORMATION_MESSAGE,
+                                null, optionsBon, optionsBon[0]);
+                        
+                        Einkaufsmanager.stornierenEinkauf();
+                        Warenliste.clearTable();
+                        Ziffernblock.setModeMenge();
                     }
                 }
             }
