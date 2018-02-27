@@ -6,9 +6,13 @@
 package model;
 
 import Controller.DBVerbindung;
+import Controller.Einkaufsmanager;
 import Controller.Propertymanager;
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,13 +24,13 @@ public class Kassenbon {
     private final List<Artikel> warenkorb;
     private final LocalDateTime zeitstempel;
     private final String impressum;
-    private static final DateTimeFormatter ZEITFORMATTER = DateTimeFormatter.ofPattern("HH:mm");
-    private static final DateTimeFormatter DATUMFORMATTER = DateTimeFormatter.ofPattern("E, dd.MM.YY");
+    private static final DateTimeFormatter ZEITFORMATTER = DateTimeFormatter.ofPattern("HH-mm-ss");
+    private static final DateTimeFormatter DATUMFORMATTER = DateTimeFormatter.ofPattern("dd-MM-YY");
 
     public Kassenbon(List<Artikel> warenkorb) {
         zeitstempel = LocalDateTime.now();
         this.warenkorb = warenkorb;
-        impressum = Propertymanager.getProperty("MoneyFlow.Impressum");
+        impressum = Propertymanager.getProperty("Impressum");
     }
 
     public List<Artikel> getWarenkorb() {
@@ -112,6 +116,34 @@ public class Kassenbon {
     public String getNettoByMwstklasseString(char mwstklasse) {
         String nullen = String.format("%03d€", getNettoByMwstklasse(mwstklasse));
         return nullen.substring(0, nullen.length() - 3) + ',' + nullen.substring(nullen.length() - 3);
+    }
+
+    public ArrayList<String> getKassebonAufbereitet() throws IOException {
+        ArrayList<String> lines = new ArrayList<String>();
+        ArrayList<String> tempKategorien = new ArrayList<String>();
+        lines.add(Propertymanager.getProperty("Impressum"));
+        lines.add("");
+        for (Artikel artikel : this.getWarenkorb()) {
+            if (!tempKategorien.contains(artikel.getKategorie())) {
+                tempKategorien.add(artikel.getKategorie());
+            }
+        }
+        for (String kategorie : tempKategorien) {
+            lines.add(kategorie + "\n");
+            for (Artikel artikel : this.getWarenkorb()) {
+                if (artikel.getKategorie().equals(kategorie)) {
+                    lines.add(" " + artikel.getMengeFormatiert() + " " + artikel.getName() + " "
+                            + artikel.getPreisString() + " " + artikel.getMehrwertsteuerklasse() + "\n");
+                }
+            }
+        }
+        lines.add("");
+        lines.add("Summe: " + this.getGesamtpreisString());
+        lines.add("");
+        lines.add("MwSt. A: " + this.getNettoByMwstklasseString('A'));
+        lines.add("MwSt. B: " + this.getNettoByMwstklasseString('B'));
+        
+        return lines;
     }
 
 }

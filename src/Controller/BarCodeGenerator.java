@@ -27,7 +27,7 @@ public class BarCodeGenerator {
         eanBean.setModuleWidth(UnitConv.in2mm(1.0f / dpi));
         eanBean.setFontSize(2.0);
         eanBean.doQuietZone(true);
-        File outputFile = new File("barcodes" + "/" + code + ".png");
+        File outputFile = new File(Propertymanager.getProperty("BarcodeDirectory") + code + ".png");
         OutputStream out = new FileOutputStream(outputFile);
         BitmapCanvasProvider canvas = new BitmapCanvasProvider(out, "image/jpeg", dpi, BufferedImage.TYPE_BYTE_BINARY, false, 0);
         eanBean.generateBarcode(canvas, String.valueOf(code));

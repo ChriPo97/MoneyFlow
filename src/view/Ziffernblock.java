@@ -5,6 +5,8 @@
  */
 package view;
 
+import Controller.Einkaufsmanager;
+import Controller.Propertymanager;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -12,6 +14,13 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Box;
 import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
@@ -20,6 +29,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import model.Artikel;
+import model.Kassenbon;
 
 /**
  *
@@ -133,6 +144,22 @@ public class Ziffernblock extends JPanel {
         });
 
         checkout.setFont(new Font("Arial", 1, 30));
+        checkout.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!Einkaufsmanager.getEinkaufskorb().isEmpty()) {
+                    try {
+                        Kassenbon bon = new Kassenbon(Einkaufsmanager.getEinkaufskorb());
+                        File bonFile = new File(Propertymanager.getProperty("BonDirectory") + "bon_" + bon.getZeitString() + "_" + bon.getDatumString() + ".txt");
+                        bonFile.getParentFile().mkdirs();
+                        bonFile.createNewFile();
+                        Files.write(bonFile.toPath(), bon.getKassebonAufbereitet(), Charset.forName(Propertymanager.getProperty("BonCharset")));
+                    } catch (IOException ex) {
+                        Logger.getLogger(Ziffernblock.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        });
 
         ziffernPanel.setLayout(ziffernGridLayout);
         ziffernPanel.add(num1);

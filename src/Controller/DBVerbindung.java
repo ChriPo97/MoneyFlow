@@ -24,7 +24,7 @@ import model.Mehrwertsteuer;
 public class DBVerbindung {
 
     private static Connection con = null;
-    private static final String URL = "jdbc:sqlite:DB/MoneyDB.db";
+    private static final String URL = "jdbc:sqlite:" + Propertymanager.getProperty("DatabaseFile");
     private static PreparedStatement ps;
     private static ResultSet rs;
     private static final ArrayList<Mehrwertsteuer> MWSTLISTE = new ArrayList<>();
