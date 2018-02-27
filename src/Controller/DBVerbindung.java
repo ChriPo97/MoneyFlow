@@ -189,7 +189,7 @@ public class DBVerbindung {
     }
 
     //neuen Artikel anlegen
-    public static void artikelAnlegen(String artikelname, String kategorie, int preis, String einheit, int mehrwertsteuerklasse, int menge) {
+    public static void artikelAnlegen(String artikelname, String kategorie, int preis, String einheit, int mehrwertsteuerklasse) {
 
         try {
             ps = con.prepareStatement("INSERT INTO Artikel "
@@ -197,15 +197,13 @@ public class DBVerbindung {
                     + "kategorie, "
                     + "preis, "
                     + "einheit, "
-                    + "mehrwertsteuerklasse, "
-                    + "menge) "
-                    + "VALUES (?,?,?,?,?,?)");
+                    + "mehrwertsteuerklasse)"
+                    + "VALUES (?,?,?,?,?)");
             ps.setString(1, artikelname);
             ps.setString(2, kategorie);
             ps.setInt(3, preis);
             ps.setString(4, einheit);
             ps.setInt(5, mehrwertsteuerklasse);
-            ps.setInt(6, menge);
             ps.execute();
             ps.close();
         } catch (SQLException ex) {

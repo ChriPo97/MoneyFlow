@@ -5,6 +5,7 @@
  */
 package view;
 
+import Controller.Propertymanager;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.HierarchyBoundsListener;
@@ -80,15 +81,16 @@ public class Hauptfenster extends JFrame implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
-        if (e.getKeyChar() == '/' && !(barCodeActive)) {
+        if (e.getKeyChar() == Propertymanager.getProperty("BarcodeScannerPrefix").toCharArray()[0] && !(barCodeActive)) {
             barCodeActive = true;
             return;
         }
-        if (barCodeActive && !(e.getKeyChar() == '/')) {
+        if (barCodeActive && !(e.getKeyChar() == Propertymanager.getProperty("BarcodeScannerPrefix").toCharArray()[0])
+                && !(e.getKeyChar() == Propertymanager.getProperty("BarcodeScannerSuffix").toCharArray()[0])) {
             barCode = barCode + String.valueOf(e.getKeyChar());
             return;
         }
-        if (e.getKeyChar() == '/' && barCodeActive) {
+        if (e.getKeyChar() == Propertymanager.getProperty("BarcodeScannerSuffix").toCharArray()[0] && barCodeActive) {
             barCodeActive = false;
             Warenliste.addArtikel(Integer.valueOf(barCode));
             barCode = "";

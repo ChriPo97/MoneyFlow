@@ -12,11 +12,13 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -26,6 +28,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
+import javax.swing.text.NumberFormatter;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
 import model.Artikel;
@@ -48,12 +51,12 @@ public class ArtikelDialog extends JDialog {
     private JLabel kategorieLabel = new JLabel("Kategorie:");
     private JLabel produktLabel = new JLabel("Produkt:");
     private JLabel einheitLabel = new JLabel("Einheit:");
-    private JLabel einzelpreisLabel = new JLabel("Einzelpreis:");
+    private JLabel einzelpreisLabel = new JLabel("Einzelpreis (in Cent):");
     private JLabel mwstLabel = new JLabel("MwSt:");
     private static JTextField kategorieField = new JTextField();
     private static JTextField produktField = new JTextField();
     private static JComboBox einheitComboBox = new JComboBox(new String[]{"STUECK", "GEWICHT"});
-    private static JTextField einzelpreisField = new JTextField();
+    private static JFormattedTextField einzelpreisField;
     private static JComboBox mwstComboBox = new JComboBox(new String[]{"A", "B"});
     JButton modeButton = new JButton();
 
@@ -76,7 +79,7 @@ public class ArtikelDialog extends JDialog {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if (produktField.getText() != "") {
-                        //DBVerbindung.artikelAnlegen(produktField.getText(), kategorieField.getText(), 0, einheitComboBox.getSelectedItem().toString(), 0, 0);
+                        DBVerbindung.artikelAnlegen(produktField.getText(), kategorieField.getText(), (int) (einzelpreisField.getValue()), einheitComboBox.getSelectedItem().toString(), mwstComboBox.getSelectedIndex());
                     }
                 }
             });
@@ -138,6 +141,14 @@ public class ArtikelDialog extends JDialog {
     private void initComponents() {
         dialogLayout = new GridLayout(1, 2);
         dialogPanel.setLayout(dialogLayout);
+
+        NumberFormat format = NumberFormat.getInstance();
+        NumberFormatter formatter = new NumberFormatter(format);
+        formatter.setValueClass(Integer.class);
+        formatter.setMinimum(0);
+        formatter.setMaximum(Integer.MAX_VALUE);
+        formatter.setAllowsInvalid(false);
+        einzelpreisField = new JFormattedTextField(formatter);
 
         artikelPanelGroupLayout = new GroupLayout(artikelPanel);
         artikelPanelGroupLayout.setAutoCreateGaps(true);
