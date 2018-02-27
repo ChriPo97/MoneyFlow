@@ -29,7 +29,6 @@ public class Main {
         }
         DBVerbindung.verbinden();
         Propertymanager.ladenProperties();
-        System.out.println(Propertymanager.getProperty("MoneyFlow.Impressum"));
         Hauptfenster hf = new Hauptfenster();
         hf.setVisible(true);
 

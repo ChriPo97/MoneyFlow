@@ -28,8 +28,8 @@ public class MenuBar extends JMenuBar{
     private JMenuItem addArtikel = new JMenuItem("Artikel hinzufügen");
     private JMenuItem changeArtikel = new JMenuItem("Artikel ändern");
     private JMenuItem deleteArtikel = new JMenuItem("Artikel löschen");
-    private JMenu hilfe = new JMenu("Hilfe");
     private JMenu ueber = new JMenu("Über");
+    private JMenuItem information = new JMenuItem("Information");
     private JSeparator seperator = new JSeparator();
     
     public MenuBar() {
@@ -59,15 +59,21 @@ public class MenuBar extends JMenuBar{
                 ImpressumDialog impressumDialog = new ImpressumDialog();
             }
         });
+        information.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                InformationDialog ueberDialog = new InformationDialog();
+            }
+        });
         datenbank.add(addArtikel);
         datenbank.add(changeArtikel);
         datenbank.add(deleteArtikel);
         tools.add(datenbank);
         tools.add(seperator);
         tools.add(impressum);
+        ueber.add(information);
         this.add(datei);
         this.add(tools);
-        this.add(hilfe);
         this.add(ueber);
     }
     

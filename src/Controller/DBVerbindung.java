@@ -38,7 +38,6 @@ public class DBVerbindung {
         }
         try {
             con = DriverManager.getConnection(URL);
-            System.out.println("Opened database successfully");
             // Lade die Mwstklassen
             ps = con.prepareStatement("SELECT * FROM Mehrwertsteuer");
             rs = ps.executeQuery();
