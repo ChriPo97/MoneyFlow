@@ -21,14 +21,17 @@ import org.krysalis.barcode4j.tools.UnitConv;
 
 /**
  *
- * @author Christoph
+ * @author ChriPo97 
+ * Klasse zur Generierung und Löschung von BarCode-Dateien
  */
 public class BarCodeGenerator {
 
+    //Funktion zur Erstellung einer BarCode Datei im Code128 Format
     public static void generateCode128Barcode(int code) {
         OutputStream out = null;
         try {
             Code128Bean eanBean = new Code128Bean();
+            //Auflösung
             final int dpi = 600;
             eanBean.setModuleWidth(UnitConv.in2mm(6.0f / dpi));
             eanBean.setFontSize(2.0);
@@ -44,6 +47,7 @@ public class BarCodeGenerator {
 
     }
 
+    //Funktion zum Löschen einer BarCode Datei
     public static void deleteBarcode(int code) {
         File file = new File(Propertymanager.getProperty("BarcodeDirectory") + code + ".png");
         file.delete();

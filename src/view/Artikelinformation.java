@@ -26,7 +26,9 @@ import javax.swing.border.EmptyBorder;
 
 /**
  *
- * @author Christoph
+ * @author ChriPo97 
+ * Klasse für das Panel des linken Teils des Hauptfensters mit den Artikelinformationen
+ * und einigen Buttons.
  */
 public class Artikelinformation extends JPanel {
 
@@ -62,7 +64,7 @@ public class Artikelinformation extends JPanel {
 
     private void initComponents() {
 
-        //Artikel Panel mit den Artikelinformationen
+        //Alle Button werden formatiert und bekommen ihre Funktion in Form eines ActionListeners
         stornoButton.setFont(new Font("Arial", 0, 24));
         stornoButton.setForeground(new java.awt.Color(255, 51, 51));
         stornoButton.addActionListener(new ActionListener() {
@@ -109,6 +111,7 @@ public class Artikelinformation extends JPanel {
             }
         });
         
+        //Alle Felder werden auf 'nicht-editierbar' gesetzt und werden weiß.
         mengeField.setEditable(false);
         mengeField.setBackground(Color.WHITE);
         produktField.setEditable(false);
@@ -126,6 +129,7 @@ public class Artikelinformation extends JPanel {
         gesamtField.setEditable(false);
         gesamtField.setBackground(Color.WHITE);
 
+        //Das GroupLayout mit allen Komponenten wird erstellt
         GroupLayout artikelPanelGroupLayout = new GroupLayout(artikelPanel);
         artikelPanelGroupLayout.setAutoCreateGaps(true);
         artikelPanel.setLayout(artikelPanelGroupLayout);

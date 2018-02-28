@@ -7,17 +7,13 @@ package view;
 
 import Controller.BarCodeGenerator;
 import Controller.DBVerbindung;
-import Controller.Einkaufsmanager;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -42,7 +38,8 @@ import model.Mehrwertsteuer;
 
 /**
  *
- * @author Christoph Klasse zur Erstellunbg eines Dialog fensters für das
+ * @author ChriPo97 
+ * Klasse zur Erstellunbg eines Dialog fensters für das 
  * Hinzufügen/Ändern/Löschen eines Artikels in der Datenbank
  */
 public class ArtikelDialog extends JDialog {
@@ -66,14 +63,14 @@ public class ArtikelDialog extends JDialog {
     private static JComboBox einheitComboBox = new JComboBox(new String[]{"STUECK", "GEWICHT"});
     private static JFormattedTextField einzelpreisField;
     private static JComboBox mwstComboBox = new JComboBox(new String[]{"A", "B"});
-    JButton modeButton = new JButton();
+    private JButton modeButton = new JButton();
 
     public ArtikelDialog(MenuBar.ArtikelMode artikelMode) {
 
         initComponents();
         dialogPanel.setBorder(new EmptyBorder(new Insets(10, 10, 10, 10)));
 
-        //Die Größe des Fensters wird anhand des Modes festgelegt
+        //Anhand des übergebenen Modi wird ein anderer Dialog geöffnet
         if (artikelMode == MenuBar.ArtikelMode.ADD) {
             this.setTitle("Artikel hinzufügen");
             this.setMinimumSize(new Dimension(300, 250));
@@ -172,6 +169,7 @@ public class ArtikelDialog extends JDialog {
         dialogLayout = new GridLayout(1, 2);
         dialogPanel.setLayout(dialogLayout);
 
+        //Das einzelpreisField wird gesondert behandelt, da es nur Integer Werte annehmen darf
         NumberFormat format = NumberFormat.getInstance();
         NumberFormatter formatter = new NumberFormatter(format);
         formatter.setValueClass(Integer.class);
@@ -270,6 +268,7 @@ public class ArtikelDialog extends JDialog {
         dialogPanel.add(listPanel);
     }
 
+    //Lädt alle Artikel und Kategorien neu aus der Datenbank und füllt den JTree
     private void updateTree() {
         top.removeAllChildren();
         ArrayList<String> tempKategorien = new ArrayList<String>();
@@ -292,6 +291,7 @@ public class ArtikelDialog extends JDialog {
         ((DefaultTreeModel) tree.getModel()).reload();
     }
 
+    //Setzt alle Felder zurück
     private void clearAllFields() {
         kategorieField.setText("");
         produktField.setText("");

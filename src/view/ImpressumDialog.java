@@ -23,7 +23,8 @@ import javax.swing.border.EmptyBorder;
 
 /**
  *
- * @author cs15cp1
+ * @author ChriPo97 
+ * Klasse zur Erstellung eines Dialog Fensters mit Impressum als Inhalt
  */
 public class ImpressumDialog extends JDialog {
 

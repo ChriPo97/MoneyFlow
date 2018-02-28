@@ -35,7 +35,9 @@ import model.Kassenbon;
 
 /**
  *
- * @author Christoph
+ * @author ChriPo97 
+ * Klasse für das Panel des rechten Teils des Hauptfensters mit dem Ziffernblock
+ * und einigen Buttons.
  */
 public class Ziffernblock extends JPanel {
 
@@ -64,10 +66,12 @@ public class Ziffernblock extends JPanel {
     private JPanel checkoutPanel = new JPanel();
     private GridLayout checkoutGridLayout = new GridLayout(1, 1, 5, 5);
 
+    //Enum Feld für den Modus der Eingabe in den Ziffernblock
     private static enum Mode {
-
         PRODUKTNUMMER, MENGE, RABATT
     };
+    
+    //Start-Wert für den Modus ist MENGE
     private static Mode mode = Mode.MENGE;
 
     public Ziffernblock() {
@@ -79,16 +83,19 @@ public class Ziffernblock extends JPanel {
         ziffernBlockGroupLayout.setAutoCreateGaps(true);
         this.setLayout(ziffernBlockGroupLayout);
 
+        //Formatieren des preisFields
         preisField.setEditable(false);
         preisField.setPreferredSize(new Dimension(Short.MAX_VALUE, 70));
         preisField.setMaximumSize(new Dimension(Short.MAX_VALUE, 70));
         preisField.setFont(new Font("Arial", 0, 24));
         preisField.setBackground(Color.WHITE);
 
+        //Formatieren der Modus Label
         produktNummerLabel.setFont(new Font("Arial", 0, produktNummerLabel.getFont().getSize()));
         mengeLabel.setFont(new Font("Arial", 1, mengeLabel.getFont().getSize()));
         rabattLabel.setFont(new Font("Arial", 0, rabattLabel.getFont().getSize()));
 
+        //Formatieren der Ziffernfelder
         num1.setFont(new Font("Arial", 1, 30));
         num1.addActionListener(new ZiffernblockActionListener());
         num2.setFont(new Font("Arial", 1, 30));
@@ -112,6 +119,7 @@ public class Ziffernblock extends JPanel {
         num00.setFont(new Font("Arial", 1, 30));
         num00.addActionListener(new ZiffernblockActionListener());
 
+        //Belegen der Buttons mit ActionListenern
         enter.setForeground(new java.awt.Color(0, 204, 51));
         enter.setFont(enter.getFont().deriveFont(34f));
         enter.addActionListener(new ActionListener() {
@@ -181,6 +189,7 @@ public class Ziffernblock extends JPanel {
             }
         });
 
+        //Hinzufügen der Komponenten
         ziffernPanel.setLayout(ziffernGridLayout);
         ziffernPanel.add(num1);
         ziffernPanel.add(num2);
@@ -202,6 +211,7 @@ public class Ziffernblock extends JPanel {
         checkoutPanel.setLayout(checkoutGridLayout);
         checkoutPanel.add(checkout);
 
+        //Erstellen des GroupLayouts
         ziffernBlockGroupLayout.setHorizontalGroup(
                 ziffernBlockGroupLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
                         .addGroup(ziffernBlockGroupLayout.createSequentialGroup()
@@ -242,6 +252,7 @@ public class Ziffernblock extends JPanel {
         );
     }
 
+    //Funktion zum Setzen des Modus auf PRODUKTNUMMER
     public static void setModeProduktnummer() {
         preisField.setText("");
         mode = Mode.PRODUKTNUMMER;
@@ -250,6 +261,7 @@ public class Ziffernblock extends JPanel {
         rabattLabel.setFont(new Font("Arial", 0, rabattLabel.getFont().getSize()));
     }
 
+    //Funktion zum Setzen des Modus auf MENGE
     public static void setModeMenge() {
         preisField.setText("");
         mode = Mode.MENGE;
@@ -258,6 +270,7 @@ public class Ziffernblock extends JPanel {
         rabattLabel.setFont(new Font("Arial", 0, rabattLabel.getFont().getSize()));
     }
 
+    //Funktion zum Setzen des Modus auf RABATT
     public static void setModeRabatt() {
         preisField.setText("");
         mode = Mode.RABATT;
@@ -266,6 +279,7 @@ public class Ziffernblock extends JPanel {
         rabattLabel.setFont(new Font("Arial", 1, rabattLabel.getFont().getSize()));
     }
 
+    //Funktion zum Hinzufügen eines Zahlenwertes zum preisField
     public static void addToPreisField(String newText) {
         if (mode == Mode.MENGE || mode == Mode.PRODUKTNUMMER) {
                 preisField.setText(preisField.getText() + newText);

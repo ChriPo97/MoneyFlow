@@ -16,7 +16,8 @@ import javax.swing.JFrame;
 
 /**
  *
- * @author Christoph
+ * @author ChriPo97 
+ * Klasse zur Erstellung des Hauptfensters mit KeyListener für den Handscanner.
  */
 public class Hauptfenster extends JFrame implements KeyListener {
 
@@ -33,23 +34,12 @@ public class Hauptfenster extends JFrame implements KeyListener {
         this.setLocationRelativeTo(null);
         this.addKeyListener(this);
         this.setFocusable(true);
-        setLayout();
-        setFrameMovedListener();
-        setMenuBar();
-
-    }
-
-    private void setLayout() {
-
         resize();
-
         this.add(artikelinformation, BorderLayout.WEST);
         this.add(warenliste, BorderLayout.CENTER);
         this.add(ziffernblock, BorderLayout.EAST);
-
-//        this.add(artikelinformation);
-//        this.add();
-//        this.add();
+        setFrameMovedListener();
+        setMenuBar();
     }
 
     //Funktion zum setzen einer neuen Größe für alle PAnels im Hauptfenster
@@ -68,17 +58,20 @@ public class Hauptfenster extends JFrame implements KeyListener {
     //Ein Listener zum Resizen des Hauptfensters
     private void setFrameMovedListener() {
         this.getContentPane().addHierarchyBoundsListener(new HierarchyBoundsListener() {
+            
             @Override
             public void ancestorResized(HierarchyEvent e) {
                 resize();
             }
-
+            
             @Override
             public void ancestorMoved(HierarchyEvent e) {
             }
+            
         });
     }
 
+    //Funktionen des KeyListeners für den Handscanner wird implementiert
     @Override
     public void keyTyped(KeyEvent e) {
         if (e.getKeyChar() == Propertymanager.getProperty("BarcodeScannerPrefix").toCharArray()[0] && !(barCodeActive)) {

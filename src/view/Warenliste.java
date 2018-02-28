@@ -24,7 +24,9 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Christoph
+ * @author ChriPo97 
+ * Klasse für das Panel des mittleren Teils des Hauptfensters mit der Warenliste
+ * und den Feldern für Summe und MwSt.
  */
 public class Warenliste extends JPanel {
 
@@ -125,12 +127,13 @@ public class Warenliste extends JPanel {
         return rowIndex;
     }
 
-    //Funktion zum Updaten des Summe Feldes
+    //Funktion zum Updaten der Summe und MwSt. Felder
     public static void updateSummeUndMwst() {
         summe.setText("Summe: " + Einkaufsmanager.getGesamtPreisString());
         mwst.setText("inkl. MwSt: " + Einkaufsmanager.getGesamtMwstString());
     }
 
+    //Funktion zum Updaten der Warenliste
     public static void updateWarenliste() {
         tableModel.setRowCount(0);
         for (Artikel artikelEinkaufskorb : Einkaufsmanager.getEinkaufskorb()) {
@@ -139,6 +142,7 @@ public class Warenliste extends JPanel {
         }
     }
 
+    //Funktion zum Rabattieren eines Artikels
     public static void discountArtikel(int rabatt) {
         if (getLastSelectedTableRow() >= 0) {
             for (Artikel artikelEinkaufskorb : Einkaufsmanager.getEinkaufskorb()) {
@@ -151,6 +155,7 @@ public class Warenliste extends JPanel {
         updateWarenliste();
     }
 
+    //Funktion zum Ändern der Menge eines Artikels
     public static void changeMenge(int menge) {
         if (getLastSelectedTableRow() >= 0) {
             for (Artikel artikelEinkaufskorb : Einkaufsmanager.getEinkaufskorb()) {
@@ -163,6 +168,7 @@ public class Warenliste extends JPanel {
         updateWarenliste();
     }
     
+    //Funktion zum Leeren der Warenliste
     public static void clearTable() {
         tableModel.setRowCount(0);
         updateSummeUndMwst();

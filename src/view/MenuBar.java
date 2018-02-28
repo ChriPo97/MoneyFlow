@@ -16,7 +16,8 @@ import javax.swing.JSeparator;
 
 /**
  *
- * @author Christoph
+ * @author ChriPo97 
+ * Klasse der MenuBar der Benutzeroberfläche.
  */
 public class MenuBar extends JMenuBar {
 

@@ -18,7 +18,8 @@ import javax.swing.border.EmptyBorder;
 
 /**
  *
- * @author Christoph
+ * @author ChriPo97 
+ * Klasse zur Erstellung eines Dialog Fensters mit Informationen als Inhalt
  */
 public class InformationDialog extends JDialog {
     
@@ -26,6 +27,8 @@ public class InformationDialog extends JDialog {
     private BoxLayout dialogLayout;
     private JScrollPane scrollPane;
     private JTextArea textArea;
+    
+    //Informationstext
     private String text = "MoneyFlow - Kassensystem\n\n"
             + "GNU General Public License v3.0\n\n"
             + "https://github.com/ChriPo97/MoneyFlow";
