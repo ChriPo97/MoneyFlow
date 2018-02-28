@@ -215,7 +215,7 @@ public class DBVerbindung {
         String artikelname = "Mango";
         String kategorie = "Obst";
         int preis = 70;
-        String einheit = "Stück";
+        String einheit = "STUECK";
         int mwst = 2;
         int menge = 100;
         try {
@@ -255,10 +255,10 @@ public class DBVerbindung {
                 kategorie = rs.getString("Kategorie");
                 preis = rs.getInt("Preis");
                 String tmp = rs.getString("Einheit");
-                if (tmp.equals("Stück")) {
+                if (tmp.equals("STUECK")) {
                     einheit = Artikel.Einheit.STUECK;
                 } else {
-                    if (tmp.equals("Gewicht")) {
+                    if (tmp.equals("GEWICHT")) {
                         einheit = Artikel.Einheit.GEWICHT;
                     }
                 }
@@ -295,10 +295,10 @@ public class DBVerbindung {
                 kategorie = rs.getString("Kategorie");
                 preis = rs.getInt("Preis");
                  String tmp = rs.getString("Einheit");
-                if (tmp.equals("Stück")) {
+                if (tmp.equals("STUECK")) {
                     einheit = Artikel.Einheit.STUECK;
                 } else {
-                    if (tmp.equals("Gewicht")) {
+                    if (tmp.equals("GEWICHT")) {
                         einheit = Artikel.Einheit.GEWICHT;
                     }
                 }
