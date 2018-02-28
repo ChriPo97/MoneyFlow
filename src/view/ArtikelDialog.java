@@ -5,6 +5,7 @@
  */
 package view;
 
+import Controller.BarCodeGenerator;
 import Controller.DBVerbindung;
 import Controller.Einkaufsmanager;
 import java.awt.Dimension;
@@ -12,8 +13,11 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -87,6 +91,7 @@ public class ArtikelDialog extends JDialog {
                         DBVerbindung.artikelAnlegen(produktField.getText(), kategorieField.getText(), (int) (einzelpreisField.getValue()),
                                 einheitComboBox.getSelectedItem().toString(), mwst.getId());
                         JOptionPane.showMessageDialog(null, "Artikel erfolgreich angelegt!");
+                        BarCodeGenerator.generateCode128Barcode(DBVerbindung.artikelNametoArtikelID(produktField.getText()));
                         clearAllFields();
                     }
                 }
@@ -146,6 +151,7 @@ public class ArtikelDialog extends JDialog {
                             int id = DBVerbindung.artikelNametoArtikelID(produktField.getText());
                             DBVerbindung.artikelLoeschen(id);
                             JOptionPane.showMessageDialog(null, "Artikel erfolgreich gelöscht!");
+                            BarCodeGenerator.deleteBarcode(id);
                             updateTree();
                             clearAllFields();
                         }

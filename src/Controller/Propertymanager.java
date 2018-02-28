@@ -18,6 +18,7 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -32,7 +33,7 @@ public class Propertymanager {
         try (FileInputStream in = new FileInputStream("MoneyFlow.properties")) {
             PROPS.load(in);
         } catch (IOException ex) {
-            Logger.getLogger(Propertymanager.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Die PROPERTIES-Datei konnte nicht geladen werden!", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -40,7 +41,8 @@ public class Propertymanager {
         try (FileOutputStream out = new FileOutputStream("MoneyFlow.properties")) {
             PROPS.store(out, "MoneyFlow.properties");
         } catch (IOException ex) {
-            Logger.getLogger(Propertymanager.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Die Daten konnten nicht in die PROPERTIES-Datei geschrieben werden!", 
+                    "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 

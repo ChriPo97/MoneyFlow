@@ -5,6 +5,7 @@
  */
 package view;
 
+import Controller.BarCodeGenerator;
 import Controller.DBVerbindung;
 import Controller.Propertymanager;
 import java.io.FileNotFoundException;
