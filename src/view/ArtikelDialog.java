@@ -20,6 +20,7 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -30,8 +31,10 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.text.NumberFormatter;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeSelectionModel;
 import model.Artikel;
+import model.Mehrwertsteuer;
 
 /**
  *
@@ -45,7 +48,8 @@ public class ArtikelDialog extends JDialog {
     private JPanel listPanel = new JPanel();
     private GridLayout listLayout;
     private JScrollPane listPane;
-    private JTree tree;
+    private DefaultMutableTreeNode top = new DefaultMutableTreeNode("Artikel");
+    private JTree tree = new JTree(top);
     private GroupLayout artikelPanelGroupLayout;
     private GridLayout dialogLayout;
     private JLabel kategorieLabel = new JLabel("Kategorie:");
@@ -79,7 +83,11 @@ public class ArtikelDialog extends JDialog {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if (produktField.getText() != "") {
-                        DBVerbindung.artikelAnlegen(produktField.getText(), kategorieField.getText(), (int) (einzelpreisField.getValue()), einheitComboBox.getSelectedItem().toString(), mwstComboBox.getSelectedIndex());
+                        Mehrwertsteuer mwst = DBVerbindung.getMwstByKlasse(((String) mwstComboBox.getSelectedItem()).toCharArray()[0]);
+                        DBVerbindung.artikelAnlegen(produktField.getText(), kategorieField.getText(), (int) (einzelpreisField.getValue()),
+                                einheitComboBox.getSelectedItem().toString(), mwst.getId());
+                        JOptionPane.showMessageDialog(null, "Artikel erfolgreich angelegt!");
+                        clearAllFields();
                     }
                 }
             });
@@ -100,11 +108,15 @@ public class ArtikelDialog extends JDialog {
                 public void actionPerformed(ActionEvent e) {
                     if (produktField.getText() != "") {
                         int id = DBVerbindung.artikelNametoArtikelID(produktField.getText());
+                        Mehrwertsteuer mwst = DBVerbindung.getMwstByKlasse(((String) mwstComboBox.getSelectedItem()).toCharArray()[0]);
                         DBVerbindung.artikelBearbeitenKategorie(id, kategorieField.getText());
                         DBVerbindung.artikelBearbeitenName(id, produktField.getText());
-                        //DBVerbindung.artikelBearbeitenEinheit(id, einheitComboBox.getSelectedItem().toString());
-                        //DBVerbindung.artikelBearbeitenPreis(id, einzelpreisField.getText());
-                        //DBVerbindung.artikelBearbeitenMwstklasse(id, );
+                        DBVerbindung.artikelBearbeitenPreis(id, (int) (einzelpreisField.getValue()));
+                        DBVerbindung.artikelBearbeitenEinheit(id, einheitComboBox.getSelectedItem().toString());
+                        DBVerbindung.artikelBearbeitenMwstklasse(id, mwst.getId());
+                        JOptionPane.showMessageDialog(null, "Artikel erfolgreich geändert!");
+                        updateTree();
+                        clearAllFields();
                     }
                 }
             });
@@ -123,8 +135,20 @@ public class ArtikelDialog extends JDialog {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if (produktField.getText() != "") {
-                        int id = DBVerbindung.artikelNametoArtikelID(produktField.getText());
-                        DBVerbindung.artikelLoeschen(id);
+                        Object[] options = {"Ja", "Nein"};
+                        int selectedOption = JOptionPane.showOptionDialog(null,
+                                "Wollen Sie den Artikel wirklich löschen?",
+                                "Artikel löschen",
+                                JOptionPane.DEFAULT_OPTION,
+                                JOptionPane.INFORMATION_MESSAGE,
+                                null, options, options[0]);
+                        if (selectedOption == 0) {
+                            int id = DBVerbindung.artikelNametoArtikelID(produktField.getText());
+                            DBVerbindung.artikelLoeschen(id);
+                            JOptionPane.showMessageDialog(null, "Artikel erfolgreich gelöscht!");
+                            updateTree();
+                            clearAllFields();
+                        }
                     }
                 }
             });
@@ -149,6 +173,7 @@ public class ArtikelDialog extends JDialog {
         formatter.setMaximum(Integer.MAX_VALUE);
         formatter.setAllowsInvalid(false);
         einzelpreisField = new JFormattedTextField(formatter);
+        einzelpreisField.setValue(0);
 
         artikelPanelGroupLayout = new GroupLayout(artikelPanel);
         artikelPanelGroupLayout.setAutoCreateGaps(true);
@@ -216,7 +241,31 @@ public class ArtikelDialog extends JDialog {
 
     //Initiert des Tree mit allen Artikeln
     private void initTree() {
-        DefaultMutableTreeNode top = new DefaultMutableTreeNode("Artikel");
+        updateTree();
+        tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+        tree.addTreeSelectionListener(new TreeSelectionListener() {
+            @Override
+            public void valueChanged(TreeSelectionEvent e) {
+                for (Artikel artikel : DBVerbindung.alleArtikelAuslesen()) {
+                    if (artikel.getName().equals(e.getPath().getLastPathComponent().toString())) {
+                        kategorieField.setText(artikel.getKategorie());
+                        produktField.setText(artikel.getName());
+                        einheitComboBox.setSelectedItem(artikel.getEinheit().toString());
+                        einzelpreisField.setValue(artikel.getEinheitspreis());
+                        mwstComboBox.setSelectedItem(String.valueOf(artikel.getMehrwertsteuerklasse()));
+                    }
+                }
+            }
+        });
+        listPane = new JScrollPane(tree);
+        listLayout = new GridLayout();
+        listPanel.setLayout(listLayout);
+        listPanel.add(listPane);
+        dialogPanel.add(listPanel);
+    }
+
+    private void updateTree() {
+        top.removeAllChildren();
         ArrayList<String> tempKategorien = new ArrayList<String>();
         ArrayList<Artikel> tempArtikel = DBVerbindung.alleArtikelAuslesen();
         for (Artikel artikel : tempArtikel) {
@@ -234,28 +283,15 @@ public class ArtikelDialog extends JDialog {
             }
             top.add(kategorieNode);
         }
-        tree = new JTree(top);
+        ((DefaultTreeModel) tree.getModel()).reload();
+    }
 
-        tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-        tree.addTreeSelectionListener(new TreeSelectionListener() {
-            @Override
-            public void valueChanged(TreeSelectionEvent e) {
-                for (Artikel artikel : DBVerbindung.alleArtikelAuslesen()) {
-                    if (artikel.getName().equals(e.getPath().getLastPathComponent().toString())) {
-                        kategorieField.setText(artikel.getKategorie());
-                        produktField.setText(artikel.getName());
-                        einheitComboBox.setSelectedItem(artikel.getEinheit().toString());
-                        einzelpreisField.setText(String.valueOf(artikel.getPreisString()));
-                        mwstComboBox.setSelectedItem(String.valueOf(artikel.getMehrwertsteuerklasse()));
-                    }
-                }
-            }
-        });
-        listPane = new JScrollPane(tree);
-        listLayout = new GridLayout();
-        listPanel.setLayout(listLayout);
-        listPanel.add(listPane);
-        dialogPanel.add(listPanel);
+    private void clearAllFields() {
+        kategorieField.setText("");
+        produktField.setText("");
+        einheitComboBox.setSelectedIndex(0);
+        einzelpreisField.setValue(0);
+        mwstComboBox.setSelectedIndex(0);
     }
 
 }
