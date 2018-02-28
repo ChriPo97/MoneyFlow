@@ -84,7 +84,7 @@ public class Artikel {
      */
     public int getPreis() {
         //TODO immer aufrunden?
-        return Math.round((this.einheit == Artikel.Einheit.GEWICHT ? menge / 1000 : menge) * einheitspreis * rabatt);
+        return Math.round((this.einheit == Artikel.Einheit.GEWICHT ? menge / 1000f : menge) * einheitspreis * rabatt);
     }
 
     public Einheit getEinheit() {
