@@ -211,35 +211,6 @@ public class DBVerbindung {
         }
     }
 
-    public static void artikelTest() {
-        String artikelname = "Mango";
-        String kategorie = "Obst";
-        int preis = 70;
-        String einheit = "STUECK";
-        int mwst = 2;
-        int menge = 100;
-        try {
-            ps = con.prepareStatement("INSERT INTO Artikel "
-                    + "(artikelname, "
-                    + "kategorie, "
-                    + "preis, "
-                    + "einheit, "
-                    + "mehrwertsteuerklasse, "
-                    + "menge) "
-                    + "VALUES (?,?,?,?,?,?)");
-            ps.setString(1, artikelname);
-            ps.setString(2, kategorie);
-            ps.setInt(3, preis);
-            ps.setString(4, einheit);
-            ps.setInt(5, mwst);
-            ps.setInt(6, menge);
-            ps.execute();
-            ps.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(DBVerbindung.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
     public static Artikel getArtikelbyID(int artikelID, int menge) {
         String name;
         String kategorie;
