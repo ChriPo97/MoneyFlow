@@ -55,7 +55,6 @@ public class Ziffernblock extends JPanel {
     private JButton num9 = new JButton("9");
     private JButton num0 = new JButton("0");
     private JButton num00 = new JButton("00");
-    private JButton numKomma = new JButton(",");
     private JButton enter = new JButton("\u2713");
     private JButton delete = new JButton("X");
     private JButton checkout = new JButton("CHECKOUT");
@@ -112,8 +111,6 @@ public class Ziffernblock extends JPanel {
         num0.addActionListener(new ZiffernblockActionListener());
         num00.setFont(new Font("Arial", 1, 30));
         num00.addActionListener(new ZiffernblockActionListener());
-        numKomma.setFont(new Font("Arial", 1, 30));
-        numKomma.addActionListener(new ZiffernblockActionListener());
 
         enter.setForeground(new java.awt.Color(0, 204, 51));
         enter.setFont(enter.getFont().deriveFont(34f));
@@ -196,7 +193,7 @@ public class Ziffernblock extends JPanel {
         ziffernPanel.add(num9);
         ziffernPanel.add(num00);
         ziffernPanel.add(num0);
-        ziffernPanel.add(numKomma);
+        ziffernPanel.add(Box.createRigidArea(new Dimension(0, delete.getMinimumSize().height * 2)));
         ziffernPanel.add(delete);
         ziffernPanel.add(Box.createRigidArea(new Dimension(0, delete.getMinimumSize().height * 2)));
         ziffernPanel.add(enter);
@@ -270,34 +267,11 @@ public class Ziffernblock extends JPanel {
     }
 
     public static void addToPreisField(String newText) {
-        if (mode == Mode.MENGE) {
-            //if(artikel.getEinheit() == Artikel.Einheit.GEWICHT)
-            if (!preisField.getText().contains(",")) {
+        if (mode == Mode.MENGE || mode == Mode.PRODUKTNUMMER) {
                 preisField.setText(preisField.getText() + newText);
-                return;
-            }
-            if (preisField.getText().contains(",")) {
-                if (!newText.contains(",")) {
-                    String[] subStrings = preisField.getText().split(",");
-                    if (subStrings.length > 1) {
-                        if (!((subStrings[1].length() + newText.length()) > 3)) {
-                            preisField.setText(preisField.getText() + newText);
-                            return;
-                        }
-                        return;
-                    }
-                    preisField.setText(preisField.getText() + newText);
-                    return;
-                }
-            }
-        }
-        if (mode == Mode.PRODUKTNUMMER) {
-            if (!preisField.getText().contains(",") && !newText.contains(",")) {
-                preisField.setText(preisField.getText() + newText);
-            }
         }
         if (mode == Mode.RABATT) {
-            if (!preisField.getText().contains(",") && !newText.contains(",") && (Integer.valueOf(preisField.getText() + newText) <= 100)) {
+            if (Integer.valueOf(preisField.getText() + newText) <= 100) {
                 preisField.setText(preisField.getText() + newText);
             }
         }
