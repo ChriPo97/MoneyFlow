@@ -38,8 +38,7 @@ import model.Mehrwertsteuer;
 
 /**
  *
- * @author ChriPo97 
- * Klasse zur Erstellunbg eines Dialog fensters für das 
+ * @author ChriPo97 Klasse zur Erstellunbg eines Dialog fensters für das
  * Hinzufügen/Ändern/Löschen eines Artikels in der Datenbank
  */
 public class ArtikelDialog extends JDialog {
@@ -60,6 +59,7 @@ public class ArtikelDialog extends JDialog {
     private JLabel mwstLabel = new JLabel("MwSt:");
     private static JTextField kategorieField = new JTextField();
     private static JTextField produktField = new JTextField();
+    private String currentArtikelname = "";
     private static JComboBox einheitComboBox = new JComboBox(new String[]{"STUECK", "GEWICHT"});
     private static JFormattedTextField einzelpreisField;
     private static JComboBox mwstComboBox = new JComboBox(new String[]{"A", "B"});
@@ -109,7 +109,7 @@ public class ArtikelDialog extends JDialog {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if (produktField.getText() != "") {
-                        int id = DBVerbindung.artikelNametoArtikelID(produktField.getText());
+                        int id = DBVerbindung.artikelNametoArtikelID(currentArtikelname);
                         Mehrwertsteuer mwst = DBVerbindung.getMwstByKlasse(((String) mwstComboBox.getSelectedItem()).toCharArray()[0]);
                         DBVerbindung.artikelBearbeitenKategorie(id, kategorieField.getText());
                         DBVerbindung.artikelBearbeitenName(id, produktField.getText());
@@ -252,6 +252,7 @@ public class ArtikelDialog extends JDialog {
             public void valueChanged(TreeSelectionEvent e) {
                 for (Artikel artikel : DBVerbindung.alleArtikelAuslesen()) {
                     if (artikel.getName().equals(e.getPath().getLastPathComponent().toString())) {
+                        currentArtikelname = artikel.getName();
                         kategorieField.setText(artikel.getKategorie());
                         produktField.setText(artikel.getName());
                         einheitComboBox.setSelectedItem(artikel.getEinheit().toString());
