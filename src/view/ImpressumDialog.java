@@ -50,7 +50,7 @@ public class ImpressumDialog extends JDialog {
         dialogPanel = new JPanel();
         dialogLayout = new BoxLayout(dialogPanel, BoxLayout.Y_AXIS);
         dialogPanel.setLayout(dialogLayout);
-        textArea = new JTextArea(Propertymanager.getProperty("MoneyFlow.Impressum").replaceAll("\"", ""));
+        textArea = new JTextArea(Propertymanager.getProperty("Impressum").replaceAll("\"", ""));
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
         textArea.setSize(new Dimension(280, 100));

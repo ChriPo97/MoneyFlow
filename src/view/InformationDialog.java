@@ -49,7 +49,7 @@ public class InformationDialog extends JDialog {
         dialogPanel.setBorder(new EmptyBorder(new Insets(10, 10, 10, 10)));
         dialogLayout = new BoxLayout(dialogPanel, BoxLayout.Y_AXIS);
         dialogPanel.setLayout(dialogLayout);
-        textArea = new JTextArea(Propertymanager.getProperty("MoneyFlow.Impressum").replaceAll("\"", ""));
+        textArea = new JTextArea(Propertymanager.getProperty("Impressum").replaceAll("\"", ""));
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
         textArea.setSize(new Dimension(280, 100));
