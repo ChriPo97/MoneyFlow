@@ -49,12 +49,11 @@ public class InformationDialog extends JDialog {
         dialogPanel.setBorder(new EmptyBorder(new Insets(10, 10, 10, 10)));
         dialogLayout = new BoxLayout(dialogPanel, BoxLayout.Y_AXIS);
         dialogPanel.setLayout(dialogLayout);
-        textArea = new JTextArea(Propertymanager.getProperty("Impressum").replaceAll("\"", ""));
+        textArea = new JTextArea(text);
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
         textArea.setSize(new Dimension(280, 100));
         textArea.setEditable(false);
-        textArea.setText(text);
         scrollPane = new JScrollPane(textArea);
         dialogPanel.add(scrollPane);
         this.add(dialogPanel);
