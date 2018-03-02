@@ -7,6 +7,7 @@ package view;
 
 import Controller.BarCodeGenerator;
 import Controller.DBVerbindung;
+import Controller.Languagemanager;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Insets;
@@ -48,15 +49,15 @@ public class ArtikelDialog extends JDialog {
     private JPanel listPanel = new JPanel();
     private GridLayout listLayout;
     private JScrollPane listPane;
-    private DefaultMutableTreeNode top = new DefaultMutableTreeNode("Artikel");
+    private DefaultMutableTreeNode top = new DefaultMutableTreeNode(Languagemanager.getProperty("ArtikelDialog.top"));
     private JTree tree = new JTree(top);
     private GroupLayout artikelPanelGroupLayout;
     private GridLayout dialogLayout;
-    private JLabel kategorieLabel = new JLabel("Kategorie:");
-    private JLabel produktLabel = new JLabel("Produkt:");
-    private JLabel einheitLabel = new JLabel("Einheit:");
-    private JLabel einzelpreisLabel = new JLabel("Einzelpreis (in Cent):");
-    private JLabel mwstLabel = new JLabel("MwSt:");
+    private JLabel kategorieLabel = new JLabel(Languagemanager.getProperty("ArtikelDialog.kategorieLabel") + ":");
+    private JLabel produktLabel = new JLabel(Languagemanager.getProperty("ArtikelDialog.produktLabel") + ":");
+    private JLabel einheitLabel = new JLabel(Languagemanager.getProperty("ArtikelDialog.einheitLabel") + ":");
+    private JLabel einzelpreisLabel = new JLabel(Languagemanager.getProperty("ArtikelDialog.einzelpreisLabel") + ":");
+    private JLabel mwstLabel = new JLabel(Languagemanager.getProperty("ArtikelDialog.mwstLabel") + ":");
     private static JTextField kategorieField = new JTextField();
     private static JTextField produktField = new JTextField();
     private String currentArtikelname = "";
@@ -72,9 +73,9 @@ public class ArtikelDialog extends JDialog {
 
         //Anhand des übergebenen Modi wird ein anderer Dialog geöffnet
         if (artikelMode == MenuBar.ArtikelMode.ADD) {
-            this.setTitle("Artikel hinzufügen");
+            this.setTitle(Languagemanager.getProperty("ArtikelDialog.mode.add.titel"));
             this.setMinimumSize(new Dimension(300, 250));
-            modeButton.setText("Artikel hinzufügen");
+            modeButton.setText(Languagemanager.getProperty("ArtikelDialog.mode.add.modeButton"));
             kategorieField.setEnabled(true);
             produktField.setEnabled(true);
             einheitComboBox.setEnabled(true);
@@ -87,7 +88,7 @@ public class ArtikelDialog extends JDialog {
                         Mehrwertsteuer mwst = DBVerbindung.getMwstByKlasse(((String) mwstComboBox.getSelectedItem()).toCharArray()[0]);
                         DBVerbindung.artikelAnlegen(produktField.getText(), kategorieField.getText(), (int) (einzelpreisField.getValue()),
                                 einheitComboBox.getSelectedItem().toString(), mwst.getId());
-                        JOptionPane.showMessageDialog(null, "Artikel erfolgreich angelegt!");
+                        JOptionPane.showMessageDialog(null, Languagemanager.getProperty("ArtikelDialog.mode.add.message"));
                         BarCodeGenerator.generateCode128Barcode(DBVerbindung.artikelNametoArtikelID(produktField.getText()));
                         clearAllFields();
                     }
@@ -96,9 +97,9 @@ public class ArtikelDialog extends JDialog {
             //Barcode generieren
         }
         if (artikelMode == MenuBar.ArtikelMode.CHANGE) {
-            this.setTitle("Artikel ändern");
+            this.setTitle(Languagemanager.getProperty("ArtikelDialog.mode.change.titel"));
             this.setMinimumSize(new Dimension(600, 250));
-            modeButton.setText("Artikel ändern");
+            modeButton.setText(Languagemanager.getProperty("ArtikelDialog.mode.change.modeButton"));
             kategorieField.setEnabled(true);
             produktField.setEnabled(true);
             einheitComboBox.setEnabled(true);
@@ -116,7 +117,7 @@ public class ArtikelDialog extends JDialog {
                         DBVerbindung.artikelBearbeitenPreis(id, (int) (einzelpreisField.getValue()));
                         DBVerbindung.artikelBearbeitenEinheit(id, einheitComboBox.getSelectedItem().toString());
                         DBVerbindung.artikelBearbeitenMwstklasse(id, mwst.getId());
-                        JOptionPane.showMessageDialog(null, "Artikel erfolgreich geändert!");
+                        JOptionPane.showMessageDialog(null, Languagemanager.getProperty("ArtikelDialog.mode.change.message"));
                         updateTree();
                         clearAllFields();
                     }
@@ -124,9 +125,9 @@ public class ArtikelDialog extends JDialog {
             });
         }
         if (artikelMode == MenuBar.ArtikelMode.DELETE) {
-            this.setTitle("Artikel löschen");
+            this.setTitle(Languagemanager.getProperty("ArtikelDialog.mode.change.titel"));
             this.setMinimumSize(new Dimension(600, 250));
-            modeButton.setText("Artikel löschen");
+            modeButton.setText(Languagemanager.getProperty("ArtikelDialog.mode.change.modeButton"));
             kategorieField.setEnabled(false);
             produktField.setEnabled(false);
             einheitComboBox.setEnabled(false);
@@ -137,17 +138,18 @@ public class ArtikelDialog extends JDialog {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if (produktField.getText() != "") {
-                        Object[] options = {"Ja", "Nein"};
+                        Object[] options = {Languagemanager.getProperty("ArtikelDialog.mode.delete.options.Ja"), 
+                            Languagemanager.getProperty("ArtikelDialog.mode.delete.options.Nein")};
                         int selectedOption = JOptionPane.showOptionDialog(null,
-                                "Wollen Sie den Artikel wirklich löschen?",
-                                "Artikel löschen",
+                                Languagemanager.getProperty("ArtikelDialog.mode.delete.selectedOption.text"),
+                                Languagemanager.getProperty("ArtikelDialog.mode.delete.selectedOption.titel"),
                                 JOptionPane.DEFAULT_OPTION,
                                 JOptionPane.INFORMATION_MESSAGE,
                                 null, options, options[0]);
                         if (selectedOption == 0) {
                             int id = DBVerbindung.artikelNametoArtikelID(produktField.getText());
                             DBVerbindung.artikelLoeschen(id);
-                            JOptionPane.showMessageDialog(null, "Artikel erfolgreich gelöscht!");
+                            JOptionPane.showMessageDialog(null, Languagemanager.getProperty("ArtikelDialog.mode.delete.message"));
                             BarCodeGenerator.deleteBarcode(id);
                             updateTree();
                             clearAllFields();

@@ -5,6 +5,7 @@
  */
 package view;
 
+import Controller.Languagemanager;
 import Controller.Propertymanager;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -30,7 +31,7 @@ public class Hauptfenster extends JFrame implements KeyListener {
     public Hauptfenster() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setMinimumSize(new Dimension(1024, 768));
-        this.setTitle("Kassensystem MoneyFlow");
+        this.setTitle(Languagemanager.getProperty("Hauptfenster.Titel"));
         this.setLocationRelativeTo(null);
         this.addKeyListener(this);
         this.setFocusable(true);

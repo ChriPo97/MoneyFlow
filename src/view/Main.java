@@ -7,6 +7,7 @@ package view;
 
 import Controller.BarCodeGenerator;
 import Controller.DBVerbindung;
+import Controller.Languagemanager;
 import Controller.Propertymanager;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -32,6 +33,7 @@ public class Main {
             JOptionPane.showMessageDialog(null, "Das Anpassen des LookAndFeels an das System eigene ist fehlgeschlagen!", "Error", JOptionPane.ERROR_MESSAGE);
         }
         Propertymanager.ladenProperties();
+        Languagemanager.ladenProperties();
         DBVerbindung.verbinden();
         Hauptfenster hf = new Hauptfenster();
         hf.setVisible(true);

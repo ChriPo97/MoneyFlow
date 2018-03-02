@@ -164,7 +164,7 @@ public class Artikel {
             return vorKomma+','+nachKomma;
         }
         
-        return menge+"stk";
+        return String.valueOf(menge);
     }
 
 }

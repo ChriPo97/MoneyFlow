@@ -7,6 +7,7 @@ package model;
 
 import Controller.DBVerbindung;
 import Controller.Einkaufsmanager;
+import Controller.Languagemanager;
 import Controller.Propertymanager;
 import java.io.File;
 import java.io.IOException;
@@ -138,10 +139,10 @@ public class Kassenbon {
             }
         }
         lines.add("");
-        lines.add("Summe: " + this.getGesamtpreisString());
+        lines.add(Languagemanager.getProperty("Kassenbon.Summe") + ": " + this.getGesamtpreisString());
         lines.add("");
-        lines.add("MwSt. A: " + this.getNettoByMwstklasseString('A'));
-        lines.add("MwSt. B: " + this.getNettoByMwstklasseString('B'));
+        lines.add(Languagemanager.getProperty("Kassenbon.MwSt") + " A: " + this.getNettoByMwstklasseString('A'));
+        lines.add(Languagemanager.getProperty("Kassenbon.MwSt") + " B: " + this.getNettoByMwstklasseString('B'));
         
         return lines;
     }

@@ -6,6 +6,7 @@
 package view;
 
 import Controller.Einkaufsmanager;
+import Controller.Languagemanager;
 import model.Artikel;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -30,8 +31,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Warenliste extends JPanel {
 
-    private static JTextField summe = new JTextField("Summe:");
-    private static JTextField mwst = new JTextField("MwSt:");
+    private static JTextField summe = new JTextField(Languagemanager.getProperty("Warenliste.summe") + ": ");
+    private static JTextField mwst = new JTextField(Languagemanager.getProperty("Warenliste.mwst") + ": ");
     private static JTable table;
     private JScrollPane scrollpaneTable;
     private static DefaultTableModel tableModel = new DefaultTableModel() {
@@ -54,19 +55,19 @@ public class Warenliste extends JPanel {
         summe.setMaximumSize(new Dimension(Short.MAX_VALUE, 70));
         summe.setBackground(Color.WHITE);
         summe.setFont(new Font("Ariel", 0, 30));
-        summe.setText("Summe: " + Einkaufsmanager.getGesamtPreisString());
+        summe.setText(Languagemanager.getProperty("Warenliste.summe") + ": " + Einkaufsmanager.getGesamtPreisString());
         mwst.setPreferredSize(new Dimension(Short.MAX_VALUE, 40));
         mwst.setMaximumSize(new Dimension(Short.MAX_VALUE, 40));
         mwst.setEditable(false);
         mwst.setBackground(Color.WHITE);
         mwst.setFont(new Font("Ariel", 0, 16));
-        mwst.setText("inkl. MwSt: "+ Einkaufsmanager.getGesamtMwstString());
+        mwst.setText(Languagemanager.getProperty("Warenliste.mwst") + ": " + Einkaufsmanager.getGesamtMwstString());
 
         //Erstellen des Table Models und der JTabel
-        tableModel.addColumn("Menge");
-        tableModel.addColumn("Produkt");
-        tableModel.addColumn("Rabatt");
-        tableModel.addColumn("Preis");
+        tableModel.addColumn(Languagemanager.getProperty("Warenliste.table.column.1"));
+        tableModel.addColumn(Languagemanager.getProperty("Warenliste.table.column.2"));
+        tableModel.addColumn(Languagemanager.getProperty("Warenliste.table.column.3"));
+        tableModel.addColumn(Languagemanager.getProperty("Warenliste.table.column.4"));
         table = new JTable(tableModel) {
             @Override
             public Class getColumnClass(int column) {
@@ -129,8 +130,8 @@ public class Warenliste extends JPanel {
 
     //Funktion zum Updaten der Summe und MwSt. Felder
     public static void updateSummeUndMwst() {
-        summe.setText("Summe: " + Einkaufsmanager.getGesamtPreisString());
-        mwst.setText("inkl. MwSt: " + Einkaufsmanager.getGesamtMwstString());
+        summe.setText(Languagemanager.getProperty("Warenliste.summe") + ": " + Einkaufsmanager.getGesamtPreisString());
+        mwst.setText(Languagemanager.getProperty("Warenliste.mwst") + ": " + Einkaufsmanager.getGesamtMwstString());
     }
 
     //Funktion zum Updaten der Warenliste

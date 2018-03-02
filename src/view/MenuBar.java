@@ -6,6 +6,7 @@
 package view;
 
 import Controller.Einkaufsmanager;
+import Controller.Languagemanager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JMenu;
@@ -24,15 +25,14 @@ public class MenuBar extends JMenuBar {
     public enum ArtikelMode {
         ADD, CHANGE, DELETE
     };
-    private JMenu datei = new JMenu("Datei");
-    private JMenu tools = new JMenu("Tools");
-    private JMenu datenbank = new JMenu("Datenbank");
-    private JMenuItem impressum = new JMenuItem("Impressum ändern");
-    private JMenuItem addArtikel = new JMenuItem("Artikel hinzufügen");
-    private JMenuItem changeArtikel = new JMenuItem("Artikel ändern");
-    private JMenuItem deleteArtikel = new JMenuItem("Artikel löschen");
-    private JMenu ueber = new JMenu("Über");
-    private JMenuItem information = new JMenuItem("Information");
+    private JMenu tools = new JMenu(Languagemanager.getProperty("MenuBar.tools"));
+    private JMenu datenbank = new JMenu(Languagemanager.getProperty("MenuBar.datenbank"));
+    private JMenuItem impressum = new JMenuItem(Languagemanager.getProperty("MenuBar.impressum"));
+    private JMenuItem addArtikel = new JMenuItem(Languagemanager.getProperty("MenuBar.addArtikel"));
+    private JMenuItem changeArtikel = new JMenuItem(Languagemanager.getProperty("MenuBar.changeArtikel"));
+    private JMenuItem deleteArtikel = new JMenuItem(Languagemanager.getProperty("MenuBar.deleteArtikel"));
+    private JMenu ueber = new JMenu(Languagemanager.getProperty("MenuBar.ueber"));
+    private JMenuItem information = new JMenuItem(Languagemanager.getProperty("MenuBar.information"));
     private JSeparator seperator = new JSeparator();
 
     public MenuBar() {
@@ -44,7 +44,7 @@ public class MenuBar extends JMenuBar {
                 if (Einkaufsmanager.getEinkaufskorb().isEmpty()) {
                     ArtikelDialog artikelDialog = new ArtikelDialog(ArtikelMode.ADD);
                 } else {
-                    JOptionPane.showMessageDialog(null, "Für diese Aktion darf kein Einkauf aktiv sein.");
+                    JOptionPane.showMessageDialog(null, Languagemanager.getProperty("MenuBar.addchangedelete.error.text"));
                 }
             }
         });
@@ -54,7 +54,7 @@ public class MenuBar extends JMenuBar {
                 if (Einkaufsmanager.getEinkaufskorb().isEmpty()) {
                     ArtikelDialog artikelDialog = new ArtikelDialog(ArtikelMode.CHANGE);
                 } else {
-                    JOptionPane.showMessageDialog(null, "Für diese Aktion darf kein Einkauf aktiv sein.");
+                    JOptionPane.showMessageDialog(null, Languagemanager.getProperty("MenuBar.addchangedelete.error.text"));
                 }
             }
         });
@@ -64,7 +64,7 @@ public class MenuBar extends JMenuBar {
                 if (Einkaufsmanager.getEinkaufskorb().isEmpty()) {
                     ArtikelDialog artikelDialog = new ArtikelDialog(ArtikelMode.DELETE);
                 } else {
-                    JOptionPane.showMessageDialog(null, "Für diese Aktion darf kein Einkauf aktiv sein.");
+                    JOptionPane.showMessageDialog(null, Languagemanager.getProperty("MenuBar.addchangedelete.error.text"));
                 }
             }
         });
@@ -87,7 +87,6 @@ public class MenuBar extends JMenuBar {
         tools.add(seperator);
         tools.add(impressum);
         ueber.add(information);
-        this.add(datei);
         this.add(tools);
         this.add(ueber);
     }

@@ -6,6 +6,7 @@
 package view;
 
 import Controller.Einkaufsmanager;
+import Controller.Languagemanager;
 import Controller.Propertymanager;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -35,16 +36,15 @@ import model.Kassenbon;
 
 /**
  *
- * @author ChriPo97 
- * Klasse für das Panel des rechten Teils des Hauptfensters mit dem Ziffernblock
- * und einigen Buttons.
+ * @author ChriPo97 Klasse für das Panel des rechten Teils des Hauptfensters mit
+ * dem Ziffernblock und einigen Buttons.
  */
 public class Ziffernblock extends JPanel {
 
     private static JTextField preisField = new JTextField();
-    private static JLabel produktNummerLabel = new JLabel("Produktnummer");
-    private static JLabel mengeLabel = new JLabel("Menge");
-    private static JLabel rabattLabel = new JLabel("Rabatt");
+    private static JLabel produktNummerLabel = new JLabel(Languagemanager.getProperty("Ziffernblock.produktNummerLabel"));
+    private static JLabel mengeLabel = new JLabel(Languagemanager.getProperty("Ziffernblock.mengeLabel"));
+    private static JLabel rabattLabel = new JLabel(Languagemanager.getProperty("Ziffernblock.rabattLabel"));
     private ButtonGroup numBlock = new ButtonGroup();
     private JButton num1 = new JButton("1");
     private JButton num2 = new JButton("2");
@@ -59,7 +59,7 @@ public class Ziffernblock extends JPanel {
     private JButton num00 = new JButton("00");
     private JButton enter = new JButton("\u2713");
     private JButton delete = new JButton("X");
-    private JButton checkout = new JButton("CHECKOUT");
+    private JButton checkout = new JButton(Languagemanager.getProperty("Ziffernblock.checkout"));
     private JPanel ziffernPanel = new JPanel();
     private GridLayout ziffernGridLayout = new GridLayout(5, 3, 5, 5);
     private GroupLayout ziffernBlockGroupLayout = new GroupLayout(this);
@@ -70,7 +70,7 @@ public class Ziffernblock extends JPanel {
     private static enum Mode {
         PRODUKTNUMMER, MENGE, RABATT
     };
-    
+
     //Start-Wert für den Modus ist MENGE
     private static Mode mode = Mode.MENGE;
 
@@ -154,14 +154,15 @@ public class Ziffernblock extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (!Einkaufsmanager.getEinkaufskorb().isEmpty()) {
-                    Object[] optionsCheckout = {"Ja", "Nein"};
+                    Object[] optionsCheckout = {Languagemanager.getProperty("Ziffernblock.optionsCheckout.Ja"),
+                        Languagemanager.getProperty("Ziffernblock.optionsCheckout.Nein")};
                     int selectedOptionCheckout = JOptionPane.showOptionDialog(null,
-                            "Möchten Sie den Einkauf beenden?",
-                            "Checkout",
+                            Languagemanager.getProperty("Ziffernblock.selectedOptionCheckout.text"),
+                            Languagemanager.getProperty("Ziffernblock.selectedOptionCheckout.titel"),
                             JOptionPane.DEFAULT_OPTION,
                             JOptionPane.INFORMATION_MESSAGE,
                             null, optionsCheckout, optionsCheckout[0]);
-                    
+
                     if (selectedOptionCheckout == 0) {
                         try {
                             Kassenbon bon = new Kassenbon(Einkaufsmanager.getEinkaufskorb());
@@ -172,15 +173,16 @@ public class Ziffernblock extends JPanel {
                         } catch (IOException ex) {
                             JOptionPane.showMessageDialog(null, "Ein Bon konnte nicht erstellt werden.", "I/O Error", JOptionPane.ERROR_MESSAGE);
                         }
-                        
-                        Object[] optionsBon = {"Ja", "Nein"};
+
+                        Object[] optionsBon = {Languagemanager.getProperty("Ziffernblock.optionsBon.Ja"),
+                            Languagemanager.getProperty("Ziffernblock.optionsBon.Nein")};
                         int selectedOptionBon = JOptionPane.showOptionDialog(null,
-                                "Bon erfolgreich gespeichert!\nSoll der Bon gedruckt werden?",
-                                "Checkout - Bon",
+                                Languagemanager.getProperty("Ziffernblock.selectedOptionBon.text"),
+                                Languagemanager.getProperty("Ziffernblock.selectedOptionBon.titel"),
                                 JOptionPane.DEFAULT_OPTION,
                                 JOptionPane.INFORMATION_MESSAGE,
                                 null, optionsBon, optionsBon[0]);
-                        
+
                         Einkaufsmanager.stornierenEinkauf();
                         Warenliste.clearTable();
                         Ziffernblock.setModeMenge();
@@ -282,7 +284,7 @@ public class Ziffernblock extends JPanel {
     //Funktion zum Hinzufügen eines Zahlenwertes zum preisField
     public static void addToPreisField(String newText) {
         if (mode == Mode.MENGE || mode == Mode.PRODUKTNUMMER) {
-                preisField.setText(preisField.getText() + newText);
+            preisField.setText(preisField.getText() + newText);
         }
         if (mode == Mode.RABATT) {
             if (Integer.valueOf(preisField.getText() + newText) <= 100) {

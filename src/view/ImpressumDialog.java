@@ -5,6 +5,7 @@
  */
 package view;
 
+import Controller.Languagemanager;
 import Controller.Propertymanager;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -37,7 +38,7 @@ public class ImpressumDialog extends JDialog {
     public ImpressumDialog() {
         initComponents();
         dialogPanel.setBorder(new EmptyBorder(new Insets(10, 10, 10, 10)));
-        this.setTitle("Impressum ändern");
+        this.setTitle(Languagemanager.getProperty("ImpressumDialog.titel"));
         this.setMinimumSize(new Dimension(300, 200));
         this.setResizable(false);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -55,7 +56,7 @@ public class ImpressumDialog extends JDialog {
         textArea.setWrapStyleWord(true);
         textArea.setSize(new Dimension(280, 100));
         scrollPane = new JScrollPane(textArea);
-        changeButton = new JButton("Impressum ändern");
+        changeButton = new JButton(Languagemanager.getProperty("ImpressumDialog.changeButton"));
         changeButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         changeButton.addActionListener(new ActionListener() {
             @Override
@@ -63,7 +64,7 @@ public class ImpressumDialog extends JDialog {
                 Propertymanager.setProperty("MoneyFlow.Impressum", "\"" + textArea.getText() + "\"");
                 Propertymanager.schreibenProperties();
                 disposeDialog();
-                JOptionPane.showMessageDialog(null, "Impressum geändert!");
+                JOptionPane.showMessageDialog(null, Languagemanager.getProperty("ImpressumDialog.message"));
             }
         });
         dialogPanel.add(scrollPane);

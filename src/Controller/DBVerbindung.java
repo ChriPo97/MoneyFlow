@@ -35,7 +35,7 @@ public class DBVerbindung {
         try {
             Class.forName("org.sqlite.JDBC");
         } catch (ClassNotFoundException ex) {
-            JOptionPane.showMessageDialog(null, "Eine für die SQLite notwendige Klasse konnte nicht gefunden werden!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, Languagemanager.getProperty("DBVerbindung.error.text"), Languagemanager.getProperty("DBVerbindung.error.titel"), JOptionPane.ERROR_MESSAGE);
         }
         try {
             con = DriverManager.getConnection(URL);
@@ -47,7 +47,7 @@ public class DBVerbindung {
             }
             rs.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Eine Verbindung mit der SQLite Datenbank war nicht möglich!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, Languagemanager.getProperty("DBVerbindung.error.text"), Languagemanager.getProperty("DBVerbindung.error.titel"), JOptionPane.ERROR_MESSAGE);
         }
     }
 //Verbindung zur Datenbank schliesse
@@ -56,7 +56,7 @@ public class DBVerbindung {
         try {
             con.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Eine Verbindung mit der SQLite Datenbank war nicht möglich!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, Languagemanager.getProperty("DBVerbindung.error.text"), Languagemanager.getProperty("DBVerbindung.error.titel"), JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -72,7 +72,7 @@ public class DBVerbindung {
             artikelID = rs.getInt("AID");
             rs.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Eine Verbindung mit der SQLite Datenbank war nicht möglich!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, Languagemanager.getProperty("DBVerbindung.error.text"), Languagemanager.getProperty("DBVerbindung.error.titel"), JOptionPane.ERROR_MESSAGE);
         }
         return artikelID;
     }
@@ -88,7 +88,7 @@ public class DBVerbindung {
             kategorie = rs.getString("Kategorie");
             rs.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Eine Verbindung mit der SQLite Datenbank war nicht möglich!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, Languagemanager.getProperty("DBVerbindung.error.text"), Languagemanager.getProperty("DBVerbindung.error.titel"), JOptionPane.ERROR_MESSAGE);
         }
         return kategorie;
     }
@@ -104,7 +104,7 @@ public class DBVerbindung {
             preis = rs.getInt("Preis");
             rs.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Eine Verbindung mit der SQLite Datenbank war nicht möglich!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, Languagemanager.getProperty("DBVerbindung.error.text"), Languagemanager.getProperty("DBVerbindung.error.titel"), JOptionPane.ERROR_MESSAGE);
         }
         return preis;
     }
@@ -120,7 +120,7 @@ public class DBVerbindung {
             einheit = rs.getString("Einheit");
             rs.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Eine Verbindung mit der SQLite Datenbank war nicht möglich!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, Languagemanager.getProperty("DBVerbindung.error.text"), Languagemanager.getProperty("DBVerbindung.error.titel"), JOptionPane.ERROR_MESSAGE);
         }
         return einheit;
     }
@@ -136,7 +136,7 @@ public class DBVerbindung {
             mwstk = rs.getString("Mehrwertsteuerklasse");
             rs.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Eine Verbindung mit der SQLite Datenbank war nicht möglich!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, Languagemanager.getProperty("DBVerbindung.error.text"), Languagemanager.getProperty("DBVerbindung.error.titel"), JOptionPane.ERROR_MESSAGE);
         }
         return mwstk;
     }
@@ -152,7 +152,7 @@ public class DBVerbindung {
             menge = rs.getInt("Menge");
             rs.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Eine Verbindung mit der SQLite Datenbank war nicht möglich!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, Languagemanager.getProperty("DBVerbindung.error.text"), Languagemanager.getProperty("DBVerbindung.error.titel"), JOptionPane.ERROR_MESSAGE);
         }
         return menge;
     }
@@ -168,7 +168,7 @@ public class DBVerbindung {
             mwst = rs.getFloat("Steuersatz");
             rs.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Eine Verbindung mit der SQLite Datenbank war nicht möglich!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, Languagemanager.getProperty("DBVerbindung.error.text"), Languagemanager.getProperty("DBVerbindung.error.titel"), JOptionPane.ERROR_MESSAGE);
         }
         return mwst;
     }
@@ -184,7 +184,7 @@ public class DBVerbindung {
             artikelName = rs.getString("Artikelname");
             rs.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Eine Verbindung mit der SQLite Datenbank war nicht möglich!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, Languagemanager.getProperty("DBVerbindung.error.text"), Languagemanager.getProperty("DBVerbindung.error.titel"), JOptionPane.ERROR_MESSAGE);
         }
         return artikelName;
     }
@@ -208,7 +208,7 @@ public class DBVerbindung {
             ps.execute();
             ps.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Eine Verbindung mit der SQLite Datenbank war nicht möglich!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, Languagemanager.getProperty("DBVerbindung.error.text"), Languagemanager.getProperty("DBVerbindung.error.titel"), JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -241,7 +241,7 @@ public class DBVerbindung {
             }
             rs.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Eine Verbindung mit der SQLite Datenbank war nicht möglich!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, Languagemanager.getProperty("DBVerbindung.error.text"), Languagemanager.getProperty("DBVerbindung.error.titel"), JOptionPane.ERROR_MESSAGE);
         }
         return null;
     }
@@ -284,7 +284,7 @@ public class DBVerbindung {
             }
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Eine Verbindung mit der SQLite Datenbank war nicht möglich!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, Languagemanager.getProperty("DBVerbindung.error.text"), Languagemanager.getProperty("DBVerbindung.error.titel"), JOptionPane.ERROR_MESSAGE);
         }
         return artikelListe;
     }
@@ -299,7 +299,7 @@ public class DBVerbindung {
             ps.execute();
             ps.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Eine Verbindung mit der SQLite Datenbank war nicht möglich!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, Languagemanager.getProperty("DBVerbindung.error.text"), Languagemanager.getProperty("DBVerbindung.error.titel"), JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -312,7 +312,7 @@ public class DBVerbindung {
             ps.execute();
             ps.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Eine Verbindung mit der SQLite Datenbank war nicht möglich!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, Languagemanager.getProperty("DBVerbindung.error.text"), Languagemanager.getProperty("DBVerbindung.error.titel"), JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -325,7 +325,7 @@ public class DBVerbindung {
             ps.execute();
             ps.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Eine Verbindung mit der SQLite Datenbank war nicht möglich!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, Languagemanager.getProperty("DBVerbindung.error.text"), Languagemanager.getProperty("DBVerbindung.error.titel"), JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -338,7 +338,7 @@ public class DBVerbindung {
             ps.execute();
             ps.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Eine Verbindung mit der SQLite Datenbank war nicht möglich!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, Languagemanager.getProperty("DBVerbindung.error.text"), Languagemanager.getProperty("DBVerbindung.error.titel"), JOptionPane.ERROR_MESSAGE);
         }
     }
     //Artikelmehrwertsteuer bearbeiten
@@ -351,7 +351,7 @@ public class DBVerbindung {
             ps.execute();
             ps.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Eine Verbindung mit der SQLite Datenbank war nicht möglich!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, Languagemanager.getProperty("DBVerbindung.error.text"), Languagemanager.getProperty("DBVerbindung.error.titel"), JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -363,7 +363,7 @@ public class DBVerbindung {
             ps.execute();
             ps.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Eine Verbindung mit der SQLite Datenbank war nicht möglich!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, Languagemanager.getProperty("DBVerbindung.error.text"), Languagemanager.getProperty("DBVerbindung.error.titel"), JOptionPane.ERROR_MESSAGE);
         }
     }
 

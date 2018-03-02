@@ -6,6 +6,7 @@
 package view;
 
 import Controller.Einkaufsmanager;
+import Controller.Languagemanager;
 import model.Artikel;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -33,14 +34,14 @@ import javax.swing.border.EmptyBorder;
 public class Artikelinformation extends JPanel {
 
     private JPanel artikelPanel = new JPanel();
-    private JLabel mengeLabel = new JLabel("Menge:");
-    private JLabel produktLabel = new JLabel("Produkt:");
-    private JLabel einheitLabel = new JLabel("Einheit:");
-    private JLabel kategorieLabel = new JLabel("Kategorie:");
-    private JLabel mwstLabel = new JLabel("MwSt:");
-    private JLabel produktNummerLabel = new JLabel("Produktnummer:");
-    private JLabel einzelpreisLabel = new JLabel("Einzelpreis:");
-    private JLabel gesamtLabel = new JLabel("Gesamtpreis:");
+    private JLabel mengeLabel = new JLabel(Languagemanager.getProperty("Artikelinformation.mengeLabel") + ":");
+    private JLabel produktLabel = new JLabel(Languagemanager.getProperty("Artikelinformation.produktLabel") + ":");
+    private JLabel einheitLabel = new JLabel(Languagemanager.getProperty("Artikelinformation.einheitLabel") + ":");
+    private JLabel kategorieLabel = new JLabel(Languagemanager.getProperty("Artikelinformation.kategorieLabel") + ":");
+    private JLabel mwstLabel = new JLabel(Languagemanager.getProperty("Artikelinformation.mwstLabel") + ":");
+    private JLabel produktNummerLabel = new JLabel(Languagemanager.getProperty("Artikelinformation.produktNummerLabel") + ":");
+    private JLabel einzelpreisLabel = new JLabel(Languagemanager.getProperty("Artikelinformation.einzelpreisLabel") + ":");
+    private JLabel gesamtLabel = new JLabel(Languagemanager.getProperty("Artikelinformation.gesamtLabel") + ":");
     private static JTextField mengeField = new JTextField();
     private static JTextField produktField = new JTextField();
     private static JTextField einheitField = new JTextField();
@@ -50,11 +51,11 @@ public class Artikelinformation extends JPanel {
     private static JTextField einzelpreisField = new JTextField();
     private static JTextField gesamtField = new JTextField();
     private JPanel panelButtons = new JPanel();
-    private JButton stornoButton = new JButton("Storno");
-    private JButton produktnummerButton = new JButton("Produktnummer");
-    private JButton mengeButton = new JButton("Menge");
-    private JButton rabattButton = new JButton("Rabatt");
-    private JButton verkaufAbbrechenButton = new JButton("Verkauf abbrechen");
+    private JButton stornoButton = new JButton(Languagemanager.getProperty("Artikelinformation.stornoButton"));
+    private JButton produktnummerButton = new JButton(Languagemanager.getProperty("Artikelinformation.produktnummerButton"));
+    private JButton mengeButton = new JButton(Languagemanager.getProperty("Artikelinformation.mengeButton"));
+    private JButton rabattButton = new JButton(Languagemanager.getProperty("Artikelinformation.rabattButton"));
+    private JButton verkaufAbbrechenButton = new JButton(Languagemanager.getProperty("Artikelinformation.verkaufAbbrechenButton"));
 
     public Artikelinformation() {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
