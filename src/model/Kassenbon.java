@@ -9,6 +9,7 @@ import Controller.DBVerbindung;
 import Controller.Einkaufsmanager;
 import Controller.Languagemanager;
 import Controller.Propertymanager;
+import java.awt.Desktop;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -178,36 +179,39 @@ public class Kassenbon {
         Files.write(bonFile.toPath(), this.getKassebonAufbereitet(), Charset.forName(Propertymanager.getProperty("BonCharset")));
     }
 
-    public void printBon() throws FileNotFoundException, PrintException {
-        FileInputStream textStream = new FileInputStream(bonFile);
+    public void printBon() throws FileNotFoundException, PrintException, IOException {
         
-        PrintRequestAttributeSet aset = new HashPrintRequestAttributeSet();
-        aset.add(new Copies(1));
+        Desktop.getDesktop().print(bonFile);
         
-        DocFlavor flavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
-        Doc mydoc = new SimpleDoc(textStream, flavor, null);
-
-        PrintService[] services = PrintServiceLookup.lookupPrintServices(flavor, aset);
-        PrintService defaultService = PrintServiceLookup.lookupDefaultPrintService();
-
-        if (services.length == 0) {
-            if (defaultService == null) {
-                System.out.println("no printer found");
-            } else {
-                System.out.println("using default");
-                DocPrintJob job = defaultService.createPrintJob();
-                job.print(mydoc, aset);
-            }
-        } else {
-
-            //built in UI for printing you may not use this
-            PrintService service = ServiceUI.printDialog(null, 200, 200, services, defaultService, flavor, aset);
-
-            if (service != null) {
-                DocPrintJob job = service.createPrintJob();
-                job.print(mydoc, aset);
-            }
-        }
+//        FileInputStream textStream = new FileInputStream(bonFile);
+//        
+//        PrintRequestAttributeSet aset = new HashPrintRequestAttributeSet();
+//        aset.add(new Copies(1));
+//        
+//        DocFlavor flavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
+//        Doc mydoc = new SimpleDoc(textStream, flavor, null);
+//
+//        PrintService[] services = PrintServiceLookup.lookupPrintServices(flavor, aset);
+//        PrintService defaultService = PrintServiceLookup.lookupDefaultPrintService();
+//
+//        if (services.length == 0) {
+//            if (defaultService == null) {
+//                System.out.println("no printer found");
+//            } else {
+//                System.out.println("using default");
+//                DocPrintJob job = defaultService.createPrintJob();
+//                job.print(mydoc, aset);
+//            }
+//        } else {
+//
+//            //built in UI for printing you may not use this
+//            PrintService service = ServiceUI.printDialog(null, 200, 200, services, defaultService, flavor, aset);
+//
+//            if (service != null) {
+//                DocPrintJob job = service.createPrintJob();
+//                job.print(mydoc, aset);
+//            }
+//        }
     }
 
 }
