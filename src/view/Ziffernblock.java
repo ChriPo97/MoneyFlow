@@ -16,12 +16,14 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.print.PrintException;
 import javax.swing.Box;
 import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
@@ -164,14 +166,12 @@ public class Ziffernblock extends JPanel {
                             null, optionsCheckout, optionsCheckout[0]);
 
                     if (selectedOptionCheckout == 0) {
+                        Kassenbon bon = new Kassenbon(Einkaufsmanager.getEinkaufskorb());
                         try {
-                            Kassenbon bon = new Kassenbon(Einkaufsmanager.getEinkaufskorb());
-                            File bonFile = new File(Propertymanager.getProperty("BonDirectory") + "bon_" + bon.getZeitString() + "_" + bon.getDatumString() + ".txt");
-                            bonFile.getParentFile().mkdirs();
-                            bonFile.createNewFile();
-                            Files.write(bonFile.toPath(), bon.getKassebonAufbereitet(), Charset.forName(Propertymanager.getProperty("BonCharset")));
+                            bon.saveBon();
                         } catch (IOException ex) {
-                            JOptionPane.showMessageDialog(null, "Ein Bon konnte nicht erstellt werden.", "I/O Error", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(null, Languagemanager.getProperty("Ziffernblock.selectedOptionCheckout.error.text"),
+                                    Languagemanager.getProperty("Ziffernblock.selectedOptionCheckout.error.titel"), JOptionPane.ERROR_MESSAGE);
                         }
 
                         Object[] optionsBon = {Languagemanager.getProperty("Ziffernblock.optionsBon.Ja"),
@@ -182,35 +182,59 @@ public class Ziffernblock extends JPanel {
                                 JOptionPane.DEFAULT_OPTION,
                                 JOptionPane.INFORMATION_MESSAGE,
                                 null, optionsBon, optionsBon[0]);
-
+                        if (selectedOptionBon == 0) {
+                            try {
+                                bon.printBon();
+                            } catch (FileNotFoundException | PrintException ex) {
+                                Logger.getLogger(Ziffernblock.class.getName()).log(Level.SEVERE, null, ex);
+                                JOptionPane.showMessageDialog(null, Languagemanager.getProperty("Ziffernblock.selectedOptionBon.error.text"),
+                                        Languagemanager.getProperty("Ziffernblock.selectedOptionBon.error.titel"), JOptionPane.ERROR_MESSAGE);
+                            }
+                        }
                         Einkaufsmanager.stornierenEinkauf();
                         Warenliste.clearTable();
                         Ziffernblock.setModeMenge();
                     }
                 }
             }
-        });
+        }
+        );
 
         //Hinzufügen der Komponenten
         ziffernPanel.setLayout(ziffernGridLayout);
+
         ziffernPanel.add(num1);
+
         ziffernPanel.add(num2);
+
         ziffernPanel.add(num3);
+
         ziffernPanel.add(num4);
+
         ziffernPanel.add(num5);
+
         ziffernPanel.add(num6);
+
         ziffernPanel.add(num7);
+
         ziffernPanel.add(num8);
+
         ziffernPanel.add(num9);
+
         ziffernPanel.add(num00);
+
         ziffernPanel.add(num0);
+
         ziffernPanel.add(Box.createRigidArea(new Dimension(0, delete.getMinimumSize().height * 2)));
         ziffernPanel.add(delete);
+
         ziffernPanel.add(Box.createRigidArea(new Dimension(0, delete.getMinimumSize().height * 2)));
         ziffernPanel.add(enter);
 
-        checkoutPanel.setPreferredSize(new Dimension(Short.MAX_VALUE, 120));
+        checkoutPanel.setPreferredSize(
+                new Dimension(Short.MAX_VALUE, 120));
         checkoutPanel.setLayout(checkoutGridLayout);
+
         checkoutPanel.add(checkout);
 
         //Erstellen des GroupLayouts

@@ -10,11 +10,30 @@ import Controller.Einkaufsmanager;
 import Controller.Languagemanager;
 import Controller.Propertymanager;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import javax.print.Doc;
+import javax.print.DocFlavor;
+import javax.print.DocPrintJob;
+import javax.print.PrintException;
+import javax.print.PrintService;
+import javax.print.PrintServiceLookup;
+import javax.print.ServiceUI;
+import javax.print.SimpleDoc;
+import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.PrintRequestAttributeSet;
+import javax.print.attribute.standard.Copies;
+import javax.print.attribute.standard.MediaSize;
+import javax.print.attribute.standard.MediaSizeName;
+import javax.print.attribute.standard.OrientationRequested;
+import javax.print.attribute.standard.Sides;
 
 /**
  *
@@ -27,11 +46,14 @@ public class Kassenbon {
     private final String impressum;
     private static final DateTimeFormatter ZEITFORMATTER = DateTimeFormatter.ofPattern("HH-mm-ss");
     private static final DateTimeFormatter DATUMFORMATTER = DateTimeFormatter.ofPattern("dd-MM-YY");
+    private ArrayList<String> bonAufbereitet;
+    private File bonFile;
 
     public Kassenbon(List<Artikel> warenkorb) {
         zeitstempel = LocalDateTime.now();
         this.warenkorb = warenkorb;
         impressum = Propertymanager.getProperty("Impressum");
+        bonAufbereiten();
     }
 
     public List<Artikel> getWarenkorb() {
@@ -119,32 +141,73 @@ public class Kassenbon {
         return nullen.substring(0, nullen.length() - 3) + ',' + nullen.substring(nullen.length() - 3);
     }
 
-    public ArrayList<String> getKassebonAufbereitet() throws IOException {
-        ArrayList<String> lines = new ArrayList<String>();
+    public ArrayList<String> getKassebonAufbereitet() {
+        return bonAufbereitet;
+    }
+
+    private void bonAufbereiten() {
+        bonAufbereitet = new ArrayList<String>();
         ArrayList<String> tempKategorien = new ArrayList<String>();
-        lines.add(Propertymanager.getProperty("Impressum"));
-        lines.add("");
+        bonAufbereitet.add(Propertymanager.getProperty("Impressum"));
+        bonAufbereitet.add("");
         for (Artikel artikel : this.getWarenkorb()) {
             if (!tempKategorien.contains(artikel.getKategorie())) {
                 tempKategorien.add(artikel.getKategorie());
             }
         }
         for (String kategorie : tempKategorien) {
-            lines.add(kategorie + "\n");
+            bonAufbereitet.add(kategorie + "\n");
             for (Artikel artikel : this.getWarenkorb()) {
                 if (artikel.getKategorie().equals(kategorie)) {
-                    lines.add(" " + artikel.getMengeFormatiert() + " " + artikel.getName() + " "
+                    bonAufbereitet.add(" " + artikel.getMengeFormatiert() + " " + artikel.getName() + " "
                             + artikel.getPreisString() + " " + artikel.getMehrwertsteuerklasse() + "\n");
                 }
             }
         }
-        lines.add("");
-        lines.add(Languagemanager.getProperty("Kassenbon.Summe") + ": " + this.getGesamtpreisString());
-        lines.add("");
-        lines.add(Languagemanager.getProperty("Kassenbon.MwSt") + " A: " + this.getNettoByMwstklasseString('A'));
-        lines.add(Languagemanager.getProperty("Kassenbon.MwSt") + " B: " + this.getNettoByMwstklasseString('B'));
+        bonAufbereitet.add("");
+        bonAufbereitet.add(Languagemanager.getProperty("Kassenbon.Summe") + ": " + this.getGesamtpreisString());
+        bonAufbereitet.add("");
+        bonAufbereitet.add(Languagemanager.getProperty("Kassenbon.MwSt") + " A: " + this.getNettoByMwstklasseString('A'));
+        bonAufbereitet.add(Languagemanager.getProperty("Kassenbon.MwSt") + " B: " + this.getNettoByMwstklasseString('B'));
+    }
+
+    public void saveBon() throws IOException {
+        bonFile = new File(Propertymanager.getProperty("BonDirectory") + "bon_" + this.getZeitString() + "_" + this.getDatumString() + ".txt");
+        bonFile.getParentFile().mkdirs();
+        bonFile.createNewFile();
+        Files.write(bonFile.toPath(), this.getKassebonAufbereitet(), Charset.forName(Propertymanager.getProperty("BonCharset")));
+    }
+
+    public void printBon() throws FileNotFoundException, PrintException {
+        FileInputStream textStream = new FileInputStream(bonFile);
         
-        return lines;
+        PrintRequestAttributeSet aset = new HashPrintRequestAttributeSet();
+        aset.add(new Copies(1));
+        
+        DocFlavor flavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
+        Doc mydoc = new SimpleDoc(textStream, flavor, null);
+
+        PrintService[] services = PrintServiceLookup.lookupPrintServices(flavor, aset);
+        PrintService defaultService = PrintServiceLookup.lookupDefaultPrintService();
+
+        if (services.length == 0) {
+            if (defaultService == null) {
+                System.out.println("no printer found");
+            } else {
+                System.out.println("using default");
+                DocPrintJob job = defaultService.createPrintJob();
+                job.print(mydoc, aset);
+            }
+        } else {
+
+            //built in UI for printing you may not use this
+            PrintService service = ServiceUI.printDialog(null, 200, 200, services, defaultService, flavor, aset);
+
+            if (service != null) {
+                DocPrintJob job = service.createPrintJob();
+                job.print(mydoc, aset);
+            }
+        }
     }
 
 }
