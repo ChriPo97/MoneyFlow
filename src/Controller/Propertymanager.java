@@ -30,7 +30,7 @@ public class Propertymanager {
     private static final Properties PROPS = new Properties();
 
     public static void ladenProperties() {
-        try (FileInputStream in = new FileInputStream("MoneyFlow.properties")) {
+        try (FileInputStream in = new FileInputStream("cfg/" + "MoneyFlow.properties")) {
             PROPS.load(in);
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Die PROPERTIES-Datei konnte nicht geladen werden!", "Error", JOptionPane.ERROR_MESSAGE);
