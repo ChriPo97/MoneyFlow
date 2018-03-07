@@ -45,8 +45,10 @@ public class Kassenbon {
     private final List<Artikel> warenkorb;
     private final LocalDateTime zeitstempel;
     private final String impressum;
-    private static final DateTimeFormatter ZEITFORMATTER = DateTimeFormatter.ofPattern("HH-mm-ss");
-    private static final DateTimeFormatter DATUMFORMATTER = DateTimeFormatter.ofPattern("dd-MM-YY");
+    private static final DateTimeFormatter ZEITFORMATTER_NAME = DateTimeFormatter.ofPattern("HH-mm-ss");
+    private static final DateTimeFormatter DATUMFORMATTER_NAME = DateTimeFormatter.ofPattern("dd-MM-YY");
+    private static final DateTimeFormatter ZEITFORMATTER_BON = DateTimeFormatter.ofPattern("HH:mm");
+    private static final DateTimeFormatter DATUMFORMATTER_BON = DateTimeFormatter.ofPattern("dd MMM yyyy");
     private ArrayList<String> bonAufbereitet;
     private File bonFile;
 
@@ -66,8 +68,8 @@ public class Kassenbon {
      *
      * @return Der Zeitpunkt des Einkaufs als String
      */
-    public String getZeitString() {
-        return zeitstempel.format(Kassenbon.ZEITFORMATTER);
+    public String getZeitStringName() {
+        return zeitstempel.format(Kassenbon.ZEITFORMATTER_NAME);
     }
 
     /**
@@ -75,8 +77,26 @@ public class Kassenbon {
      *
      * @return Der Zeitpunkt des Einkaufs als String
      */
-    public String getDatumString() {
-        return zeitstempel.format(Kassenbon.DATUMFORMATTER);
+    public String getDatumStringName() {
+        return zeitstempel.format(Kassenbon.DATUMFORMATTER_NAME);
+    }
+    
+        /**
+     * Gibt einen String aus, welcher den Zeitpunk des Einkaufs enhaelt.
+     *
+     * @return Der Zeitpunkt des Einkaufs als String
+     */
+    public String getZeitStringBon() {
+        return zeitstempel.format(Kassenbon.ZEITFORMATTER_BON);
+    }
+
+    /**
+     * Gibt einen String aus, welcher den Zeitpunk des Einkaufs enhaelt.
+     *
+     * @return Der Zeitpunkt des Einkaufs als String
+     */
+    public String getDatumStringBon() {
+        return zeitstempel.format(Kassenbon.DATUMFORMATTER_BON);
     }
 
     public String getImpressum() {
@@ -150,6 +170,7 @@ public class Kassenbon {
         bonAufbereitet = new ArrayList<String>();
         ArrayList<String> tempKategorien = new ArrayList<String>();
         bonAufbereitet.add(Propertymanager.getProperty("Impressum"));
+        bonAufbereitet.add(this.getDatumStringBon()+ " " + this.getZeitStringBon());
         bonAufbereitet.add("");
         for (Artikel artikel : this.getWarenkorb()) {
             if (!tempKategorien.contains(artikel.getKategorie())) {
@@ -173,7 +194,7 @@ public class Kassenbon {
     }
 
     public void saveBon() throws IOException {
-        bonFile = new File(Propertymanager.getProperty("BonDirectory") + "bon_" + this.getZeitString() + "_" + this.getDatumString() + ".txt");
+        bonFile = new File(Propertymanager.getProperty("BonDirectory") + "bon_" + this.getZeitStringName()+ "_" + this.getDatumStringName()+ ".txt");
         bonFile.getParentFile().mkdirs();
         bonFile.createNewFile();
         Files.write(bonFile.toPath(), this.getKassebonAufbereitet(), Charset.forName(Propertymanager.getProperty("BonCharset")));

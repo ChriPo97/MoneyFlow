@@ -185,7 +185,7 @@ public class Ziffernblock extends JPanel {
                         if (selectedOptionBon == 0) {
                             try {
                                 bon.printBon();
-                            } catch (FileNotFoundException | PrintException ex) {
+                            } catch (IOException | PrintException ex) {
                                 Logger.getLogger(Ziffernblock.class.getName()).log(Level.SEVERE, null, ex);
                                 JOptionPane.showMessageDialog(null, Languagemanager.getProperty("Ziffernblock.selectedOptionBon.error.text"),
                                         Languagemanager.getProperty("Ziffernblock.selectedOptionBon.error.titel"), JOptionPane.ERROR_MESSAGE);
