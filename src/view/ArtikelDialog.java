@@ -53,11 +53,13 @@ public class ArtikelDialog extends JDialog {
     private JTree tree = new JTree(top);
     private GroupLayout artikelPanelGroupLayout;
     private GridLayout dialogLayout;
+    private JLabel idLabel = new JLabel(Languagemanager.getProperty("ArtikelDialog.idLabel") + ":");
     private JLabel kategorieLabel = new JLabel(Languagemanager.getProperty("ArtikelDialog.kategorieLabel") + ":");
     private JLabel produktLabel = new JLabel(Languagemanager.getProperty("ArtikelDialog.produktLabel") + ":");
     private JLabel einheitLabel = new JLabel(Languagemanager.getProperty("ArtikelDialog.einheitLabel") + ":");
     private JLabel einzelpreisLabel = new JLabel(Languagemanager.getProperty("ArtikelDialog.einzelpreisLabel") + ":");
     private JLabel mwstLabel = new JLabel(Languagemanager.getProperty("ArtikelDialog.mwstLabel") + ":");
+    private static JTextField idField = new JTextField();
     private static JTextField kategorieField = new JTextField();
     private static JTextField produktField = new JTextField();
     private String currentArtikelname = "";
@@ -76,6 +78,7 @@ public class ArtikelDialog extends JDialog {
             this.setTitle(Languagemanager.getProperty("ArtikelDialog.mode.add.titel"));
             this.setMinimumSize(new Dimension(300, 250));
             modeButton.setText(Languagemanager.getProperty("ArtikelDialog.mode.add.modeButton"));
+            idField.setEditable(false);
             kategorieField.setEnabled(true);
             produktField.setEnabled(true);
             einheitComboBox.setEnabled(true);
@@ -100,6 +103,7 @@ public class ArtikelDialog extends JDialog {
             this.setTitle(Languagemanager.getProperty("ArtikelDialog.mode.change.titel"));
             this.setMinimumSize(new Dimension(600, 250));
             modeButton.setText(Languagemanager.getProperty("ArtikelDialog.mode.change.modeButton"));
+            idField.setEditable(false);
             kategorieField.setEnabled(true);
             produktField.setEnabled(true);
             einheitComboBox.setEnabled(true);
@@ -128,6 +132,7 @@ public class ArtikelDialog extends JDialog {
             this.setTitle(Languagemanager.getProperty("ArtikelDialog.mode.change.titel"));
             this.setMinimumSize(new Dimension(600, 250));
             modeButton.setText(Languagemanager.getProperty("ArtikelDialog.mode.change.modeButton"));
+            idField.setEditable(false);
             kategorieField.setEnabled(false);
             produktField.setEnabled(false);
             einheitComboBox.setEnabled(false);
@@ -188,6 +193,10 @@ public class ArtikelDialog extends JDialog {
         artikelPanelGroupLayout.setHorizontalGroup(
                 artikelPanelGroupLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
                         .addGroup(artikelPanelGroupLayout.createSequentialGroup()
+                                .addComponent(idLabel)
+                                .addComponent(idField)
+                        )
+                        .addGroup(artikelPanelGroupLayout.createSequentialGroup()
                                 .addComponent(produktLabel)
                                 .addComponent(produktField)
                         )
@@ -214,6 +223,10 @@ public class ArtikelDialog extends JDialog {
         artikelPanelGroupLayout.setVerticalGroup(
                 artikelPanelGroupLayout.createSequentialGroup()
                         .addGroup(artikelPanelGroupLayout.createParallelGroup()
+                                .addComponent(idLabel)
+                                .addComponent(idField)
+                        )
+                        .addGroup(artikelPanelGroupLayout.createParallelGroup()
                                 .addComponent(produktLabel)
                                 .addComponent(produktField)
                         )
@@ -237,9 +250,9 @@ public class ArtikelDialog extends JDialog {
                                 .addComponent(modeButton)
                         )
         );
-        artikelPanelGroupLayout.linkSize(SwingConstants.HORIZONTAL, kategorieLabel, produktLabel, einheitLabel, einzelpreisLabel,
+        artikelPanelGroupLayout.linkSize(SwingConstants.HORIZONTAL, idLabel, kategorieLabel, produktLabel, einheitLabel, einzelpreisLabel,
                 mwstLabel);
-        artikelPanelGroupLayout.linkSize(SwingConstants.VERTICAL, kategorieField, produktField, einheitComboBox, einzelpreisField,
+        artikelPanelGroupLayout.linkSize(SwingConstants.VERTICAL, idField, kategorieField, produktField, einheitComboBox, einzelpreisField,
                 mwstComboBox);
         dialogPanel.add(artikelPanel);
         this.add(dialogPanel);
@@ -255,6 +268,7 @@ public class ArtikelDialog extends JDialog {
                 for (Artikel artikel : DBVerbindung.alleArtikelAuslesen()) {
                     if (artikel.getName().equals(e.getPath().getLastPathComponent().toString())) {
                         currentArtikelname = artikel.getName();
+                        idField.setText(String.valueOf(artikel.getId()));
                         kategorieField.setText(artikel.getKategorie());
                         produktField.setText(artikel.getName());
                         einheitComboBox.setSelectedItem(artikel.getEinheit().toString());
@@ -296,11 +310,18 @@ public class ArtikelDialog extends JDialog {
 
     //Setzt alle Felder zurück
     private void clearAllFields() {
+        idField.setText("");
         kategorieField.setText("");
         produktField.setText("");
         einheitComboBox.setSelectedIndex(0);
         einzelpreisField.setValue(0);
         mwstComboBox.setSelectedIndex(0);
+    }
+
+    @Override
+    public void dispose() {
+        clearAllFields();
+        super.dispose();
     }
 
 }

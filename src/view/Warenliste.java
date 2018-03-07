@@ -20,17 +20,19 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author ChriPo97 
- * Klasse für das Panel des mittleren Teils des Hauptfensters mit der Warenliste
- * und den Feldern für Summe und MwSt.
+ * @author ChriPo97 Klasse für das Panel des mittleren Teils des Hauptfensters
+ * mit der Warenliste und den Feldern für Summe und MwSt.
  */
 public class Warenliste extends JPanel {
-
+    
     private static JTextField summe = new JTextField(Languagemanager.getProperty("Warenliste.summe") + ": ");
     private static JTextField mwst = new JTextField(Languagemanager.getProperty("Warenliste.mwst") + ": ");
     private static JTable table;
@@ -41,15 +43,15 @@ public class Warenliste extends JPanel {
             return false;
         }
     };
-
+    
     public Warenliste() {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setBorder(new EmptyBorder(new Insets(0, 10, 10, 10)));
         initComponents();
     }
-
+    
     private void initComponents() {
-
+        
         summe.setEditable(false);
         summe.setPreferredSize(new Dimension(Short.MAX_VALUE, 70));
         summe.setMaximumSize(new Dimension(Short.MAX_VALUE, 70));
@@ -76,6 +78,7 @@ public class Warenliste extends JPanel {
         };
         scrollpaneTable = new JScrollPane(table);
         table.getTableHeader().setReorderingAllowed(false);
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         //MousListener für die Table - Artikelinformationen werden angezeigt
         table.addMouseListener(new MouseAdapter() {
@@ -88,12 +91,9 @@ public class Warenliste extends JPanel {
                     }
                 }
             }
-
         });
 
-        //table.setCellSelectionEnabled(true);
-        //table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        //HinzufÃ¼gen der Scroll Pane mit der Table
+        //Hinzufügen der Scroll Pane mit der Table
         this.add(Box.createRigidArea(new Dimension(0, 5)));
         this.add(scrollpaneTable);
         this.add(Box.createRigidArea(new Dimension(0, 5)));
@@ -168,12 +168,12 @@ public class Warenliste extends JPanel {
         updateSummeUndMwst();
         updateWarenliste();
     }
-    
+
     //Funktion zum Leeren der Warenliste
     public static void clearTable() {
         tableModel.setRowCount(0);
         updateSummeUndMwst();
         updateWarenliste();
     }
-
+    
 }
