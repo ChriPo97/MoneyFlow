@@ -35,6 +35,10 @@ public class Einkaufsmanager {
         if (artikel == null) {
             return false;
         }
+        //Ist die Menge durch Gewicht bestimmt wird der Standardwert auf 1,000 (1kg) gesetzt
+        if (artikel.getEinheit() == Artikel.Einheit.GEWICHT) {
+            artikel.setMenge(1000);
+        }
         // Ist der Artikel bereits enthalten wird die Menge addiert. Sonst wird der Artikel dem Einkaufskorb hinzugefuegt.
         for (Artikel a : EINKAUFSKORB) {
             if (a.getId() == id) {
