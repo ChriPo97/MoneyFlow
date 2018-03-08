@@ -1,3 +1,5 @@
+(Scroll down for the english version)
+
 # MoneyFlow Kassensystem - Deutsch
 
 #Systemvoraussetzungen
