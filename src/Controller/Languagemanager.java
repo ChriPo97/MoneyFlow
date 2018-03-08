@@ -25,25 +25,16 @@ import javax.swing.JOptionPane;
  * @author lykoju Diese Klasse liest die Properties ein und macht sie fuer das
  * Programm verfuegbar
  */
-public class Propertymanager {
+public class Languagemanager {
 
     private static final Properties PROPS = new Properties();
 
     public static void ladenProperties() {
-        try (FileInputStream in = new FileInputStream("cfg/" + "MoneyFlow.properties")) {
+        try (FileInputStream in = new FileInputStream("cfg/" + Propertymanager.getProperty("Language") + ".properties")) {
             PROPS.load(in);
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "The PROPERTIES file could not be loaded!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "The language PROPERTIES file could not be loaded!", "Error", JOptionPane.ERROR_MESSAGE);
             System.exit(0);
-        }
-    }
-
-    public static void schreibenProperties() {
-        try (FileOutputStream out = new FileOutputStream("MoneyFlow.properties")) {
-            PROPS.store(out, "MoneyFlow.properties");
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Coul not write to the PROPERTIES file!", 
-                    "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 

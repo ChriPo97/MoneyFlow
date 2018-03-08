@@ -6,6 +6,7 @@
 package view;
 
 import Controller.Einkaufsmanager;
+import Controller.Languagemanager;
 import model.Artikel;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -19,17 +20,21 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Christoph
+ * @author ChriPo97 Klasse für das Panel des mittleren Teils des Hauptfensters
+ * mit der Warenliste und den Feldern für Summe und MwSt.
  */
 public class Warenliste extends JPanel {
-
-    private static JTextField summe = new JTextField("Summe:");
-    private static JTextField mwst = new JTextField("MwSt:");
+    
+    private static JTextField summe = new JTextField(Languagemanager.getProperty("Warenliste.summe") + ": ");
+    private static JTextField mwst = new JTextField(Languagemanager.getProperty("Warenliste.mwst") + ": ");
     private static JTable table;
     private JScrollPane scrollpaneTable;
     private static DefaultTableModel tableModel = new DefaultTableModel() {
@@ -38,33 +43,33 @@ public class Warenliste extends JPanel {
             return false;
         }
     };
-
+    
     public Warenliste() {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setBorder(new EmptyBorder(new Insets(0, 10, 10, 10)));
         initComponents();
     }
-
+    
     private void initComponents() {
-
+        
         summe.setEditable(false);
         summe.setPreferredSize(new Dimension(Short.MAX_VALUE, 70));
         summe.setMaximumSize(new Dimension(Short.MAX_VALUE, 70));
         summe.setBackground(Color.WHITE);
         summe.setFont(new Font("Ariel", 0, 30));
-        summe.setText("Summe: " + Einkaufsmanager.getGesamtPreisString());
+        summe.setText(Languagemanager.getProperty("Warenliste.summe") + ": " + Einkaufsmanager.getGesamtPreisString());
         mwst.setPreferredSize(new Dimension(Short.MAX_VALUE, 40));
         mwst.setMaximumSize(new Dimension(Short.MAX_VALUE, 40));
         mwst.setEditable(false);
         mwst.setBackground(Color.WHITE);
         mwst.setFont(new Font("Ariel", 0, 16));
-        mwst.setText("inkl. MwSt: "+ Einkaufsmanager.getGesamtMwstString());
+        mwst.setText(Languagemanager.getProperty("Warenliste.mwst") + ": " + Einkaufsmanager.getGesamtMwstString());
 
         //Erstellen des Table Models und der JTabel
-        tableModel.addColumn("Menge");
-        tableModel.addColumn("Produkt");
-        tableModel.addColumn("Rabatt");
-        tableModel.addColumn("Preis");
+        tableModel.addColumn(Languagemanager.getProperty("Warenliste.table.column.1"));
+        tableModel.addColumn(Languagemanager.getProperty("Warenliste.table.column.2"));
+        tableModel.addColumn(Languagemanager.getProperty("Warenliste.table.column.3"));
+        tableModel.addColumn(Languagemanager.getProperty("Warenliste.table.column.4"));
         table = new JTable(tableModel) {
             @Override
             public Class getColumnClass(int column) {
@@ -73,6 +78,7 @@ public class Warenliste extends JPanel {
         };
         scrollpaneTable = new JScrollPane(table);
         table.getTableHeader().setReorderingAllowed(false);
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         //MousListener für die Table - Artikelinformationen werden angezeigt
         table.addMouseListener(new MouseAdapter() {
@@ -85,12 +91,9 @@ public class Warenliste extends JPanel {
                     }
                 }
             }
-
         });
 
-        //table.setCellSelectionEnabled(true);
-        //table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        //HinzufÃ¼gen der Scroll Pane mit der Table
+        //Hinzufügen der Scroll Pane mit der Table
         this.add(Box.createRigidArea(new Dimension(0, 5)));
         this.add(scrollpaneTable);
         this.add(Box.createRigidArea(new Dimension(0, 5)));
@@ -125,12 +128,13 @@ public class Warenliste extends JPanel {
         return rowIndex;
     }
 
-    //Funktion zum Updaten des Summe Feldes
+    //Funktion zum Updaten der Summe und MwSt. Felder
     public static void updateSummeUndMwst() {
-        summe.setText("Summe: " + Einkaufsmanager.getGesamtPreisString());
-        mwst.setText("inkl. MwSt: " + Einkaufsmanager.getGesamtMwstString());
+        summe.setText(Languagemanager.getProperty("Warenliste.summe") + ": " + Einkaufsmanager.getGesamtPreisString());
+        mwst.setText(Languagemanager.getProperty("Warenliste.mwst") + ": " + Einkaufsmanager.getGesamtMwstString());
     }
 
+    //Funktion zum Updaten der Warenliste
     public static void updateWarenliste() {
         tableModel.setRowCount(0);
         for (Artikel artikelEinkaufskorb : Einkaufsmanager.getEinkaufskorb()) {
@@ -139,6 +143,7 @@ public class Warenliste extends JPanel {
         }
     }
 
+    //Funktion zum Rabattieren eines Artikels
     public static void discountArtikel(int rabatt) {
         if (getLastSelectedTableRow() >= 0) {
             for (Artikel artikelEinkaufskorb : Einkaufsmanager.getEinkaufskorb()) {
@@ -151,6 +156,7 @@ public class Warenliste extends JPanel {
         updateWarenliste();
     }
 
+    //Funktion zum Ändern der Menge eines Artikels
     public static void changeMenge(int menge) {
         if (getLastSelectedTableRow() >= 0) {
             for (Artikel artikelEinkaufskorb : Einkaufsmanager.getEinkaufskorb()) {
@@ -162,11 +168,12 @@ public class Warenliste extends JPanel {
         updateSummeUndMwst();
         updateWarenliste();
     }
-    
+
+    //Funktion zum Leeren der Warenliste
     public static void clearTable() {
         tableModel.setRowCount(0);
         updateSummeUndMwst();
         updateWarenliste();
     }
-
+    
 }

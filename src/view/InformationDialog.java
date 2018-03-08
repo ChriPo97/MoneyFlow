@@ -5,6 +5,7 @@
  */
 package view;
 
+import Controller.Languagemanager;
 import Controller.Propertymanager;
 import java.awt.Dimension;
 import java.awt.Insets;
@@ -18,7 +19,8 @@ import javax.swing.border.EmptyBorder;
 
 /**
  *
- * @author Christoph
+ * @author ChriPo97 
+ * Klasse zur Erstellung eines Dialog Fensters mit Informationen als Inhalt
  */
 public class InformationDialog extends JDialog {
     
@@ -26,13 +28,15 @@ public class InformationDialog extends JDialog {
     private BoxLayout dialogLayout;
     private JScrollPane scrollPane;
     private JTextArea textArea;
-    private String text = "MoneyFlow - Kassensystem\n\n"
+    
+    //Informationstext
+    private String text = Languagemanager.getProperty("InformationDialog.text.name") + "\n\n"
             + "GNU General Public License v3.0\n\n"
             + "https://github.com/ChriPo97/MoneyFlow";
     
     public InformationDialog() {
         initComponents();
-        this.setTitle("Information");
+        this.setTitle(Languagemanager.getProperty("InformationDialog.titel"));
         this.setMinimumSize(new Dimension(350, 200));
         this.setResizable(false);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -46,12 +50,11 @@ public class InformationDialog extends JDialog {
         dialogPanel.setBorder(new EmptyBorder(new Insets(10, 10, 10, 10)));
         dialogLayout = new BoxLayout(dialogPanel, BoxLayout.Y_AXIS);
         dialogPanel.setLayout(dialogLayout);
-        textArea = new JTextArea(Propertymanager.getProperty("MoneyFlow.Impressum").replaceAll("\"", ""));
+        textArea = new JTextArea(text);
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
         textArea.setSize(new Dimension(280, 100));
         textArea.setEditable(false);
-        textArea.setText(text);
         scrollPane = new JScrollPane(textArea);
         dialogPanel.add(scrollPane);
         this.add(dialogPanel);

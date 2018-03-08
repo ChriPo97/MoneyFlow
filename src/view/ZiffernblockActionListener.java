@@ -11,7 +11,8 @@ import javax.swing.JButton;
 
 /**
  *
- * @author Christoph
+ * @author ChriPo97 
+ * Klasse des ActionListers für die Ziffern des Ziffernblocks
  */
 public class ZiffernblockActionListener implements ActionListener{
 

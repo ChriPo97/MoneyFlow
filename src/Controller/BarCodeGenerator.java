@@ -11,27 +11,46 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.file.Files;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import org.krysalis.barcode4j.impl.code128.Code128Bean;
 import org.krysalis.barcode4j.output.bitmap.BitmapCanvasProvider;
 import org.krysalis.barcode4j.tools.UnitConv;
 
 /**
  *
- * @author Christoph
+ * @author ChriPo97 
+ * Klasse zur Generierung und Löschung von BarCode-Dateien
  */
 public class BarCodeGenerator {
 
-    public static void generateCode128Barcode(int code) throws FileNotFoundException, IOException {
-        Code128Bean eanBean = new Code128Bean();
-        final int dpi = 150;
-        eanBean.setModuleWidth(UnitConv.in2mm(1.0f / dpi));
-        eanBean.setFontSize(2.0);
-        eanBean.doQuietZone(true);
-        File outputFile = new File(Propertymanager.getProperty("BarcodeDirectory") + code + ".png");
-        OutputStream out = new FileOutputStream(outputFile);
-        BitmapCanvasProvider canvas = new BitmapCanvasProvider(out, "image/jpeg", dpi, BufferedImage.TYPE_BYTE_BINARY, false, 0);
-        eanBean.generateBarcode(canvas, String.valueOf(code));
-        canvas.finish();
+    //Funktion zur Erstellung einer BarCode Datei im Code128 Format
+    public static void generateCode128Barcode(int code) {
+        OutputStream out = null;
+        try {
+            Code128Bean eanBean = new Code128Bean();
+            //Auflösung
+            final int dpi = 600;
+            eanBean.setModuleWidth(UnitConv.in2mm(6.0f / dpi));
+            eanBean.setFontSize(2.0);
+            eanBean.doQuietZone(true);
+            File outputFile = new File(Propertymanager.getProperty("BarcodeDirectory") + code + ".png");
+            out = new FileOutputStream(outputFile);
+            BitmapCanvasProvider canvas = new BitmapCanvasProvider(out, "image/jpeg", dpi, BufferedImage.TYPE_BYTE_BINARY, false, 0);
+            eanBean.generateBarcode(canvas, String.valueOf(code));
+            canvas.finish();
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Die Generierung eines Barcodes war nicht möglich!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }
+
+    //Funktion zum Löschen einer BarCode Datei
+    public static void deleteBarcode(int code) {
+        File file = new File(Propertymanager.getProperty("BarcodeDirectory") + code + ".png");
+        file.delete();
     }
 
 }
