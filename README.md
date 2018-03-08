@@ -1,7 +1,7 @@
-# MoneyFlow
-Kassensystem
+# MoneyFlow Kassensystem
 
-#Workflow
+#Start
+-MoneyFlow.jar ausführen um Kassensystem zu starten
 
 #Anlegen eines Artikels in der Datenbank
  - Über "Tools" -> "Datenbank" -> "Artikel hinzufügen" können neue Artikel in der 
