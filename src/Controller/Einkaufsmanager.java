@@ -9,7 +9,6 @@ import model.Artikel;
 import model.Kassenbon;
 import java.util.ArrayList;
 import java.util.Collections;
-import model.Mehrwertsteuer;
 
 /**
  *

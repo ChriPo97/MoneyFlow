@@ -6,7 +6,6 @@
 package view;
 
 import Controller.Languagemanager;
-import Controller.Propertymanager;
 import java.awt.Dimension;
 import java.awt.Insets;
 import javax.swing.BoxLayout;

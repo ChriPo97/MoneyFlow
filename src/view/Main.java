@@ -5,14 +5,11 @@
  */
 package view;
 
-import Controller.BarCodeGenerator;
 import Controller.DBVerbindung;
 import Controller.Languagemanager;
 import Controller.Propertymanager;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;

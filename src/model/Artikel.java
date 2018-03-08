@@ -4,10 +4,6 @@
  * and open the template in the editor.
  */
 package model;
-
-import Controller.DBVerbindung;
-import Controller.Einkaufsmanager;
-
 /**
  *
  * @author lykoju Laufzeitklasse fuer einen Artikel im Einkauf.
