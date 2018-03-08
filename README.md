@@ -6,6 +6,7 @@
  - Java 1.8 installed
 
 #Start
+ - MoneyFlow.jar has to be in the same directory as the /cfg/ and /lib/ folders
  - Execute MoneyFlow.jar to start the cashier system
 
 #Adding a product to the database
@@ -45,6 +46,7 @@
  - Java 1.8 installiert
 
 #Start
+ - MoneyFlow.jar muss im gleichen Verzeichnis wie die Ordner /cfg/ und /lib/ sein
  - MoneyFlow.jar ausführen um Kassensystem zu starten
 
 #Anlegen eines Artikels in der Datenbank
