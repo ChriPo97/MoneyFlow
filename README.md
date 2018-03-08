@@ -1,7 +1,51 @@
-# MoneyFlow Kassensystem
+# MoneyFlow cashier system - English
+
+#System requirements
+ - OS: Windows XP Service Pack 2 or higher
+ - RAM: 4 GB or more
+ - Java 1.8 installed
 
 #Start
--MoneyFlow.jar ausführen um Kassensystem zu starten
+ - Execute MoneyFlow.jar to start the cashier system
+
+#Adding a product to the database
+ - Via "Tools" -> "Database" -> "Add product" you can add a product to the database
+ - Product name, unit, category, sales tax and price can be set
+ - After successfully adding a new product, the following message will appear: "Added product successfully!"
+
+#Changing a product in the database
+ - Via "Tools" -> "Database" -> "Change product" you can select a product and change it
+ - You can change the following attributes: Product name, unit, category, sales tax and price
+ - After successfully changing a product, the following message will appear: "Changed product successfully!"
+
+#Deleting a product from the database
+ - Via "Tools" -> "Database" -> "Delete product" you can select a product and delete it
+ - After successfully changing a product, the following message will appear: "Deleted product successfully!"
+
+#Displaying all products
+ - All products are displayed when opening the windows to change or delete a product from the database
+
+#Changing the imprint
+ - Via "Tools" -> "Impressum ändern" you can change the imprint that is displayed on the receipt
+
+#Properties file
+ - Language: Selecting the programs language (de,en)
+ - Impressum: Imprint that is displayed on the receipt
+ - BonCharset: Charset that is used for the receipts
+ - BonDirectory: Path to where the generated receipts are saved
+ - BarcodeDirectory: Path to where the generated barcodes are saved
+ - BarcodeScannerPrefix/BarcodeScannerSuffix: Pre- und Suffix of the barcode scanner
+ - DatabaseFile: Database file of the program
+
+# MoneyFlow Kassensystem - Deutsch
+
+#Systemvoraussetzungen
+ - OS: Windows XP Service Pack 2 oder neuer
+ - RAM: 4 GB oder mehr
+ - Java 1.8 installiert
+
+#Start
+ - MoneyFlow.jar ausführen um Kassensystem zu starten
 
 #Anlegen eines Artikels in der Datenbank
  - Über "Tools" -> "Datenbank" -> "Artikel hinzufügen" können neue Artikel in der 
@@ -34,9 +78,10 @@
    Kassenbons erscheint bearbeitet werden
 
 #Properties-Datei
-- Impressum: Impressum des Unternehmens (wird auf dem Bon angezeigt)
-- BonCharset: Zeichensatz der für die Bons verwendet wird
-- BonDirectory: Pfad zu den generierten Bons
-- BarcodeDirectory: Pfad zu den generierten Barcodes
-- BarcodeScannerPrefix/BarcodeScannerSuffix: Prä- und Suffix des Scanners
-- DatabaseFile: Datenbankdatei der Anwendung
+ - Language: Festlegen der Sprache (de,en)
+ - Impressum: Impressum des Unternehmens (wird auf dem Bon angezeigt)
+ - BonCharset: Zeichensatz der für die Bons verwendet wird
+ - BonDirectory: Pfad zu den generierten Bons
+ - BarcodeDirectory: Pfad zu den generierten Barcodes
+ - BarcodeScannerPrefix/BarcodeScannerSuffix: Prä- und Suffix des Scanners
+ - DatabaseFile: Datenbankdatei der Anwendung

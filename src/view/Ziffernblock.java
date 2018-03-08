@@ -7,7 +7,6 @@ package view;
 
 import Controller.Einkaufsmanager;
 import Controller.Languagemanager;
-import Controller.Propertymanager;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -15,12 +14,7 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.print.PrintException;
@@ -33,7 +27,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-import model.Artikel;
 import model.Kassenbon;
 
 /**
