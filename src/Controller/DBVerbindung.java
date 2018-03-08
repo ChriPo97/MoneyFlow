@@ -36,6 +36,7 @@ public class DBVerbindung {
             Class.forName("org.sqlite.JDBC");
         } catch (ClassNotFoundException ex) {
             JOptionPane.showMessageDialog(null, Languagemanager.getProperty("DBVerbindung.error.text"), Languagemanager.getProperty("DBVerbindung.error.titel"), JOptionPane.ERROR_MESSAGE);
+            System.exit(0);
         }
         try {
             con = DriverManager.getConnection(URL);
@@ -48,6 +49,7 @@ public class DBVerbindung {
             rs.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, Languagemanager.getProperty("DBVerbindung.error.text"), Languagemanager.getProperty("DBVerbindung.error.titel"), JOptionPane.ERROR_MESSAGE);
+            System.exit(0);
         }
     }
 //Verbindung zur Datenbank schliesse

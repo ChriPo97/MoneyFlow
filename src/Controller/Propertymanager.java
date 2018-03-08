@@ -33,7 +33,8 @@ public class Propertymanager {
         try (FileInputStream in = new FileInputStream("cfg/" + "MoneyFlow.properties")) {
             PROPS.load(in);
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Die PROPERTIES-Datei konnte nicht geladen werden!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "The PROPERTIES file could not be loaded!", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(0);
         }
     }
 
@@ -41,7 +42,7 @@ public class Propertymanager {
         try (FileOutputStream out = new FileOutputStream("MoneyFlow.properties")) {
             PROPS.store(out, "MoneyFlow.properties");
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Die Daten konnten nicht in die PROPERTIES-Datei geschrieben werden!", 
+            JOptionPane.showMessageDialog(null, "Coul not write to the PROPERTIES file!", 
                     "Error", JOptionPane.ERROR_MESSAGE);
         }
     }

@@ -19,18 +19,16 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
- * @author ChriPo97 
- * Klasse die zum Start des Programms aufgerufen wird.
- * Sie startet die GUI, lädt die Properties und stellt die Datenbank Verbindung her.
+ * @author ChriPo97 Klasse die zum Start des Programms aufgerufen wird. Sie
+ * startet die GUI, lädt die Properties und stellt die Datenbank Verbindung her.
  */
 public class Main {
 
     public static void main(String[] args) throws FileNotFoundException, IOException {
-
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-            JOptionPane.showMessageDialog(null, "Das Anpassen des LookAndFeels an das System eigene ist fehlgeschlagen!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "The Look and Feel could not be adjusted to the operating system.", "Error", JOptionPane.ERROR_MESSAGE);
         }
         Propertymanager.ladenProperties();
         Languagemanager.ladenProperties();

@@ -33,7 +33,8 @@ public class Languagemanager {
         try (FileInputStream in = new FileInputStream("cfg/" + Propertymanager.getProperty("Language") + ".properties")) {
             PROPS.load(in);
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Die PROPERTIES-Datei konnte nicht geladen werden!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "The language PROPERTIES file could not be loaded!", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(0);
         }
     }
 
