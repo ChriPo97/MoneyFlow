@@ -34,4 +34,9 @@
    Kassenbons erscheint bearbeitet werden
 
 #Properties-Datei
--> Pfad zu den Bons angeben
+- Impressum: Impressum des Unternehmens (wird auf dem Bon angezeigt)
+- BonCharset: Zeichensatz der für die Bons verwendet wird
+- BonDirectory: Pfad zu den generierten Bons
+- BarcodeDirectory: Pfad zu den generierten Barcodes
+- BarcodeScannerPrefix/BarcodeScannerSuffix: Prä- und Suffix des Scanners
+- DatabaseFile: Datenbankdatei der Anwendung
