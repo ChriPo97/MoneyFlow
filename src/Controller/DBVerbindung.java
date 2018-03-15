@@ -227,10 +227,10 @@ public class DBVerbindung {
                 preis = rs.getInt("Preis");
                 String tmp = rs.getString("Einheit");
                 if (tmp.equals("STUECK")) {
-                    einheit = Artikel.Einheit.STUECK;
+                    einheit = Artikel.Einheit.PIECE;
                 } else {
                     if (tmp.equals("GEWICHT")) {
-                        einheit = Artikel.Einheit.GEWICHT;
+                        einheit = Artikel.Einheit.WEIGHT;
                     }
                 }
                 //Mehrwertsteuerklasse ermitteln
@@ -267,10 +267,10 @@ public class DBVerbindung {
                 preis = rs.getInt("Preis");
                  String tmp = rs.getString("Einheit");
                 if (tmp.equals("STUECK")) {
-                    einheit = Artikel.Einheit.STUECK;
+                    einheit = Artikel.Einheit.PIECE;
                 } else {
                     if (tmp.equals("GEWICHT")) {
-                        einheit = Artikel.Einheit.GEWICHT;
+                        einheit = Artikel.Einheit.WEIGHT;
                     }
                 }
                 

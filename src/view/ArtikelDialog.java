@@ -63,7 +63,7 @@ public class ArtikelDialog extends JDialog {
     private static JTextField kategorieField = new JTextField();
     private static JTextField produktField = new JTextField();
     private String currentArtikelname = "";
-    private static JComboBox einheitComboBox = new JComboBox(new String[]{"STUECK", "GEWICHT"});
+    private static JComboBox einheitComboBox = new JComboBox(new String[]{"PIECE", "WEIGHT"});
     private static JFormattedTextField einzelpreisField;
     private static JComboBox mwstComboBox = new JComboBox(new String[]{"A", "B"});
     private JButton modeButton = new JButton();
@@ -89,8 +89,15 @@ public class ArtikelDialog extends JDialog {
                 public void actionPerformed(ActionEvent e) {
                     if (produktField.getText() != "") {
                         Mehrwertsteuer mwst = DBVerbindung.getMwstByKlasse(((String) mwstComboBox.getSelectedItem()).toCharArray()[0]);
+                        String unit;
+                        if(einheitComboBox.getSelectedItem().toString().equals("PIECE")) {
+                            unit = "STUECK";
+                        }
+                        else {
+                            unit = "GEWICHT";
+                        }
                         DBVerbindung.artikelAnlegen(produktField.getText(), kategorieField.getText(), (int) (einzelpreisField.getValue()),
-                                einheitComboBox.getSelectedItem().toString(), mwst.getId());
+                                unit, mwst.getId());
                         JOptionPane.showMessageDialog(null, Languagemanager.getProperty("ArtikelDialog.mode.add.message"));
                         BarCodeGenerator.generateCode128Barcode(DBVerbindung.artikelNametoArtikelID(produktField.getText()));
                         clearAllFields();
@@ -115,11 +122,18 @@ public class ArtikelDialog extends JDialog {
                 public void actionPerformed(ActionEvent e) {
                     if (produktField.getText() != "") {
                         int id = DBVerbindung.artikelNametoArtikelID(currentArtikelname);
+                        String unit;
+                        if(einheitComboBox.getSelectedItem().toString().equals("PIECE")) {
+                            unit = "STUECK";
+                        }
+                        else {
+                            unit = "GEWICHT";
+                        }
                         Mehrwertsteuer mwst = DBVerbindung.getMwstByKlasse(((String) mwstComboBox.getSelectedItem()).toCharArray()[0]);
                         DBVerbindung.artikelBearbeitenKategorie(id, kategorieField.getText());
                         DBVerbindung.artikelBearbeitenName(id, produktField.getText());
                         DBVerbindung.artikelBearbeitenPreis(id, (int) (einzelpreisField.getValue()));
-                        DBVerbindung.artikelBearbeitenEinheit(id, einheitComboBox.getSelectedItem().toString());
+                        DBVerbindung.artikelBearbeitenEinheit(id, unit);
                         DBVerbindung.artikelBearbeitenMwstklasse(id, mwst.getId());
                         JOptionPane.showMessageDialog(null, Languagemanager.getProperty("ArtikelDialog.mode.change.message"));
                         updateTree();
@@ -129,9 +143,9 @@ public class ArtikelDialog extends JDialog {
             });
         }
         if (artikelMode == MenuBar.ArtikelMode.DELETE) {
-            this.setTitle(Languagemanager.getProperty("ArtikelDialog.mode.change.titel"));
+            this.setTitle(Languagemanager.getProperty("ArtikelDialog.mode.delete.titel"));
             this.setMinimumSize(new Dimension(600, 250));
-            modeButton.setText(Languagemanager.getProperty("ArtikelDialog.mode.change.modeButton"));
+            modeButton.setText(Languagemanager.getProperty("ArtikelDialog.mode.delete.modeButton"));
             idField.setEditable(false);
             kategorieField.setEnabled(false);
             produktField.setEnabled(false);

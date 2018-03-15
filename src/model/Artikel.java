@@ -11,7 +11,7 @@ package model;
 public class Artikel {
 
     public static enum Einheit {
-        STUECK, GEWICHT
+        PIECE, WEIGHT
     };
 
     private final String name;
@@ -80,7 +80,7 @@ public class Artikel {
      */
     public int getPreis() {
         //TODO immer aufrunden?
-        return Math.round((this.einheit == Artikel.Einheit.GEWICHT ? menge / 1000f : menge) * einheitspreis * rabatt);
+        return Math.round((this.einheit == Artikel.Einheit.WEIGHT ? menge / 1000f : menge) * einheitspreis * rabatt);
     }
 
     public Einheit getEinheit() {
@@ -139,7 +139,7 @@ public class Artikel {
      * @return Ein String, der die Menge anhand der Einheit ordentlich formatiert.
      */
     public String getMengeFormatiert() {
-        if (einheit == Artikel.Einheit.GEWICHT) {
+        if (einheit == Artikel.Einheit.WEIGHT) {
             //Fuege fuehrende Nullen ein
             String nullen = String.format("%04dkg", menge);
 
