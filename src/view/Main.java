@@ -29,9 +29,10 @@ public class Main {
         }
         Propertymanager.ladenProperties();
         Languagemanager.ladenProperties();
-        DBVerbindung.verbinden();
-        Hauptfenster hf = new Hauptfenster();
-        hf.setVisible(true);
+        
+        LoginFenster login = new LoginFenster();
+        
+        
 
     }
 
