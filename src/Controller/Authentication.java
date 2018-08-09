@@ -25,7 +25,6 @@ public class Authentication {
      */
     public static boolean login(String userName, String password) {
         
-        System.out.println(userName+password);
         Factory<SecurityManager> factory = new IniSecurityManagerFactory("cfg/shiro.ini");
         SecurityManager securityManager = factory.getInstance();
         SecurityUtils.setSecurityManager(securityManager);
