@@ -23,12 +23,15 @@ public class Authentication {
     /**
      * @param args
      */
+    
+    private static Subject currentUser;
+    
     public static boolean login(String userName, String password) {
         
         Factory<SecurityManager> factory = new IniSecurityManagerFactory("cfg/shiro.ini");
         SecurityManager securityManager = factory.getInstance();
         SecurityUtils.setSecurityManager(securityManager);
-        Subject currentUser = SecurityUtils.getSubject();
+        currentUser = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(userName, password);
         token.setRememberMe(true);
         try {
@@ -44,6 +47,10 @@ public class Authentication {
             return false;
         }
 
+    }
+    
+    public static boolean checkRoleOfCurrentUser(String role) {
+        return currentUser.hasRole(role);
     }
     
 }

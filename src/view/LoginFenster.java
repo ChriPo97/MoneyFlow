@@ -96,6 +96,16 @@ public class LoginFenster extends JFrame {
                     Hauptfenster hf = new Hauptfenster();
                     hf.setVisible(true);
                     setVisible(false);
+                    
+                    String role;
+                    if (Authentication.checkRoleOfCurrentUser("Administrator")) {
+                        role = Languagemanager.getProperty("LoginDialog.confirm.admin");
+                    } else if (Authentication.checkRoleOfCurrentUser("User")) {
+                        role = Languagemanager.getProperty("LoginDialog.confirm.user");
+                    } else {
+                        role = Languagemanager.getProperty("LoginDialog.confirm.guest");
+                    }
+                    JOptionPane.showMessageDialog(null, Languagemanager.getProperty("LoginDialog.confirm.message") + role);
                 }
                 else {
                     JOptionPane.showMessageDialog(null, Languagemanager.getProperty("LoginDialog.error"));
